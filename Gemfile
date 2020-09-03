@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 source "https://rubygems.org"
 # Hello! This is where you manage which Jekyll version is used to run.
 # When you want to use a different version, change it below, save the
@@ -28,3 +29,10 @@ end
 # Performance-booster for watching directories on Windows
 gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
 
+=======
+source 'https://rubygems.org'
+gem 'jekyll-paginate'
+
+gem "jekyll", "~> 4.0"
+gem "rake"
+>>>>>>> 40a490e47ad567d6a3e37c42d6e7604652f7e8a1
