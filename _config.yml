@@ -62,8 +62,8 @@ header-img: img/home-bg.jpg
 email: yueluji@gmail.com
 description: "季月侣的Blog || About Joy "
 keyword: "博客, 个人网站, 互联网, Web, JavaScript, 前端, 设计"
-url: ""              # your host, for absolute URL
-baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
+url: "JoyDajunSpaceCraft"              # your host, for absolute URL
+baseurl: ""             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Publish posts or collection documents with a future date.
 future: true
@@ -114,7 +114,7 @@ kramdown:
 
 
 # Disqus settings
-disqus_username: hux
+disqus_username: joy
 
 # Netease settings
 netease_comment: false
@@ -127,7 +127,7 @@ netease_comment: false
 
 # Google Analytics
 ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: huangxuan.me
+ga_domain: lalala
 
 
 
