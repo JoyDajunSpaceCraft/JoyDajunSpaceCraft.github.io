@@ -78,7 +78,7 @@ ga_domain: huangxuan.me
 # # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "追逐梦想就是追逐自己的厄运，在满地都是六便士的街上，他抬起头看到了月光"
-sidebar-avatar: /img/avatar-ny.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/avatar-hux-ny.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
