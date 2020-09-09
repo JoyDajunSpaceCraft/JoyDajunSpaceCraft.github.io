@@ -4,7 +4,7 @@ title: ' React Native 设备加载 '
 subtitle: 'react native device feature (camera, location, map, SQLite ...)'
 date: 2020--09-06
 author: 'Joy'
-header-img: 'img/react-native-got7.jpg'
+header-img: 'img/react-native-device.jpg'
 tags:
   - react native
   - self-learning
@@ -128,3 +128,19 @@ const verfiypermissions = async () => {
 
 <a href="http://lbsyun.baidu.com/index.php?title=static" target="_blank">百度地图开发者获得静态地图界面</a>
 原始的教程中是 Google Map 获得 API 但是需要绑定 credit card 以及连接 VPN，这里利用百度地图也可以实现类似功能，就是界面有点难找：）
+
+
+### React 语法 小知识点
+
+1. `export default xxx` 在后面导入的时候是 `import xxx from ''`， 但是在`export const xxx` 时 后面导入要求 `import {xxx} from ''`
+2. ES7中代码编写的特点，不再使用this关键字了
+ `constructor (){this.property = 'xxx'}`转换为 `property = 'xxx`;
+ `method () {...}`转换为 `method = () =>{...}`
+3. `...` spread  数组`const newArray = [...oldArray,1,2]`；Object`const newObj = {... oldObj, newProp:5}` 如果oldObj也有newProp，新的Obj会覆盖newProp。
+    `...` rest 针对方法的填充 `function sortArg(...args){return args.sort()}`。注意，使用...表示创建了新的对象。
+4. destructuring 不创建新对象的抽取 `[a,b] = ['a', 'b']`此时单独拿a或者b都不算创建新的对象，适用于array和obj。
+5. `reference`和`primitive`格式，object和array都是reference所以copy之后会联动修改，但是常量不会，因为常量是primitive格式的。解决联动修改的方法是给copy那一方加上`...`
+ ```
+ cosnt person = {name:'max'};
+ const secondPersion = {...person,name:'min'};
+ ```
