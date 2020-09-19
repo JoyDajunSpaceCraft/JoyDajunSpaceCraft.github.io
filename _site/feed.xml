@@ -5,9 +5,559 @@
     <description>季月侣的Blog || About Joy </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 09 Sep 2020 21:25:56 +0800</pubDate>
-    <lastBuildDate>Wed, 09 Sep 2020 21:25:56 +0800</lastBuildDate>
+    <pubDate>Fri, 18 Sep 2020 22:21:55 +0800</pubDate>
+    <lastBuildDate>Fri, 18 Sep 2020 22:21:55 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title> React burger 页面axios获得数据库中数据 </title>
+        <description>&lt;h3 id=&quot;do-not-go-gentle-into-that-good-night&quot;&gt;Do not go gentle into that good night.&lt;/h3&gt;
+
+&lt;p&gt;Do not go gentle into that good night,&lt;/p&gt;
+
+&lt;p&gt;Old age should burn and rave at close of day;&lt;/p&gt;
+
+&lt;p&gt;Rage, rage against the dying of the light.
+&lt;img src=&quot;/img/react-axios.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;h3 id=&quot;首先了解axios和firebase是什么&quot;&gt;首先了解axios和firebase是什么&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;axios是一种ajax传参方式，导入的形式是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save axios&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;import axios from 'axios'&lt;/code&gt;
+当然真正使用的方式可以是&lt;/p&gt;
+</description>
+        <pubDate>Fri, 18 Sep 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/18/React-axios/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/18/React-axios/</guid>
+        
+        <category>react</category>
+        
+        <category>self-learning</category>
+        
+        <category>no class basing</category>
+        
+        <category>Do not go gentle into that good night.</category>
+        
+        
+      </item>
+    
+      <item>
+        <title> React 笔记 </title>
+        <description>&lt;h3 id=&quot;react-语法-小知识点&quot;&gt;React 语法 小知识点&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;export default xxx&lt;/code&gt; 在后面导入的时候是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;import xxx from ''&lt;/code&gt;， 但是在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;export const xxx&lt;/code&gt; 时 后面导入要求 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;import {xxx} from ''&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;ES7中代码编写的特点，不再使用this关键字了
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;constructor (){this.property = 'xxx'}&lt;/code&gt;转换为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;property = 'xxx&lt;/code&gt;;
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;method () {...}&lt;/code&gt;转换为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;method = () =&amp;gt;{...}&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;...&lt;/code&gt; spread  数组&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const newArray = [...oldArray,1,2]&lt;/code&gt;；Object&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const newObj = {... oldObj, newProp:5}&lt;/code&gt; 如果oldObj也有newProp，新的Obj会覆盖newProp。
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;...&lt;/code&gt; rest 针对方法的填充 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;function sortArg(...args){return args.sort()}&lt;/code&gt;。注意，使用…表示创建了新的对象。&lt;/li&gt;
+  &lt;li&gt;destructuring 不创建新对象的抽取 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[a,b] = ['a', 'b']&lt;/code&gt;此时单独拿a或者b都不算创建新的对象，适用于array和obj。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reference&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;primitive&lt;/code&gt;格式，object和array都是reference所以copy之后会联动修改，但是常量不会，因为常量是primitive格式的。解决联动修改的方法是给copy那一方加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;...&lt;/code&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt; cosnt person = {name:'max'};
+ const secondPersion = {...person,name:'min'};
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;react-建立项目以及语法&quot;&gt;React 建立项目以及语法&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;sudo npm install create-react-app -g&lt;/li&gt;
+  &lt;li&gt;create-react-app react-complete-guide –scripts-version 1.1.5 不是为了加载react的版本，是为了项目结构一致&lt;/li&gt;
+  &lt;li&gt;进入dir react-complete-guide npm start&lt;/li&gt;
+  &lt;li&gt;理解项目结构
+    &lt;ul&gt;
+      &lt;li&gt;public web 服务器中显示的界面，index.html 如果是多页面也不会有多个html，这个页面可以导入css依赖&lt;/li&gt;
+      &lt;li&gt;src 文件是js和css文件名一一对应，注意在index.js中最好只有一个Component&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;jsx概念：react语法糖，就是js中包裹了HTML，实际上还是js。&lt;/li&gt;
+  &lt;li&gt;不能在Component中写class即HTML中class属性被className代替；一个render 的return 只能有一个 root element 并列是不允许的。&lt;/li&gt;
+  &lt;li&gt;以小写开头的component是HTML中的，自定义一般大写。&lt;/li&gt;
+  &lt;li&gt;dynamic content { }&lt;/li&gt;
+  &lt;li&gt;props ，props.children 是在opening component中展示的&amp;lt;P&amp;gt; xxx &amp;lt;/P&amp;gt; 在调用的时候就是props.children&lt;/li&gt;
+  &lt;li&gt;在return中定义的方法是不会加上()，因为这样每次页面一加载就会调用这个方法，常见做法是只传入名字。&lt;/li&gt;
+  &lt;li&gt;state 在更新state时不是override而是会保留没有修改的state&lt;/li&gt;
+  &lt;li&gt;react hook介绍：首先是不再用class定义component而是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const component名 = props =&amp;gt;{}&lt;/code&gt;，其中可以写入方法。而且在component中不再使用render。hook不再使用Component关键字，而是使用以use开头的关键字如&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;useState&lt;/code&gt;。
+    &lt;ul&gt;
+      &lt;li&gt;useState 用法 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const [state名, 更新state的方法名] = useState(初始化的state可以是任何形式的数据)&lt;/code&gt;；同时需要注意，&lt;strong&gt;在useState中更新state的方法不会merge原有的state！！！&lt;/strong&gt;，所以在hook中可以有多个useState。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;method在componet之间传递，使用props，如果方法需要参数，可以使用以下两种方法，但是比较推荐第一种的bind，提高效率。
+    &lt;ul&gt;
+      &lt;li&gt;在调用方法的那一端使用bind(this,参数)&lt;/li&gt;
+      &lt;li&gt;或者是使用匿名函数包裹并传入参数()=&amp;gt;this.func(参数)； 如果有event要传入需要在&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;add two way binding, 动态传入用的是onChange 执行的时候自动传入event 获得修改的是event.target.value,但是在一开始并没有输入，所以使用了 value={props.value}当做初始值。&lt;/li&gt;
+  &lt;li&gt;要在jsx中加上css文件需要导入&lt;/li&gt;
+  &lt;li&gt;在return中不能使用if而是用{ ? :  },如果不想在HTML中使用{}扩上大段的HTML可以在render和return之间加上一个let变量，这样就可以使用if语句。&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在jsx中使用&lt;strong&gt;map&lt;/strong&gt;来渲染list类型的数据:&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;   persons :[
+       {name:'l1',age:12},
+       {name:'l2',age:13}
+   ]
+   render(
+       return {
+           &amp;lt;div&amp;gt;
+               {this.persons.map((person,index) =&amp;gt;{ // map需要一个key 这个index就是作用在map中的key，要保证key是不同的，所以这里其实不能用index因为list改变可能会使用相同index，在给用户数据的时候需要一个不同的key，这个可以是list再定义一个id
+                   // 这里的person就是  {name:'l1',age:12} 
+                   return &amp;lt;Person name={person.name} age={person.age} key={index}&amp;gt;
+               })} 
+           &amp;lt;/div&amp;gt;
+       }
+   )
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;事件监听event,在传入method中如果要加入event作为参数，并且在调用的方法中是使用onClick等将(event) =&amp;gt;{调用的函数(event)} 作为props传入另外的页面。&lt;/li&gt;
+  &lt;li&gt;使用join和数组对className做动态处理66-67&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在button上加上hover，需要引入 npm install –save radium 在export default 用Radium(Component)包裹当前component之后在定义的inline css中。&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;       const style={
+           color: 'red',
+           ':hover':{
+               backgroundColor:'lightblue'
+           }
+       }
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;当然在动态调用这个style的时候一般是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;style.color='red'&lt;/code&gt;，但是针对&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:hover&lt;/code&gt;是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;style[':hover']={覆盖原来属性}&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;@media query 根据页面大小调整边距占比。一般是用在CSS中，但是Radium可以帮助调整，在最外层的App.js上套用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;import Radium,{StyleRoot} from 'radium&lt;/code&gt;导入 StyleRoot 来引入 ，再wrap 所有Html到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;StyleRoot&amp;gt;&amp;lt;/StyleRoot&amp;gt;&lt;/code&gt;中，在单独需要作用的界面上,需要单独写好 @media同时在export时用Radium包裹。
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const style = {
+'@media(min-width:500px)':{
+    width:'450px'
+}
+ }&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;styled Component是一个专门做css style的工具，npm install –save styled-components加载
+    &lt;a href=&quot;https://styled-components.com/&quot; target=&quot;_blank&quot;&gt;styled-components&lt;/a&gt;
+ 用法：&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;   import styled from 'styled-components';
+   const StyleDiv = styled.div` //这里可以使用任何html中的标签 h1,span等
+           width:12px,
+           margin:...,
+           @media (min-width:500px):{
+               width:450px
+           }
+           //写入任何css中的style，不需要加上selector
+           `//这里用到的`号！！！
+   const example = (props) =&amp;gt;{
+       return (
+           &amp;lt;StyleDiv&amp;gt;
+           包裹住想要加上css的标签
+           &amp;lt;/StyleDiv&amp;gt;    
+       )
+   }
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;同样 要动态的修改css可以在以上的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;styled.div 中使用 ${}&lt;/code&gt;传入props 因为styled-componets定义的css是一个component。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;利用css module实现对单独需要的component进行渲染，好处是不用在整个css文件中渲染导致有相同className的元素共用一个css， 使用react-script版本为1.x.x，执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm run eject&lt;/code&gt;编写buddle文件
+ 在 config/webpack.config.dev.js和 config/webpack.config.props.js中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt; test: /\.css$/&lt;/code&gt;项目下给use中的options加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;modules:true,localIdentName:'[name]_[local]_[hash:base64:51]'&lt;/code&gt;表示给每个css文件加上modules而且命名也不同，在正式使用的过程中使用以下方式导入：&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;       import classes from 'XXX.css';//导入css文件 
+       render(
+           return (
+               &amp;lt;div&amp;gt;
+                   &amp;lt;button className={classes.在css文件中以class为selector的名称}&amp;gt;
+               &amp;lt;/div&amp;gt;
+           )
+       )
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;在检查界面看到这个css的class名为 “使用此css的component名_在css文件中定义的classSelector名_随机的hash”,动态加载的界面同样使用join和push来加载，在css文件中可以指定两个classSelector就能通过push传入多个class。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;react-debug&quot;&gt;React debug&lt;/h3&gt;
+&lt;p&gt;在react 16中写入ErrorBoundary文件夹 写入ErrorBoundary 只在有需要时显示customer error message&lt;/p&gt;
+
+&lt;h3 id=&quot;dive-deep-into-react-component--react-internals&quot;&gt;Dive deep into React component &amp;amp; react internals&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;class component create lifecycle hook（ 和 react hook无关）
+  因为class based 和 functional based 的component对state的要求不同，所以 lifecycle 只在class based上保有。
+    &lt;ol&gt;
+      &lt;li&gt;constructor(props) set up state&lt;/li&gt;
+      &lt;li&gt;getDerivedStateFromProps 不常用 sync state&lt;/li&gt;
+      &lt;li&gt;render&lt;/li&gt;
+      &lt;li&gt;render child component&lt;/li&gt;
+      &lt;li&gt;componetDidMount() 不要update state 会trigger re-render&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;lifecycle update props and state&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;getDerivedStateFromProps 不常用&lt;/li&gt;
+      &lt;li&gt;shouldComponentUpdate 确定是否继续&lt;/li&gt;
+      &lt;li&gt;render&lt;/li&gt;
+      &lt;li&gt;update child props&lt;/li&gt;
+      &lt;li&gt;getSnapshotBeforeUpdate 获得最后一刻dom的信息&lt;/li&gt;
+      &lt;li&gt;componentDidUpdate cause side effects 不要update state&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;functional component hook&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;useEffect default run for every render cycle 每次修改都会调用&lt;/li&gt;
+      &lt;li&gt;useEffect (()=&amp;gt;{},[依赖])，可以多次使用，只在依赖改变的时候才执行，如果依赖为空表示只在第一次render的时候执行，但是一定要加上依赖为[]的空数组才能表达这个意思。&lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;clean life cycle &amp;amp; useEffect&lt;/p&gt;
+
+        &lt;p&gt;在useEffect 中执行return可以是一个方法，在第一次的main useEffect 执行之前 执行，但是在第一次render之后执行，在其中加上的return就是消除本次useEffect的中执行内容对页面的影响。&lt;/p&gt;
+        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;     useEffect (()=&amp;gt;{
+         const timer = setTimeout(()=&amp;gt;{alert('')},1000);
+         return ()=&amp;gt;{
+             cleanTimeout(timer);
+         }
+         },[]);
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;use shouldComponentUpdate for Optimize&lt;/p&gt;
+
+    &lt;p&gt;利用shouldComponentUpdate来优化 
+  shouldComponentUpdate中包含参数nextProps, nextState可以通过判断这两个参数是否需要更新来优化代码，避免re-render多余部分。 Chrome -&amp;gt;more tool-&amp;gt;rendering 查看是否有多余render&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Optimize functional component with React.memo()适用于functional component&lt;/p&gt;
+
+    &lt;p&gt;React.memo(component)只有input改变才会render这个component&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;问题来了 什么时候应该optimize&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;parent update -&amp;gt; 本component就要render, 没必要的check。&lt;/li&gt;
+      &lt;li&gt;pureComponents instead of shouldComponentUpdate
+  pureComponent 是 normal 的 component，传入的参数多，不需要每个都检查是否更新了，将原来继承的{Component}修改为{PureComponent}帮助检查参数是否更新，不必多写shouldComponentUpdate代码。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;how react update real dom&lt;/p&gt;
+
+    &lt;p&gt;一般情况下，无论class-based 还是 functional-based的 都会反映到react的虚拟dom上， 
+  shouldComponentUpdate() =&amp;gt;render() is called  但是 render{} doesn’t immediately update the “real dom”&lt;/p&gt;
+
+    &lt;p&gt;react 保留两个 dom&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;1) old virtual dom (比real dom 快)&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;2) re-rendered Virtual dom&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;比较以上两个dom 是否改变 改变了就update real 不改就是不update&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;render Adjacent JSX elements&lt;/p&gt;
+
+    &lt;p&gt;只能在return中保有一个root element,如果想要多个adjacent elements&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;1）用array将其包裹，传入key可以实现多个element在return中渲染。&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;2）使用Aux component props.children实现多个element渲染&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;use React.Fragment&lt;/p&gt;
+
+    &lt;p&gt;和上面Aux 传props.children 是一个用处&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Higher Order Component (HOC)&lt;/p&gt;
+
+    &lt;p&gt;以With…开头 使用example，可以用来handle http error&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;      使用时
+      WithClass from '../...'
+      &amp;lt;WithClass classes={}&amp;gt;
+      &amp;lt;/WithClass&amp;gt;
+       ====================
+      import React from 'react';
+      const WithClass = props =&amp;gt;{
+          &amp;lt;div className={props.classes}&amp;gt;props.children&amp;lt;/div&amp;gt;
+      };
+      export default withClass;
+        
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;其他形式的HOC，function return 一个function component&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;      const withClass = (WrappedComponent, className) =&amp;gt;{//不是 functional component
+          return props =&amp;gt;{
+              &amp;lt;div className={className}&amp;gt;
+                  &amp;lt;WrappedComponent&amp;gt;
+              &amp;lt;/div&amp;gt;
+          }
+      };
+      export default withClass;
+      ============================
+      使用时是normal function
+      用withClass(需要包裹的component, className)
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;passing unknown props&lt;/p&gt;
+
+    &lt;p&gt;是针对HOC传入时 props丢失的情况， 使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;WrappedComponent {...props}&amp;gt;&lt;/code&gt;获得原先需要传入的props&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;怎样防止错误的 setState&lt;/p&gt;
+
+    &lt;p&gt;sync情况，多个setState同时改变state导致state不能保证哪个是最新的，解决方式
+ this.setState((prevState, props)={return {新state的修改}})&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;更新PropsType&lt;/p&gt;
+
+    &lt;p&gt;如果产生错误的传入props的格式，比如age应该是number ，导入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm instal --save prop-type&lt;/code&gt; import 之后在使用的时候是在定义需要传入props的component中的export之前加上每个props的定义：&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;      Component.propTypes = {
+          propname:PropType.func,
+          name:PropType.string,
+          ...
+      };
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;use Refs 暂时没明白什么作用&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;ref=”“&lt;/strong&gt; key word class-based 的 component
+  在打开页面的时候在哪里定位 
+  在function-based component中 使用
+  useRef&lt;br /&gt;
+  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cosnt toggleBtnFre = useRef(null);&lt;/code&gt;
+  在useEffect 中使用 toggleBtnRef
+  jsx中 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;button ref={toggleBtnFre}&amp;gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;use Context API&lt;/p&gt;
+
+    &lt;p&gt;用于在一个component中需要certain data inmultiple components and do not want to pass that data across multiple layers
+  比如 确认用户是否login 但是会有一些功能在没有login的时候也能用&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;      const context = React.createContext({
+          default value:''//格式是string array
+      })
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;pass within without using props ，在需要的地方引入&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;      &amp;lt;Context.Provider value=&amp;gt;
+      包裹住需要传入的props
+      &amp;lt;/Context.Provider&amp;gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;使用&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;  ```
+  &amp;lt;Context.Consumer&amp;gt;//返回的是一个function 以context为 参数
+  {(context)=&amp;gt; context 中的value }
+  &amp;lt;/Context.Consumer&amp;gt;   ```
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;当然有更加简洁的表达方式，使用useContext 作为function-based 或者定义静态contextType变量再调用实现，详见114。其实类似于redux。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Fri, 11 Sep 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/11/React%E7%AC%94%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/11/React%E7%AC%94%E8%AE%B0/</guid>
+        
+        <category>react</category>
+        
+        <category>self-learning</category>
+        
+        
+      </item>
+    
+      <item>
+        <title> React 制作一个burger </title>
+        <description>&lt;h3 id=&quot;planning-a-react-app怎样构建一个-app&quot;&gt;Planning a React App怎样构建一个 app&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;component Tree / structure&lt;/li&gt;
+  &lt;li&gt;application state&lt;/li&gt;
+  &lt;li&gt;components vs containers
+ structure:
+ APP
+    &lt;ul&gt;
+      &lt;li&gt;toolbar
+        &lt;ul&gt;
+          &lt;li&gt;drower toggle&lt;/li&gt;
+          &lt;li&gt;logo&lt;/li&gt;
+          &lt;li&gt;navigation items&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;sideDrawer
+        &lt;ul&gt;
+          &lt;li&gt;logo&lt;/li&gt;
+          &lt;li&gt;navigation items&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;backDrop&lt;/li&gt;
+      &lt;li&gt;props.children
+        &lt;ul&gt;
+          &lt;li&gt;burger build control …order button&lt;/li&gt;
+          &lt;li&gt;burger&lt;/li&gt;
+          &lt;li&gt;modal
+ State 
+ingredient （meat * 2, cheese *2）
+purchase :true /false
+price&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;在开始项目之前可以先将 css设定好
+Optional:&lt;/p&gt;
+
+&lt;p&gt;If you still want to eject and manually adjust the Webpack config (as we do it in the new videos - which you don’t need to do if you follow the approach described in the link above), you should take the below comments into account in case your webpack config (after ejecting) doesn’t look the same as it does in my videos:&lt;/p&gt;
+
+&lt;p&gt;After ejecting, we edit a Webpack config file that’s made available by ejecting. This file might look slightly different for you.&lt;/p&gt;
+
+&lt;p&gt;In the video, I’ll look for an entry that starts like this (in the webpack.config.js file):&lt;/p&gt;
+
+&lt;p&gt;{
+  test: /.css$/,
+  …
+}
+and I then edit this entry.&lt;/p&gt;
+
+&lt;p&gt;This entry now looks slightly different. You’ll have to find the following part in your webpack.config.js file:&lt;/p&gt;
+
+&lt;p&gt;{
+  test: cssRegex,
+  exclude: cssModuleRegex,
+  …
+}
+and then edit that entry.&lt;/p&gt;
+
+&lt;p&gt;Finally, it should look like this:&lt;/p&gt;
+
+&lt;p&gt;{
+  test: cssRegex,
+  exclude: cssModuleRegex,
+  use: getStyleLoaders({
+      importLoaders: 1,
+      modules: true,
+      localIdentName: ‘[name]&lt;strong&gt;[local]&lt;/strong&gt;[hash:base64:5]’
+  }),
+}
+You can ignore me editing the webpack.config.prod.js file - with the latest version of create-react-app, ejecting only gives you ONE webpack config file (which you edit as described above).&lt;/p&gt;
+</description>
+        <pubDate>Fri, 11 Sep 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/11/React%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAburger/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/11/React%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAburger/</guid>
+        
+        <category>react</category>
+        
+        <category>self-learning</category>
+        
+        <category>class-based</category>
+        
+        
+      </item>
     
       <item>
         <title> React Native 设备加载 </title>
@@ -206,24 +756,6 @@ export const init = () =&amp;gt; {
 &lt;p&gt;&lt;a href=&quot;http://lbsyun.baidu.com/index.php?title=static&quot; target=&quot;_blank&quot;&gt;百度地图开发者获得静态地图界面&lt;/a&gt;
 原始的教程中是 Google Map 获得 API 但是需要绑定 credit card 以及连接 VPN，这里利用百度地图也可以实现类似功能，就是界面有点难找：）&lt;/p&gt;
 
-&lt;h3 id=&quot;react-语法-小知识点&quot;&gt;React 语法 小知识点&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;export default xxx&lt;/code&gt; 在后面导入的时候是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;import xxx from ''&lt;/code&gt;， 但是在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;export const xxx&lt;/code&gt; 时 后面导入要求 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;import {xxx} from ''&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;ES7中代码编写的特点，不再使用this关键字了
- &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;constructor (){this.property = 'xxx'}&lt;/code&gt;转换为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;property = 'xxx&lt;/code&gt;;
- &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;method () {...}&lt;/code&gt;转换为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;method = () =&amp;gt;{...}&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;...&lt;/code&gt; spread  数组&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const newArray = [...oldArray,1,2]&lt;/code&gt;；Object&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const newObj = {... oldObj, newProp:5}&lt;/code&gt; 如果oldObj也有newProp，新的Obj会覆盖newProp。
- &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;...&lt;/code&gt; rest 针对方法的填充 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;function sortArg(...args){return args.sort()}&lt;/code&gt;。注意，使用…表示创建了新的对象。&lt;/li&gt;
-  &lt;li&gt;destructuring 不创建新对象的抽取 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[a,b] = ['a', 'b']&lt;/code&gt;此时单独拿a或者b都不算创建新的对象，适用于array和obj。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reference&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;primitive&lt;/code&gt;格式，object和array都是reference所以copy之后会联动修改，但是常量不会，因为常量是primitive格式的。解决联动修改的方法是给copy那一方加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;...&lt;/code&gt;
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt; cosnt person = {name:'max'};
- const secondPersion = {...person,name:'min'};
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
 </description>
         <pubDate>Sun, 06 Sep 2020 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2020/09/06/React-Native%E5%AE%9E%E7%8E%B0%E7%9B%B8%E6%9C%BA%E6%89%8B%E6%9C%BA%E5%8A%A0%E8%BD%BD/</link>
