@@ -5,9 +5,610 @@
     <description>季月侣的Blog || About Joy </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 20 Sep 2020 19:21:53 +0800</pubDate>
-    <lastBuildDate>Sun, 20 Sep 2020 19:21:53 +0800</lastBuildDate>
+    <pubDate>Thu, 24 Sep 2020 08:45:51 +0800</pubDate>
+    <lastBuildDate>Thu, 24 Sep 2020 08:45:51 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title> Java并发 </title>
+        <description>&lt;h2 id=&quot;java开发中绕不开的环节并发编程&quot;&gt;Java开发中绕不开的环节，并发编程&lt;/h2&gt;
+&lt;p&gt;新手java开发，已经有一些基于spring开发的经验，但是在实际应用中对Java整个的运行机制还是不了解。&lt;/p&gt;
+&lt;h3 id=&quot;thread-和-runnable&quot;&gt;Thread 和 Runnable&lt;/h3&gt;
+&lt;p&gt;线程创建方法&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;方法1 先有任务对象，再有线程对象。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;public class Test1{
+  public static void main(String[] args){
+    Thread t = new Thread(){
+      @Override
+      public void run(){
+        log.debug(&quot;running&quot;);
+      }
+    };
+    t.setName(&quot;t1&quot;);// 给线程设置名字
+    t.start();
+  }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;用lambda简化方法1&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;new Thread(()-&amp;gt;{
+  log.debug(&quot;running&quot;);
+}, &quot;t1&quot;).start();
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;方法2 先创建线程对象，在里面执行任务。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;public class Test2{
+  public static void main(String[] args){
+   Runnable r = new Runnable(){
+     @Override
+     public void run(){
+       log.debug(&quot;running&quot;);
+     }
+   };
+   Thread t = new Thread(r,&quot;t2&quot;);// t2是给线程设置名字
+   t.start();
+  }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;用lambda简化Runnable&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Runnable r = () -&amp;gt;{
+       log.debug(&quot;running&quot;);
+   };
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;对于第一和第二种，Runnable也是实现对run方法的Override。
+方法1是线程任务合并，方法2是线程任务分开。
+推荐使用方法2，Runnable更容易与线程池等高级API实现结合。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;方法3 FutureTask
+能够接受callable类型参数，任务执行完将内容传给其他线程。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;public class Test3{
+  public static void main(String[] args){
+    FutureTask&amp;lt;Integer&amp;gt; task = new FutureTask&amp;lt;&amp;gt;(new Callable&amp;lt;Integer&amp;gt;(){
+      @Override
+      public Integer call() throws Exception{
+        log.debug(&quot;running&quot;);
+        Thread.sleep(1000);
+        return 100;
+      }
+    });
+    Thread t = new Thread(task,&quot;t3&quot;);// t3是线程名
+    t.start();
+
+    task.get();//使用 等待task返回结果
+}
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;线程交替执行情况&quot;&gt;线程交替执行情况&lt;/h3&gt;
+&lt;p&gt;只有在多核cpu才能利用多种Thread&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;查看进程方法 linux
+    &lt;ul&gt;
+      &lt;li&gt;ps -fe 查看所有进程  后面再加&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;| grep java&lt;/code&gt;查看java进程&lt;/li&gt;
+      &lt;li&gt;ps -fT -p &lt;PID&gt;&lt;/PID&gt;&lt;/li&gt;
+      &lt;li&gt;kill &lt;PID&gt;杀死进程&lt;/PID&gt;&lt;/li&gt;
+      &lt;li&gt;top 查看进行占用百分比 top -H -p &lt;PID&gt; 查看所有进程中的线程信息&lt;/PID&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Java
+    &lt;ul&gt;
+      &lt;li&gt;jps 查看所有Java进程&lt;/li&gt;
+      &lt;li&gt;jstack &lt;PID&gt; 查看线程的 snapshot&lt;/PID&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;jconsole java进程 可以远程监控 针对虚拟机专用&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;线程运行原理&quot;&gt;线程运行原理&lt;/h3&gt;
+&lt;p&gt;JVM  java virtual machine stack 给虚拟机分配空间&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;栈帧信息 frame&lt;/p&gt;
+
+    &lt;p&gt;多线程实现， 线程之间栈帧独立&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;线程上下文切换 Thread Context Switch&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;产生情况&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;从使用Cpu时间片用完&lt;/li&gt;
+  &lt;li&gt;垃圾回收&lt;/li&gt;
+  &lt;li&gt;更高级线程&lt;/li&gt;
+  &lt;li&gt;线程自己调用 sleep yield wait join park synchronized lock&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;在switch的时候需要保证线程状态，程序计数器Program Counter Register 记住下一条指令地址，频繁 Context Switch 影响 性能&lt;/p&gt;
+
+&lt;h3 id=&quot;线程常见方法&quot;&gt;线程常见方法&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;start() 启动新线程 start让线程进入就绪转态，里面代码不会立即执行，每个线程对象start方法只能调用一次&lt;/li&gt;
+  &lt;li&gt;run() 在构造Thread对象时传入 Runnable参数，在线程启动后会调用Runnable中run方法，可以创建Thread子类对象，来覆盖默认行为。&lt;/li&gt;
+  &lt;li&gt;join() 等待线程运行结束&lt;/li&gt;
+  &lt;li&gt;join(long n) 等待线程运行结束,最多等待n秒&lt;/li&gt;
+  &lt;li&gt;getId() 获取线程长整型的id&lt;/li&gt;
+  &lt;li&gt;getName() 获取线程名&lt;/li&gt;
+  &lt;li&gt;getPriority() setPriority() 设置线程优先级&lt;/li&gt;
+  &lt;li&gt;getState() 线程状态 6种&lt;/li&gt;
+  &lt;li&gt;isInterrupted() 判断线程是不是被打断&lt;/li&gt;
+  &lt;li&gt;isAlive() 判断线程是否存活&lt;/li&gt;
+  &lt;li&gt;interrupt() 打断线程&lt;/li&gt;
+  &lt;li&gt;currentThread() static 获取当前线程&lt;/li&gt;
+  &lt;li&gt;sleep(long n) static 当前线程休眠&lt;/li&gt;
+  &lt;li&gt;yield（） static 提示线程调度器让出当前线程&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;详细讲解方法&quot;&gt;详细讲解方法&lt;/h4&gt;
+
+&lt;h5 id=&quot;run-和-start&quot;&gt;run 和 start&lt;/h5&gt;
+
+&lt;p&gt;&lt;strong&gt;start启动线程&lt;/strong&gt;，再由线程调用自己定义的run方法。只能调用1次的start方法。&lt;/p&gt;
+
+&lt;h5 id=&quot;yield-和-sleep&quot;&gt;yield 和 sleep&lt;/h5&gt;
+
+&lt;p&gt;&lt;strong&gt;sleep&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Running到Time Waiting，在哪个线程里被调用，就在哪个线程里休眠。&lt;/li&gt;
+  &lt;li&gt;其他线程可使用interrupt()打断正在睡眠的线程，sleep抛异常。&lt;/li&gt;
+  &lt;li&gt;睡眠结束未必会立即执行&lt;/li&gt;
+  &lt;li&gt;建议使用TimeUnit 的 sleep 代替 Thread.sleep() 提高可读性
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;TimeUnit.SECONDS.sleep(1);//单位换算
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;yield&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Running 到 Runnable，之后执行其他&lt;strong&gt;同优先级&lt;/strong&gt;线程。&lt;/li&gt;
+  &lt;li&gt;具体实现依赖调度器。&lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Mon, 21 Sep 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/21/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/21/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+        
+        <category>java</category>
+        
+        <category>self-learning</category>
+        
+        <category>thread learning</category>
+        
+        
+      </item>
+    
+      <item>
+        <title> Redux详解 </title>
+        <description>&lt;h3 id=&quot;what-is-state&quot;&gt;what is state?&lt;/h3&gt;
+&lt;p&gt;influence what I look in the screen&lt;/p&gt;
+
+&lt;h3 id=&quot;需要了解的action-reducer&quot;&gt;需要了解的Action Reducer&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;reducers: pure function,receive action and update state.&lt;/li&gt;
+  &lt;li&gt;action: predefine information package
+其实Redux不光可以在React中使用，在只有node的情况下，也可以通过设置初始化的state。
+Redux的意义是实现各个component之间参数传递，传统的props如果要传递参数需要写入很多重复代码，Redux相当于一个云数据库，存储了许多state。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;redux中主要组成部分&quot;&gt;Redux中主要组成部分&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reducer 初始化state 绑定action
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const initialState = {
+  counter: 0
+}
+const rootReducer = (state = initialState, action) =&amp;gt; {
+  if (action.type === 'INC_COUNTER') {
+      return {
+          ...state,
+          counter: state.counter + 1
+      };
+  }
+  if (action.type === 'ADD_COUNTER') {
+
+      return {
+          ...state,
+          counter: state.counter + action.value
+      };
+  }
+  return state;
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Store 定义需要保存的对象
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const store = createStore();
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Subscription 确认所有的绑定的action执行之后的结果
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;// 不需要manually called  console.log(store.getState)
+store.subscribe(() =&amp;gt;{
+  console.log('[Subscribtion]', store.getState());// 
+})// 每次dispatch的实现都能通过getState获得
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Dispatching action 对每个action实现的具体内容，type是一定要定义的，利用type来绑定reducer中对state执行怎样的操作
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;store.dispatch({ type: 'INC_COUNTER' })
+store.dispatch({ type: 'ADD_COUNTER', value: 10 }) // 这里就是传递了value作为参数。
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;总结&lt;/strong&gt; reducer通过dispatch定义的action的type对state进行操作，而store是能获得改变之后state的对象，可以通过调用store来获得改变之后的state，subscribe是可以观察到state改变状态的store里的方法。&lt;/p&gt;
+
+&lt;h3 id=&quot;创建react-redux步骤&quot;&gt;创建react-redux步骤&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;在index.js中初始化redux&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;import { createStore } from 'redux';&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;在主界面中定义redux-base.js
+实现代码
+首先要加载属于react的redux
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save react-redux&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;安装时遇到问题 对应最新版本的react-redux安装不支持，需要在package.json中将其版本号换成&lt;strong&gt;5.0.6&lt;/strong&gt;并且对应的react版本应该小于&lt;strong&gt;16.3&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import { Provider } from 'react-redux';
+const store = createStore(reducer)
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在index.js中将&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Provider store={store}&amp;gt;&amp;lt;App /&amp;gt;&amp;lt;/Provider&amp;gt;&lt;/code&gt; 作为Component外层包裹到App中，并且传入定义好的store&lt;/p&gt;
+
+&lt;p&gt;引入connect概念和mapStateToProps()
+connect 是高阶组件，但是其引入方式是&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import {connect} from 'react-redux';
+
+...
+
+export default connect(mapStateToProps,mapDispatchToProps)(XXX);
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;mapstatetoprops-和-mapdispatchtoprops&quot;&gt;mapStateToProps 和 mapDispatchToProps&lt;/h3&gt;
+&lt;p&gt;整体上redux的参数传入机制是依靠这两个来实现&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;mapStateToProps&lt;/strong&gt; 类似于在class component 中定义初始化state&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;state = {
+  counter: 0
+} //正常格式
+
+// 处于class component之外的格式
+const mapStateToProps = state =&amp;gt; {
+    return {
+        ctr: state.counter
+    }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;mapDispatchToProps&lt;/strong&gt; 定义获得的state通过什么type的dispatch&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;在class-component中实现的形式&quot;&gt;在class component中实现的形式&lt;/h5&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;counterChangedHandler = (action, value) =&amp;gt; {
+        switch (action) {
+             case 'inc':
+                this.setState((prevState) =&amp;gt; { return { counter: prevState.counter + 1 })
+      ...
+   
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这两个的使用顺序是固定的，在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;connect(mapStateToProps,mapDispatchToProps)()&lt;/code&gt;如果没有mapStateToProps则要变为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;connect(null,mapDispatchToProps)()&lt;/code&gt;同理，没有mapDispatchToProps就默认connect中只传入一个参数。&lt;/p&gt;
+
+&lt;h4 id=&quot;在class-component外实现的形式&quot;&gt;在class component外实现的形式&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const mapDispatchToProps = dispatch =&amp;gt; {
+    return {
+        onIncreamentCounter: () =&amp;gt; dispatch({type:&quot;INCREMENT&quot;}),
+        onDecrementCounter:() =&amp;gt;dispatch({type:&quot;DECREMENT&quot;}),
+        onAddCounter: () =&amp;gt; dispatch({type:&quot;ADD&quot;, value:5}),
+        onSubtractCounter: () =&amp;gt; dispatch({type:&quot;SUBTRACT&quot;, value:5})
+        
+    };
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;在redux文件中定义的格式&quot;&gt;在redux文件中定义的格式&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const initialState = {
+    counter: 0
+}
+
+const reducer = (state = initialState, action) =&amp;gt; {
+    switch (action.type) {
+        case ('INCREMENT'):
+            return {
+                ...state,
+                counter: state.counter + 1
+            };
+            break;
+        case ('DECREMENT'):
+            return {
+                ...state,
+                counter: state.counter - 1
+            };
+            break;
+
+        case ('ADD'):
+            return {
+                ...state,
+                counter: state.counter + action.value
+            };
+            break;
+
+        case ('SUBTRACT'):
+            return {
+                ...state,
+                counter: state.counter - action.value
+            };
+            break;
+    }
+
+    return state;
+};
+export default reducer;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;redux-传参&quot;&gt;redux 传参&lt;/h3&gt;
+&lt;p&gt;playload作为参数传递于需要的component和reducer之间，对于需要在dispatch中传入参数的函数，可以通过在定义type属性之后添加进行定义。&lt;/p&gt;
+
+&lt;p&gt;如果想要在不同的class component中动态传参其实需要props的配合以及在dispatch中也放入对应参数来传递state。&lt;/p&gt;
+
+&lt;h3 id=&quot;整合多个reducer&quot;&gt;整合多个reducer&lt;/h3&gt;
+&lt;p&gt;首先定义多个reducer为一个模块，在此基础上，在index.js文件中，对其中的引入redux模块代码进行添加
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;import { createStore, combineReducers } from 'redux';&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;在index中写入&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import counterReducer from './store/reducers/counter';
+import resultReducer from './store/reducers/result';
+
+const rootReducer = combineReducers({
+    ctr:counterReducer,
+    res:resultReducer
+})
+const store = createStore(rootReducer)
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;表示告知react 整合这两个模块，并且将新的rootReducer传入到store中，对应到具体的component中，不同的reducer对应的state也改变了，所以需要再重新加上不同的模块，这里定义state的地方在mapStateToProps中，在原先的state的基础上重新加上.新定义的reducer名。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const mapStateToProps = state =&amp;gt; {
+    return {
+        ctr: state.ctr.counter,
+        storeResult: state.res.results
+    }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;什么情况下使用redux来存储state&quot;&gt;什么情况下使用redux来存储state&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;type : local UI 如 hide/show backdrop 不需要&lt;/li&gt;
+  &lt;li&gt;type: persistant state 如 users info 不需要，是存储于server端的&lt;/li&gt;
+  &lt;li&gt;client state: 用户是否登录，需要&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;advance-redux&quot;&gt;Advance Redux&lt;/h2&gt;
+&lt;p&gt;高级redux&lt;/p&gt;
+&lt;h3 id=&quot;add-midware&quot;&gt;Add midware&lt;/h3&gt;
+&lt;p&gt;什么是midware 在reducer和action中间的一段代码或者说是function&lt;/p&gt;
+
+&lt;h4 id=&quot;导入midware&quot;&gt;导入midWare&lt;/h4&gt;
+&lt;p&gt;在index.js中导入&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import { createStore, combineReducers, applyMiddleware } from 'redux';
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;并且写入midware的定义方法&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Mon, 21 Sep 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/21/React-redux/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/21/React-redux/</guid>
+        
+        <category>react</category>
+        
+        <category>self-learning</category>
+        
+        <category>spinner</category>
+        
+        
+      </item>
+    
+      <item>
+        <title> React 页面设置Spinner </title>
+        <description>&lt;h3 id=&quot;实现spinner-也就是页面加载中&quot;&gt;实现Spinner 也就是页面加载中&lt;/h3&gt;
+</description>
+        <pubDate>Sun, 20 Sep 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/20/React-spiner/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/20/React-spiner/</guid>
+        
+        <category>react</category>
+        
+        <category>self-learning</category>
+        
+        <category>spinner</category>
+        
+        
+      </item>
     
       <item>
         <title> React burger 页面axios获得数据库中数据 </title>
@@ -442,7 +1043,7 @@ const AsyncNewPost = asyncComponent(()=&amp;gt; {
  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;constructor (){this.property = 'xxx'}&lt;/code&gt;转换为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;property = 'xxx&lt;/code&gt;;
  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;method () {...}&lt;/code&gt;转换为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;method = () =&amp;gt;{...}&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;...&lt;/code&gt; spread  数组&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const newArray = [...oldArray,1,2]&lt;/code&gt;；Object&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const newObj = {... oldObj, newProp:5}&lt;/code&gt; 如果oldObj也有newProp，新的Obj会覆盖newProp。
- &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;...&lt;/code&gt; rest 针对方法的填充 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;function sortArg(...args){return args.sort()}&lt;/code&gt;。注意，使用…表示创建了新的对象。&lt;/li&gt;
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;...&lt;/code&gt; rest 针对方法的填充 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;function sortArg(...args){return args.sort()}&lt;/code&gt;。注意，使用…表示创建了新的对象。同时对于array concat表示创建新数组，但是push不能创建新数组，所以在redux中能够使用concat的地方就不用push。&lt;/li&gt;
   &lt;li&gt;destructuring 不创建新对象的抽取 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[a,b] = ['a', 'b']&lt;/code&gt;此时单独拿a或者b都不算创建新的对象，适用于array和obj。&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reference&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;primitive&lt;/code&gt;格式，object和array都是reference所以copy之后会联动修改，但是常量不会，因为常量是primitive格式的。解决联动修改的方法是给copy那一方加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;...&lt;/code&gt;
     &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
@@ -451,6 +1052,7 @@ const AsyncNewPost = asyncComponent(()=&amp;gt; {
  const secondPersion = {...person,name:'min'};
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
+  &lt;li&gt;filter 适用于 array 的方法&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h3 id=&quot;react-建立项目以及语法&quot;&gt;React 建立项目以及语法&lt;/h3&gt;
@@ -847,6 +1449,12 @@ const AsyncNewPost = asyncComponent(()=&amp;gt; {
     &lt;p&gt;当然有更加简洁的表达方式，使用useContext 作为function-based 或者定义静态contextType变量再调用实现，详见114。其实类似于redux。&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;h3 id=&quot;react-中小知识点&quot;&gt;React 中小知识点&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;preventDefault 在event事件被加载之前，为了不再request，需要调用这个方法。&lt;/li&gt;
+&lt;/ol&gt;
 
 </description>
         <pubDate>Fri, 11 Sep 2020 00:00:00 +0800</pubDate>
