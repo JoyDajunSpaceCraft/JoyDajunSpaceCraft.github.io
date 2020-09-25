@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ' React 页面设置Spinner '
+title: ' React 页面设置Spinner 以及 form 表单操作 '
 subtitle: 'react practice'
 date: 2020--09-20
 author: 'Joy'

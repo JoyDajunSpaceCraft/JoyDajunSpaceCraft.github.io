@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ' React burger 页面axios获得数据库中数据 '
+title: ' React burger 页面axios以及Router '
 subtitle: 'react practice'
 date: 2020--09-18
 author: 'Joy'
@@ -9,6 +9,8 @@ tags:
   - react
   - self-learning
   - no class basing
+  - axios
+  - router
   - Do not go gentle into that good night.
 ---
 

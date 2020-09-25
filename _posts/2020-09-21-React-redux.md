@@ -241,10 +241,111 @@ const mapStateToProps = state => {
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 ```
 
-并且写入midware的定义方法
+并且写入midware的定义方法(定义在index.js中)
+```
+// 自己创建midware 监视每次dispatch之后state的值
+const logger = store=>{
+    return next =>{
+        return action =>{
+            console.log('[MidWare] Dispatching', action);
+            const result =  next(action);
+            console.log('[Midware] next state', store.getState())
+            return result;
+        }
+    }
+}
 ```
 
+实现midWare注册，在index.js中因为已经导入`applyMiddleware`所以在createStore时多传入参数`applyMiddleware`。
+`const store = createStore(rootReducer, applyMiddleware(logger))`
+
+可以看到`applyMiddleware`传入刚刚定义的midWare，也就是`logger`，**其实可以传入多个midWare**
+
+#### 使用redux dev tools
+google安装插件，打开这个github页面<a href="https://github.com/zalmoxisus/redux-devtools-extension" target="_blank"> redux dev tools</a>
+
+定位到![](/img/advance-redux.jpg)这个位置，修改`rootRedux`
+改变为
 ```
- 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(applyMiddleware(logger )))
+```
+并且在`import redux`的时候加上`compose`， `compose`和`combineReducers`是一个类似用法，将多个enhance聚合。在redux tool中可以看到对应redux数据流。
 
+### 为什么redux需要使用async code
+在action中传入的方法如果需要设置时间属性，比如setTimeout会返回一个Promise，但是redux中不支持使用Promise所以需要在其中调用async
 
+#### 开始实现asynchron code 
++ 首先修改action.js中的内容，原先的action中使为了防止输入出错，所以const export 的大写字母，但现在可以将其和所有的dispatch整合
+
+```
+export const subtract = (value) =>{
+    return {
+        type:SUBTRACT,
+        value:value
+    }
+}
+```
+
+大写的变量变成方法，在mapDispatchToProps的时候return的dispatch就由只能传入`dispatch => ({type:...})`变成`dispatch =>(action.js中定义的各个方法名)`，其实是基本的参数变化。
+
++ 载入**redux thunk**
+`npm install --save redux-thunk`
+在createStore的时候再加上一个midWare
+
+`const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));`
+
+在action中使用setTimeout()包裹住一个dispatch，之后通过主界面调用`storeResult`中的方法实现async的dispatch
+```
+export const saveResult = ( res ) => {
+    return {
+        type: actionTypes.STORE_RESULT,
+        result: res
+    };
+}
+
+export const storeResult = ( res ) => {
+    return dispatch => {
+        setTimeout( () => {
+            dispatch(saveResult(res));
+        }, 2000 );
+    }
+};
+```
+
+#### 使用midWare之后怎样修改代码中的逻辑
+
+ action |reducer
+-- |:--:
+can run Async code| pure Sync code **Only**
+should not prepare the state update too much| core redux concept : reducers update the state
+
+所以需要修改逻辑的代码大都放置在reducer中
+
+#### use action creators 和 getState
+在进行dispatch的async中，可以使用getState
+```
+export const storeResult = ( res ) => {
+    return (dispatch, getState) => {
+        setTimeout( () => {
+            const oldCounter = getState().ctr.counter;
+            dispatch(saveResult(res));
+        }, 2000 );
+    }
+};
+```
+这个可以在进行dispatch之前将原先的state获取，注意加入的getState参数是为了可以获取state，而且要加上对应定义state的reducer在App.js中的注册名。 
+
+### 使用自定义的utility简化reducer中代码
+```
+const updateObject = (oldObject, updatedValues) => {
+    return {
+        ...oldObject,
+        ...updatedValues
+    }
+}
+// 调用时是
+updateObject(state,{counter: state.counter - 1})
+```
+
+action reducer 
