@@ -349,3 +349,6 @@ updateObject(state,{counter: state.counter - 1})
 ```
 
 action reducer 
+
+## 实际应用redux的注意事项
+通过redux来判定页面上哪些内容应该显示，但是有时因为调用的dipatch方法执行没有render快，所以导致时间延迟比如，希望在页面中传入某个在render执行之后就马上执行的dispatch，但是在其后的调用中发现这个dispatch加载比render慢，因为这个dispatch是执行在`componentWillMount`中，但是比render慢，所以无法达到要求，可以通过在上一个界面中执行这个dispatch实现相同效果，不会比render慢。

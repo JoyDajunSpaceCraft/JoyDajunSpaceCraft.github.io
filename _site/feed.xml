@@ -5,8 +5,8 @@
     <description>季月侣的Blog || About Joy </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 25 Sep 2020 08:53:26 +0800</pubDate>
-    <lastBuildDate>Fri, 25 Sep 2020 08:53:26 +0800</lastBuildDate>
+    <pubDate>Sun, 27 Sep 2020 16:05:31 +0800</pubDate>
+    <lastBuildDate>Sun, 27 Sep 2020 16:05:31 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -743,6 +743,9 @@ updateObject(state,{counter: state.counter - 1})
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;action reducer&lt;/p&gt;
+
+&lt;h2 id=&quot;实际应用redux的注意事项&quot;&gt;实际应用redux的注意事项&lt;/h2&gt;
+&lt;p&gt;通过redux来判定页面上哪些内容应该显示，但是有时因为调用的dipatch方法执行没有render快，所以导致时间延迟比如，希望在页面中传入某个在render执行之后就马上执行的dispatch，但是在其后的调用中发现这个dispatch加载比render慢，因为这个dispatch是执行在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentWillMount&lt;/code&gt;中，但是比render慢，所以无法达到要求，可以通过在上一个界面中执行这个dispatch实现相同效果，不会比render慢。&lt;/p&gt;
 </description>
         <pubDate>Mon, 21 Sep 2020 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2020/09/21/React-redux/</link>
@@ -758,8 +761,210 @@ updateObject(state,{counter: state.counter - 1})
       </item>
     
       <item>
-        <title> React 页面设置Spinner 以及 form 表单操作 </title>
-        <description>&lt;h3 id=&quot;实现spinner-也就是页面加载中&quot;&gt;实现Spinner 也就是页面加载中&lt;/h3&gt;
+        <title> React 页面设置Spinner、form 表单操作、Authentication </title>
+        <description>&lt;h1 id=&quot;实现spinner-也就是页面加载中&quot;&gt;实现Spinner 也就是页面加载中&lt;/h1&gt;
+
+&lt;h1 id=&quot;实现form传递参数到后端数据库&quot;&gt;实现form传递参数到后端数据库&lt;/h1&gt;
+
+&lt;p&gt;首先实现的form表单，需要了解的知识是，在react中例如&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;input/&amp;gt;&lt;/code&gt;这种HTML参数可以通过传入react object类型获得属性。&lt;/p&gt;
+
+&lt;h3 id=&quot;已经定义了state中能够传入到form表单中的数据类型&quot;&gt;已经定义了state中能够传入到form表单中的数据类型&lt;/h3&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;state = {
+  orderForm: {
+    name: {
+        elementType: 'input',
+        elementConfig: {
+            type: 'text',
+            placeholder: 'Your name'
+        },
+        value: '',
+        validation: {
+            required: true
+        },
+        valid: false,
+        touched: false// 表示用户有没有点击页面的order按钮
+    },
+  }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;其中&lt;strong&gt;elementType&lt;/strong&gt;是表示是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;input/&amp;gt;&lt;/code&gt;、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;textarea/&amp;gt;&lt;/code&gt;还是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;select&amp;gt;&lt;/code&gt;作为自定义的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Input/&amp;gt;&lt;/code&gt;中的Html标签。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;elementConfig&lt;/strong&gt;是一个object的数据类型，传入到自定义的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Input/&amp;gt;&lt;/code&gt;中
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&amp;lt;input 
+{...props.elementConfig}
+value={props.value}
+onChange={props.changed}
+/&amp;gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;这个input里面的value和onChange都是通过form表单中的props传输的。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;表单监听的target.value&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;validation&lt;/strong&gt;和&lt;strong&gt;valid&lt;/strong&gt;通过function包裹的输入检查，可以设置长度大小，正则表达等设置&lt;strong&gt;validation&lt;/strong&gt;，同时通过确认其正确性判断是不是正确的输入将&lt;strong&gt;valid&lt;/strong&gt;设置为true。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;touched&lt;/strong&gt;如果用户已经按下确认按钮，需要将其没有输入正确的地方标红。这个touched就是判断用户有没有按下确认提交。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;自定义的检查函数&quot;&gt;自定义的检查函数&lt;/h3&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;checkValidity(value, rules) {
+  // return boolean 确认返回validation
+  let isValid = true; // 开始时设置为true
+  // 每个情况都要判断是否是isValid 防止因为一个input需要判断多个的情况下始终为true 
+
+  if (rules.required) {
+      isValid = value.trim() !== '' &amp;amp;&amp;amp; isValid;//表示非空
+  };
+  if (rules.minLength) {
+      isValid = value.length &amp;gt;= rules.minLength &amp;amp;&amp;amp; isValid;// 表示最小输入长度
+  };
+  if (rules.maxLength) {
+      isValid = value.length &amp;lt;= rules.maxLength &amp;amp;&amp;amp; isValid;// 表示最小输入长度
+  };
+  return isValid;
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;两个传入参数&lt;strong&gt;value,rules&lt;/strong&gt;分别表示用户写入每个item的值和前面的state中定义的validation的类型。&lt;/li&gt;
+  &lt;li&gt;这个函数返回的是确认用户是否输入正确，state.valid来源于此。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;在render中实现以及监听函数&quot;&gt;在render中实现以及监听函数&lt;/h3&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const formElementsArray = [];
+for (let key in this.state.orderForm) {
+    // key [&quot;name&quot;, &quot;street&quot;, &quot;zipcode&quot;...]
+    formElementsArray.push({
+      id: key,
+      config: this.state.orderForm[key]// 这里的config所包含的就是name等右边的内容
+    })
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这段代码的作用是，给每个需要用户输入的item一个id，也就是这里的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;formElementsArray.id&lt;/code&gt;，这样做的好处是，一个eventHandler可以监听任意的一种用户修改。&lt;/p&gt;
+
+&lt;p&gt;form 表单定义可以通过以下代码来渲染于页面&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;{formElementsArray.map(formElement =&amp;gt; (
+    &amp;lt;Input
+        key={formElement.id}
+        elementType={formElement.config.elementType}
+        elementConfig={formElement.config.elementConfig}
+        value={formElement.config.value}
+        invalid={!formElement.config.valid}
+        shouldValidate={formElement.config.validation}// 区分是select还是需要填写的地方
+        touched={formElement.config.touched}
+        changed={(event) =&amp;gt; this.inputChangeHandler(event, formElement.id)}
+    /&amp;gt;
+))}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在用户每一次点击一行决定输入时可以通过自定义&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Input/&amp;gt;&lt;/code&gt;中对应传入的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;onChange={props.changed}&lt;/code&gt;绑定一个handler。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;inputChangeHandler = (event, inputIdentifier) =&amp;gt; {
+    // 用户每次输入到input中的 内容可以通过event.target.value即使获得
+    // 所谓的二次绑定，就是指，onChange指向的函数 绑定event获得用户实时输入的值，同时在onChange中调用这个函数时加上需要确认的identifier
+    // console.log(event.target.value);
+    //event.target 属性返回哪个 DOM 元素触发了事件。
+    const updatedOrderForm = {
+        ...this.state.orderForm // 不是深拷贝 state会变化 
+        //因为只创建了state.orderForm的clone但是没创建其中 {name:...}等的clone，其实还是都指向一个地方
+        // 为了创建深拷贝，对updatedOrderForm中的内容再次拷贝
+    };
+    const updatedFormElement = {
+        ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);// 判断输入值是否为空
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    updatedFormElement.touched = true;// 表示用户已经输入了某些地方
+    let formIsValid = true;
+    for (let ele in updatedOrderForm) {
+        formIsValid = updatedOrderForm[ele].valid &amp;amp;&amp;amp; formIsValid;
+    }
+    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;实现authentication&quot;&gt;实现Authentication&lt;/h1&gt;
+
+&lt;p&gt;实际上的auth传输形式，本地用户对server端发送请求，在server接收请求后给本地用户一个token，这个token可以存储于localStorage中，通过token，server可以确认用户信息。&lt;/p&gt;
 </description>
         <pubDate>Sun, 20 Sep 2020 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2020/09/20/React-spiner/</link>
