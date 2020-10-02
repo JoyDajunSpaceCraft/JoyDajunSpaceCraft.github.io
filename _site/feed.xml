@@ -5,9 +5,317 @@
     <description>季月侣的Blog || About Joy </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 27 Sep 2020 16:05:31 +0800</pubDate>
-    <lastBuildDate>Sun, 27 Sep 2020 16:05:31 +0800</lastBuildDate>
+    <pubDate>Fri, 02 Oct 2020 22:55:16 +0800</pubDate>
+    <lastBuildDate>Fri, 02 Oct 2020 22:55:16 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title> webpack </title>
+        <description>&lt;p&gt;&lt;strong&gt;申明 create-react-app已经足够日常使用，webpack配置较为麻烦，实力劝退，而且版本更新换代较快，不建议使用。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;how-it-work&quot;&gt;How it work&lt;/h2&gt;
+&lt;p&gt;entry(app.js)Multiple entry points are posible —&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;—&amp;gt; Loaders(babel-loader,css-loader) File type dependent transformations&lt;/p&gt;
+
+&lt;p&gt;—&amp;gt; Plugins(uglify)Global transformations&lt;/p&gt;
+
+&lt;p&gt;—&amp;gt; output(bundle.js) Correctly ordered concatenated output&lt;/p&gt;
+
+&lt;h2 id=&quot;basic-workflow-requirements-create-react-app帮我们做的事情&quot;&gt;Basic Workflow Requirements create-react-app帮我们做的事情&lt;/h2&gt;
+
+&lt;p&gt;compile js code&lt;/p&gt;
+
+&lt;p&gt;handle jsx&lt;/p&gt;
+
+&lt;p&gt;css auto prefix&lt;/p&gt;
+
+&lt;p&gt;support image support&lt;/p&gt;
+
+&lt;p&gt;optimize code&lt;/p&gt;
+
+&lt;h2 id=&quot;创建新的文件夹并在其下运行&quot;&gt;创建新的文件夹并在其下运行&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm init&lt;/code&gt;一路回车&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev webpack webpack-dev-server&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;在总目录下建立src目录&lt;/li&gt;
+  &lt;li&gt;npm install –save 需要的东西&lt;/li&gt;
+  &lt;li&gt;在package.json文件中的script下配置
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;start&quot;:&quot;webpack-dev-server&quot;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;导入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;webpack-cli&lt;/code&gt;使用的是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev webpack-cli&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;在package.json文件同级创建文件&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;webpack.config.js&lt;/code&gt;告知webpack读取这个文件。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://webpack.js.org/concepts/&quot; target=&quot;_blank&quot;&gt;webpack文档&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;写入webpackconfigjs文件&quot;&gt;写入webpack.config.js文件&lt;/h3&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const path= require('path');
+
+module.exports={
+    mode: 'devlopment',//设置之后不会自动压缩代码
+    entry:'./src/index.js',
+    output:{
+        // path 的名字表示当前页面的名字
+        path:path.resolve(__dirname,'react-webpack'),
+        filename: 'bundle.js',
+        publicPath: ''
+    },
+    devtool: 'cheap-module-source-map'
+};
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;加入-babel&quot;&gt;加入 babel&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev @babel/core @babel/preset-env @babel/preset-react @babel/preset-stage-2 babel-loader @babel/plugin-proposal-class-properties&lt;/code&gt;需要初始化以上&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;在devtool下面加上文件读取的rules
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt; module:{
+   rules:[
+     {
+       // test告知以js为结尾都会遵循以下的rule
+       test:/\.js$/,
+       // loader告知以什么形式加载
+       loader:'babel-loader',
+       // 不读取哪些内容
+       exclude:/node_modules/
+     }
+   ]
+ }
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;在package.json文件同级加上文件&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.babelrc&lt;/code&gt;babel自动读取这个文件，写入json文件
+    &lt;ul&gt;
+      &lt;li&gt;presets是babel给的browser的屏幕宽度等参数&lt;/li&gt;
+      &lt;li&gt;plugins是写入什么形式babel会帮助
+        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;{
+ &quot;presets&quot;: [
+   [
+       &quot;@babel/preset-env&quot;,
+       {
+           &quot;targets&quot;: {
+               &quot;browsers&quot;: [
+                   &quot;&amp;gt;1%&quot;,
+                   &quot;last 2 version&quot;
+               ]
+           }
+       }
+   ],
+   &quot;@babel/preset-react&quot;
+ ],
+ &quot;plugins&quot;: [
+   &quot;@babel/plugin-proposal-class-properties&quot;
+ ]
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;加载读取css文件的控件&quot;&gt;加载读取css文件的控件&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev style-loader css-loader file-loader&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;写入能够读取css的rules，在以上定义的modules内&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;{
+  test:/\.css$/,
+  exclude:/node_modules/,
+  use: [
+    {loader: 'style-loader'},
+    {loader: 'css-loader', options:{
+        importLoaders: 1,
+        modules: {
+            localIdentName: '[name]__[local]__[hash:base64:5]'
+        }
+    }}
+  ] 
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev postcss-loader&lt;/code&gt; 这个控件可以将react中的css以oldHtml的语法加入到页面中。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev autoprefixer&lt;/code&gt;是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;postcss-loader&lt;/code&gt;控件中options需要载入的控件，这里加载时需要在页面中先定义&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autoprefixer&lt;/code&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const autoprefixer = require('autoprefixer');&lt;/code&gt;类似于定义&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;path&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;use: [
+  { loader: 'style-loader' },
+  {
+    loader: 'css-loader',
+    options: {
+      importLoaders: 1,
+      modules: {
+        localIdentName: '[name]__[local]__[hash:base64:5]'
+      }
+    }
+  },
+  {
+    loader:'postcss-loader',options:{
+      ident:'postcss',
+      plugins: ()=&amp;gt;[autoprefixer()]
+    }
+  }
+]
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autoprefixer&lt;/code&gt;控件是告知页面是以什么样的形式打开，需要在package.json文件中&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;license&quot;&lt;/code&gt;同级中写入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;browserslist&quot;: &quot;&amp;gt;1%,last 2 version&quot;&lt;/code&gt;，这里的&lt;strong&gt;browserlist&lt;/strong&gt;对应了&lt;strong&gt;babelrc&lt;/strong&gt;中的&lt;strong&gt;browsers&lt;/strong&gt;属性&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;页面加载image&quot;&gt;页面加载image&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev url-loader&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;写入rules&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;{
+  test:/\.(png|jpe?g|gif)$/,
+  //loader ?之后的内容表示 照片存储的位置[name]是照片名,[ext]表示扩展名 extension
+  loader:'url-loader?limit=8000&amp;amp;name=images/[name].[ext]'
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;导入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev html-webpack-plugin&lt;/code&gt;将style写入bundle.js，同时在config文件中定义
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const HtmlWbpackPlugin = require('html-webpack-plugin');
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;方便后面调用。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;在config文件中，module之后定义一个plugins，告诉webpack要以index.html中的语法作为基本语法&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;plugins:[
+        new HtmlWbpackPlugin({
+            template: __dirname + './src/index.html',
+            filename: 'index.html',
+            inject:'body'
+        })
+    ]
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 30 Sep 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/30/Webpack/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/30/Webpack/</guid>
+        
+        <category>wepack</category>
+        
+        <category>self-learning</category>
+        
+        <category>完整工作流</category>
+        
+        
+      </item>
+    
+      <item>
+        <title> Machine Learning math </title>
+        <description>&lt;h2 id=&quot;降维-dimensionalily-reduce&quot;&gt;降维 Dimensionalily Reduce&lt;/h2&gt;
+&lt;p&gt;首先引入过拟合概念 overfitting ，解决方法有三种，&lt;/p&gt;
+</description>
+        <pubDate>Wed, 30 Sep 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0ML/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0ML/</guid>
+        
+        <category>math</category>
+        
+        <category>self-learning</category>
+        
+        <category>machine learning</category>
+        
+        
+      </item>
     
       <item>
         <title> Java并发 </title>
@@ -721,7 +1029,7 @@ export const storeResult = ( res ) =&amp;gt; {
     }
 };
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;这个可以在进行dispatch之前将原先的state获取，注意加入的getState参数是为了可以获取state，而且要加上对应定义state的reducer在App.js中的注册名。&lt;/p&gt;
+&lt;p&gt;这个可以在进行dispatch之前将原先的state获取，注意加入的getState参数是为了可以获取state，而且要加上对应定义state的reducer在App.js中的注册名。 &lt;strong&gt;注意，不推荐多次使用getState获得redux，尽量使用传参&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;使用自定义的utility简化reducer中代码&quot;&gt;使用自定义的utility简化reducer中代码&lt;/h3&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
@@ -1754,7 +2062,7 @@ const AsyncNewPost = asyncComponent(()=&amp;gt; {
     &lt;p&gt;怎样防止错误的 setState&lt;/p&gt;
 
     &lt;p&gt;sync情况，多个setState同时改变state导致state不能保证哪个是最新的，解决方式
- this.setState((prevState, props)={return {新state的修改}})&lt;/p&gt;
+ this.setState((prevState, props)=&amp;gt;{return {新state的修改}})&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;更新PropsType&lt;/p&gt;
@@ -1829,6 +2137,182 @@ const AsyncNewPost = asyncComponent(()=&amp;gt; {
   &lt;li&gt;preventDefault 在event事件被加载之前，为了不再request，需要调用这个方法。&lt;/li&gt;
 &lt;/ol&gt;
 
+&lt;h3 id=&quot;react-test&quot;&gt;React test&lt;/h3&gt;
+&lt;p&gt;为了实现单元测试需要导入&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;npm install --save enzyme react-test-renderer enzyme-adapter-react-16
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;使用形式
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;shallow&lt;/code&gt;表示形式是将测试行文设置为浅层的render不涉及其中全部component的render&lt;/p&gt;
+
+&lt;p&gt;如何开启test模式&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm test&lt;/code&gt;， 如果是第一次开启需要删除App.test.js再执行。&lt;/p&gt;
+
+&lt;p&gt;创建的test文件名是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NavigationItems.test.js&lt;/code&gt;来执行，文件中代码&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import React from 'react';
+
+import { configure, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+configure({ adapter: new Adapter() });// connect enzyme
+import NavigationItems from './NavigationItems';
+import NavigationItem from './NavigationItem/NavigationItem';
+
+describe('&amp;lt;NavigationItems /&amp;gt;', () =&amp;gt; {
+    it('should render two &amp;lt;NavigationItem /&amp;gt; if not authenticated', () =&amp;gt; {
+        const wrapper = shallow(&amp;lt;NavigationItems /&amp;gt;);
+        // 确认wrapper中是否含有某个确定的content
+        // 这里不再是JS element 而是 export func
+        expect(wrapper.find(NavigationItem)).toHaveLength(2);// 表示希望最后传回2个
+    });
+});
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;导入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;enzyme&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;react&lt;/code&gt; 通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;configure&lt;/code&gt;连接&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;enzyme&lt;/code&gt;，再通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;describe&lt;/code&gt;确认需要测试的component，以及通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;it&lt;/code&gt;方法传入两个参数，一个是描述测试，另一个是测试的实现匿名方法，用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;except&lt;/code&gt;实现，传入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;except&lt;/code&gt;中的是用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;shallow&lt;/code&gt;定义的探寻Component中的content和里面会实现的方法。&lt;/p&gt;
+
+&lt;p&gt;其中&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;find&lt;/code&gt;关键字实现查找有几个component被调用，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;toHaveLength&lt;/code&gt;是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jest&lt;/code&gt;中的方法表示返回component的个数。&lt;/p&gt;
+
+&lt;p&gt;可以通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;contains&lt;/code&gt;关键字找打是不是存在一个node&lt;/p&gt;
+
+&lt;p&gt;在终端中显示为
+&lt;img src=&quot;/img/react-test.jpg&quot; alt=&quot;&quot; /&gt;
+其中Test Suites 是describe function， Tests 整个是 it方法实现&lt;/p&gt;
+
+&lt;h4 id=&quot;实现多个test&quot;&gt;实现多个test&lt;/h4&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt; let wrapper;
+    beforeEach(()=&amp;gt;{ 
+        wrapper = shallow(&amp;lt;NavigationItems /&amp;gt;);
+    })
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;在describe第二个参数中传入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;beforeEach&lt;/code&gt;表示每次执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;it&lt;/code&gt;之前执行，如果要加入参数可以使用
+` wrapper.setProps({isAuth:true})&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;中的&lt;/code&gt;setProps({})`包裹需要添加的参数&lt;/p&gt;
+
+&lt;h4 id=&quot;实现component测试是将component之前加上const&quot;&gt;实现component测试是将component之前加上const&lt;/h4&gt;
+&lt;h4 id=&quot;实现redux测试&quot;&gt;实现redux测试&lt;/h4&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import reducer from './auth';
+import * as actionTypes from '../actions/actionTypes';
+
+describe('auth reducer', () =&amp;gt; {
+    it('it should return initial state', () =&amp;gt; {
+        expect(reducer(undefined, {})).toEqual({
+            token: null,
+            userId: null,
+            error: null,
+            loading: false,
+            authRedirectPath: '/'
+        })
+    })
+    it('it should store token upon login ', () =&amp;gt; {
+        expect(reducer({
+            token: null,
+            userId: null,
+            error: null,
+            loading: false,
+            authRedirectPath: '/'
+        }, {
+            type: actionTypes.AUTH_SUCCESS,
+            idToken: 'some-token',
+            userId: 'some-id'
+        })).toEqual({
+            token: 'some-token',
+            userId: 'some-id',
+            error: null,
+            loading: false,
+            authRedirectPath: '/'})
+    })
+})
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;部署到web&quot;&gt;部署到web&lt;/h3&gt;
+&lt;p&gt;利用firebase部署&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;steps&lt;/th&gt;
+      &lt;th&gt;example&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;check base path&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Router basename=&quot;/&quot;&amp;gt;&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;build project&lt;/td&gt;
+      &lt;td&gt;npm run build&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;server must ALWAYS serve index.html (also for 404 case)&lt;/td&gt;
+      &lt;td&gt;ensure router&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;upload static we page&lt;/td&gt;
+      &lt;td&gt;in build folder when using create-react-app&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm run build&lt;/code&gt; 产生build文件夹&lt;/li&gt;
+  &lt;li&gt;利用firebase中的hosting
+    &lt;ol&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install -g firebase-tools&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;firebase login&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;firebase init&lt;/code&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Fri, 11 Sep 2020 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2020/09/11/React%E7%AC%94%E8%AE%B0/</link>

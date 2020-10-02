@@ -334,7 +334,7 @@ export const storeResult = ( res ) => {
     }
 };
 ```
-这个可以在进行dispatch之前将原先的state获取，注意加入的getState参数是为了可以获取state，而且要加上对应定义state的reducer在App.js中的注册名。 
+这个可以在进行dispatch之前将原先的state获取，注意加入的getState参数是为了可以获取state，而且要加上对应定义state的reducer在App.js中的注册名。 **注意，不推荐多次使用getState获得redux，尽量使用传参**
 
 ### 使用自定义的utility简化reducer中代码
 ```
