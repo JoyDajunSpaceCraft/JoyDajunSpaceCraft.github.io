@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ' React burger 页面axios以及Router '
+title: ' React burger 页面axios、Router '
 subtitle: 'react practice'
 date: 2020--09-18
 author: 'Joy'
@@ -181,7 +181,8 @@ componentDidMount(){
 
 #### 如何实现每次加载页面能够获得最近的一个router页面的信息
 
-    在之前使用了Link，表示component之间不重新渲染页面、不重新加载state后的传参魔法，Link到的component中props中有match等详细参数，表示上一个component的信息，但是对于不在route中的component来说，想要获得离其最近的router中的参数需要调用高阶函数(higher order component)，也就是在`export default XX`中对XX进行包裹的函数，其实相当于Aux，通过props.children传递参数，使用方式
+
+在之前使用了Link，表示component之间不重新渲染页面、不重新加载state后的传参魔法，Link到的component中props中有match等详细参数，表示上一个component的信息，但是对于不在route中的component来说，想要获得离其最近的router中的参数需要调用高阶函数(higher order component)，也就是在`export default XX`中对XX进行包裹的函数，其实相当于Aux，通过props.children传递参数，使用方式
 
 ```
 import { withRouter } from 'react-router-dom';
@@ -299,13 +300,144 @@ const Posts = React.lazy(()=> import('Posts位置'))
     </Suspense>)}/>
 ```
 
+### 使用Next.js帮助自动配置router
+以上的router其实再写的过程中会有冗余感，next.js是一个基于react的路径配置<a href="https://nextjs.frontendx.cn/docs" target="_blank">next.js中文文档</a>
+<a href="https://nextjs.org/learn/basics/create-nextjs-app" target="_blank">官方文档</a>
+
+1. `npm install `
+2. 修改package.json文件中scripts
+3. 写入基本代码
+4. 运行`npm run dev`
+
+#### automatic code spilting 自动跳转
+```
+import React from 'react';
+import Link from 'next/link';
+import Router from 'next/router';
+
+const indexPage = () => (
+    <div>
+        <h1>the main page</h1>
+        <p>Go to <Link href="/auth">Auth</Link></p>
+        <button onClick={() => Router.push("/auth")}> got to auth</button>
+    </div> 
+)
+export default indexPage;
+```
+点击界面中的`Link` 包裹或者`button`就会实现页面跳转，相比于router简便。
+
+**在一个页面上加载的另外地方的component会自动在跳转时加载**
+
+#### 使用css
+next.js中可以使用style和之前使用的radius或者classes导入作为css传递，新的css使用方法是
+```
+const user = (props) => (
+    <div>
+        <h1>{props.name}</h1>
+        <p>{props.age}</p>
+        <style jsx>{`
+            div {
+                border:1px solid #eee;
+                bosx-shadow:0 2px 3px #eee;
+                padding:20px;
+                text-align:center;
+            }
+        `}
+        </style>
+    </div>
+);
+
+```
+#### 处理error 404 界面
+需要定义文件名为`_error.js`的错误处理文件
+```
+const errorPage = () => (
+    <div>
+        <h1>something went wrong </h1>
+        <p>Try <Link href="/">go back</Link></p>
+    </div> 
+)
+export default errorPage;
+```
+#### next.js原理部分
+以生命周期举例，next.js是在server端的加载，只有其child被点击之后才会开始加载
 
 
+### react Animation 页面美化相关
+在Burger中的modal的作用就是显示一种美化之后的模态对话框。
 
+#### 页面动态美化，使页面能够显示一种modal加载出来是弹跳的状态。
 
+利用`@keyframes`表示多少百分比的时间显示的透明度和下降深度，transform:表示开始位置是页面正上方，这里的相对Y是中心。这里的openModal功能是modal初始化载入，透明度由0变为1，再之后的closeModal是关闭modal。
+```
+@keyframes openModal{
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(90%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
+@keyframes closeModal{
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(60%);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+```
 
+以定义的`@keyframes`名字为属性，在css文件中导入，对应的没有动态弹跳形式的原始css，注意animation的参数，首先是`@keyframes`名字、加载到指定位置的秒数、什么形式加载、加载后是否回到初始位置（也就是`forwards`）如果没有`forwards`，会在弹跳之后变为0%时状态。
+```
+.ModalOpen{
+    /* display: block;
+    opacity: 1;
+    transform: translateY(0); */
+    animation: openModal 0.4s ease-out forwards;
+}
+.ModalClose{
+    /* display: none; 
+    opacity: 0;
+    transform: translateY(-100%); */
+    animation: closeModal 0.4s ease-out forwards;
+}
+```
 
+#### css加载在react遇到的问题
+
+因为加载顺序，在弹跳界面本来是要做同样的弹跳形式返回到原始界面，但是因为display执行顺序，所以不会显示这样界面，引入<a href="https://reactcommunity.org/react-transition-group/" target="_blank">**reactjs/react-transition-group**组件</a>
+
+`npm install react-transition-group --save`导入
+
+分为四个状态
+There are 4 main states a Transition can be in:
+
+'entering'
+
+'entered'
+
+'exiting'
+
+'exited'
+
+解决方法就是在exiting和exited之间切换`<Transition></Transition>`实现css，具体的实现方式可以看官方文档
+<a href="https://reactcommunity.org/react-transition-group/transition" target="_blank">Transition</a>
+
+这里注意在载入Transition时会因为react-redux版本冲突加载错误，需要将react设置为16.3以上版本。
 
 
 

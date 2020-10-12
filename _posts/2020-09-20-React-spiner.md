@@ -13,6 +13,7 @@ tags:
 
 
 # 实现Spinner 也就是页面加载中
+google `css spinner`
 
 # 实现form传递参数到后端数据库
 
@@ -110,7 +111,7 @@ form 表单定义可以通过以下代码来渲染于页面
 ```
 inputChangeHandler = (event, inputIdentifier) => {
     // 用户每次输入到input中的 内容可以通过event.target.value即使获得
-    // 所谓的二次绑定，就是指，onChange指向的函数 绑定event获得用户实时输入的值，同时在onChange中调用这个函数时加上需要确认的identifier
+    // 所谓的二次绑定(two way binding)，就是指，onChange指向的函数 绑定event获得用户实时输入的值，同时在onChange中调用这个函数时加上需要确认的identifier
     // console.log(event.target.value);
     //event.target 属性返回哪个 DOM 元素触发了事件。
     const updatedOrderForm = {

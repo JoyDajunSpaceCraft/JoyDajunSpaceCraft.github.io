@@ -8,7 +8,8 @@ header-img: 'img/about-bg3.jpg'
 tags:
   - react
   - self-learning
-  - spinner
+  - saga
+  - redux
 ---
 
 
@@ -350,5 +351,112 @@ updateObject(state,{counter: state.counter - 1})
 
 action reducer 
 
-## 实际应用redux的注意事项
+### 实际应用redux的注意事项
 通过redux来判定页面上哪些内容应该显示，但是有时因为调用的dipatch方法执行没有render快，所以导致时间延迟比如，希望在页面中传入某个在render执行之后就马上执行的dispatch，但是在其后的调用中发现这个dispatch加载比render慢，因为这个dispatch是执行在`componentWillMount`中，但是比render慢，所以无法达到要求，可以通过在上一个界面中执行这个dispatch实现相同效果，不会比render慢。
+
+
+### Saga 使用
+redux-saga是帮助旧版的react的async的action做出监听， handle all side effection on action, don't directly manipulate the redux store具体的实现步骤如下
+### 在store文件夹下创建saga文件夹匹配/auth.js
+
+**创建Generater**也就是`function*`，这里是为了在logout时清除localStorage。
+
+在actions/auth.js的logout中的原始code是
+
+```
+export const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationDate');
+    localStorage.removeItem('userId')
+    return {
+        type: actionTypes.AUTH_LOGOUT,
+    }
+}
+```
+
+在经过saga时变为
+```
+import { put } from 'redux-saga/effects'; // dispatch new action 
+import axios from 'axios';
+export function* logoutSaga(action) {
+    // generate
+    yield localStorage.removeItem('token');
+    yield localStorage.removeItem('expirationDate');
+    yield localStorage.removeItem('userId');
+    put({ type: actionTypes.AUTH_LOGOUT})
+}
+```
+
++ put表示dispatch新action，注意这个put如果要dispatch action 中的function时需要加上()表示实现这个function eg.`put(actions.logout())` 
++ yield表示只有在这一步执行完成之后下一步才开始执行
++ yield + put 想当于 async 的 dispatch
++ 此外`redux-saga/effects`还有属性 delay传入的是时间，表示经过多长时间之后才执行yield之后的code，具体使用形式
+`yield delay(action.expirationTime);`
+**delay是millionsecond所以需要注意在axios中expireIn是second**
+
++ `redux-saga/effects`有call 属性，使generator更加可测试，如原先的删除localStorage
+`yield localStorage.removeItem('userId');`通过 call 可以变成`yield call ([localStorage, "removeItem"],"userId")`
++ `redux-saga/effects`有all 属性使用时减少`yield`使用
+```
+yield takeEvery(actionTypes.AUTH_INITITATE_LOGOUT, logoutSaga);
+yield takeEvery(actionTypes.AUTH_CHECK_TIMEOUT, checkoutTimeoutSaga);
+yield takeEvery(actionTypes.AUTH_USER, authUserSaga);
+yield takeEvery(actionTypes.AUTH_CHECK_STATE, authCheckStateSaga);
+```
+在all属性下转换为
+```
+yield all([
+    takeEvery(actionTypes.AUTH_INITITATE_LOGOUT, logoutSaga),
+    takeEvery(actionTypes.AUTH_CHECK_TIMEOUT, checkoutTimeoutSaga),
+    takeEvery(actionTypes.AUTH_USER, authUserSaga),
+    takeEvery(actionTypes.AUTH_CHECK_STATE, authCheckStateSaga)
+])
+```
+可以对几个generator simultanously
++ `redux-saga/effects`有takeLatest属性，表示只获取最新的saga而不是每一次saga都要检测到。
++ 更多API详见<a href="https://redux-saga.js.org/" target="_blank">redux-saga</a>
+
+
+### 配置saga
+
+将创建好的saga配置入已经弄好的action中，此项目在在index.js中定义了action
+
+```
+import createSagaMiddleware from 'redux-saga';
+import { logoutSaga } from './store/sagas/auth';
+```
+
+register saga,在原有的thunk midware基础上加上了sagaMiddleware并且注册了sagaMiddleware的run
+```
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
+    applyMiddleware(thunk, sagaMiddleware)
+));
+sagaMiddleware.run(logoutSaga)
+```
+
+### 监听action
+ 因为已经出现了logout这样的方法并且执行，可能会出现执行重复的情况，所以利用saga的特性实现对logout这个action的监听。在此之前，将原先的actions/auth.js中的logout中的return `actionType`变为`AUTH_INITITATE_LOGOUT`，**通过绑定在saga中定义的Generate和action实现的`actionTypes.AUTH_CHECK_TIMEOUT`实现绑定。**
+
+建立sagas/index.js文件夹保存对saga的监听
+```
+import {takeEvery} from 'redux-saga/effects'; // listen certain action 
+
+import * as actionTypes from '../actions/actionTypes';
+import {logoutSaga} from './auth';
+
+export  function* watchAuth () {
+    yield takeEvery(actionTypes.AUTH_INITITATE_LOGOUT, logoutSaga);// 每次执行这个generation都会监听AUTH_INITITATE_LOGOUT
+}
+```
+每次执行这个generation都会监听`AUTH_INITITATE_LOGOUT`从而实现由AUTH_INITITATE_LOGOUT到AUTH_LOGOUT的绑定。
+
+
+同时在index注册时将`sagaMiddleware.run(logoutSaga)`变为`sagaMiddleware.run(watchAuth)`
+
+**注意，在注册saga的地方可以定义多个sagaMiddleware**
+
++ `takeEvery`是能够监听每一次saga执行的控件，每次点击saga
+
+### 什么时候应该使用saga
+redux本质是创建一个store保存component中共有的数据，定时删除localStorage和从服务器获取数据这样的要求其实是redux的side effect，所以要对这样的方法做处理就引入Saga。
