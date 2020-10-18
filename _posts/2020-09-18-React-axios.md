@@ -132,7 +132,8 @@ route是react-router-dom中的实现方法，通过在App.js中引入`import { B
   + exact: 表示path中的名称不是模糊的，如果没有exact那么所有path中包含"/" 的页面就都会有render之后的页面渲染效果。
   + path: 表示页面到哪里去
   + component: 表示页面render到一个component 
-  + render: 返回一个方法，可以是jsx语句
+  + render: 返回一个方法，可以是jsx语句，如果要传入参数，需要再加上`<Route path="/auth" component={(props)=><Auth {...props}/>} />`保留props
+
 
 #### 如何防止每次跳转页面不重新加载js
 

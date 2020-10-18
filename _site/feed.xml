@@ -5,8 +5,8 @@
     <description>季月侣的Blog || About Joy </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 12 Oct 2020 10:18:51 +0800</pubDate>
-    <lastBuildDate>Mon, 12 Oct 2020 10:18:51 +0800</lastBuildDate>
+    <pubDate>Sun, 18 Oct 2020 10:13:22 +0800</pubDate>
+    <lastBuildDate>Sun, 18 Oct 2020 10:13:22 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -86,9 +86,426 @@ const [enteredAmount, setEnteredAmount] = useState(&quot;&quot;);
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;useEffect hook&lt;/strong&gt;
 这个hook表示在页面每一次render完成之后再加载的动作，用于消除&lt;strong&gt;side effect&lt;/strong&gt;，没有加入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[]&lt;/code&gt;依赖，相当于&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentDidUpdate&lt;/code&gt;
-传入一个匿名函数以及函数中变量用到的依赖，只有这个依赖改变，才会rerun这个页面。所以加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[]&lt;/code&gt;表示&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentDidMount&lt;/code&gt;所以&lt;strong&gt;&lt;em&gt;一定要加[],哪怕没有依赖也要加&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+传入一个匿名函数以及函数中变量用到的依赖，只有这个依赖改变，才会rerun这个页面。所以加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[]&lt;/code&gt;表示&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentDidMount&lt;/code&gt;所以&lt;strong&gt;&lt;em&gt;一定要加[],哪怕没有依赖也要加&lt;/em&gt;&lt;/strong&gt;
+&lt;strong&gt;注意，如果是因为在props中的传入的function改变，需要加入depend中需要转化格式&lt;/strong&gt;：&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const {propsValue} = props;
+...
+useEffect = (()=&amp;gt;{...},[propsValue]);
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;案例分析如何给页面加上一个可搜索的方法&quot;&gt;案例分析，如何给页面加上一个可搜索的方法？&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;首先需要对useEffect 中设置fetch保证每次输入都能匹配数据库中的某个固定字段&lt;/li&gt;
+  &lt;li&gt;在数据库（后端）配置这个字段，也就是firebase中在rules中将这个地方加上传入数据库的字段，以下内容表示在ingredient传入时也就是fetch的url最后加上的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ingredient.json&lt;/code&gt;中post的title字段为搜索中需要修改的地方。
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;{
+&quot;rules&quot;: {
+  &quot;.read&quot;: &quot;now &amp;lt; 1605024000000&quot;,  // 2020-11-11
+  &quot;.write&quot;: &quot;now &amp;lt; 1605024000000&quot;,  // 2020-11-11
+    &quot;ingredients&quot;:{
+      &quot;.indexOn&quot;:[&quot;title&quot;]
+    }
+}
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;在useEffect中写入需要到数据库中匹配的字段，每次输入的值是通过html中onChange执行的。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在以下的代码中注意query字段，表示判断输入值是否为空，如果不为空就需要到数据库中取数据。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;useEffect = (() =&amp;gt; {
+    const query = enteredFilter.length === 0 ? '' 
+    : `?orderBy=&quot;title&quot;&amp;amp;equalTo=&quot;${enteredFilter}&quot;`;//注意不要丢到=号
+
+    fetch(&quot;https://react-hook-example-xxxee.firebaseio.com/ingredient.json&quot; + query)
+      .then(response =&amp;gt; {
+        return response.json();
+      })
+      .then(responseData =&amp;gt; {
+        const loadResponseData = [];
+        for (const key in responseData) {
+          loadResponseData.push({
+            id: key,
+            title: responseData[key].title,
+            amount: responseData[key].amount
+          });
+        }
+        onLoadingIngredients(loadResponseData);
+      })
+
+  }, [enteredFilter,onLoadingIngredients]);//每次enteredFilter改变就会执行
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;onLoadingIngredients这个依赖&lt;/strong&gt;是调用component时赋给的一个props，已经通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const {propsValue} = props;&lt;/code&gt;取出，表示如果这个component被重新调用就再次调用useEffect,parant component re-render&lt;/p&gt;
+
+&lt;h3 id=&quot;usecallback-hook&quot;&gt;&lt;strong&gt;useCallback hook&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;作用于会导致两个component一直渲染的页面，因为子页面利用父页面传过来的方法作为useEffect的依赖，只要useEffect依赖改变，子页面也就会重新渲染，但是父页面中传入到子页面的方法在被子页面调用之后，在父页面进行了重新渲染，从而带动子页面的渲染形成闭环，useCallback就是保持父页面中的内容没有因为子页面重新渲染而改变，作为一个cache。&lt;/p&gt;
+
+&lt;p&gt;useCallback 用法和useEffect相同，也需要加上依赖参数，如果是useState作为依赖参数则可以忽略不加。&lt;/p&gt;
+
+&lt;h3 id=&quot;useref-hook&quot;&gt;&lt;strong&gt;useRef hook&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;useRef是为了获得最新的state中的数据，在useEffect中setTimeout时希望判断两次输入时间间隔不小于多少秒，而且需要一边输入一边对比，就需要用到useRef。setTimeout内部获得的useState表示在运行到setTimeout时获得的state，但对于一直更新的state需要通过useRef获得。
+使用方式如下&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;先引入useRef  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;import {useRef} from 'react'&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;定义一个useRef &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const inputRef = useRef()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;在html处定义ref &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;input ref={inputRef}/&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;在setTimeout处使用ref
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;  setTimeout(() =&amp;gt; {
+if (enteredFilter === inputRef.current.value) {
+  ...
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;主要用于解决用户输入时为了不要一直获取用户输入而频繁的render到后端的问题。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;useeffect的cleanup&quot;&gt;&lt;strong&gt;useEffect的cleanUp&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;在上面的例子中，如果用户输入时间过长但是一直匹配到正确结果的情况下，需要clean useEffect的使用，（setTimeout 是在useEffect中的）所以每次depend改变需要re-render时，才执行return，也就是clean
+具体使用方式如下: return 一定是一个func，当depend为空也就是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[]&lt;/code&gt;时，return发生时间变为component为unmount时。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;useEffect(() =&amp;gt; {
+    const timer = setTimeout(() =&amp;gt; {
+      if (enteredFilter === inputRef.current.value) {
+        ...
+      }
+    },5000);
+    return ()=&amp;gt;{cleanTimeout(timer)};
+},[]);
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;return中执行的就是clean useEffect的方法。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;小知识点&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;在代码中的三段表达式：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt; A ? B: C&lt;/code&gt;如果C是null则可以写成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A &amp;amp;&amp;amp; B&lt;/code&gt;形式&lt;/li&gt;
+  &lt;li&gt;在代码中两个setState一起执行不会导致死循环情况，因为state会预先存在batch中，原先的会保留并且在同一个render中执行，两个state同时执行，并且有交叉关系再执行时是没有冲突的。对于两个setState同时执行的情况&lt;a href=&quot;https://github.com/facebook/react/issues/10231#issuecomment-316644950&quot; target=&quot;_blank&quot;&gt;github issue&lt;/a&gt;
+具体解释如下:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;more-on-state-batching--state-update&quot;&gt;more on state batching &amp;amp;&amp;amp; state update&lt;/h4&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;setName('Max');
+setAge(30);
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;in the same synchronous (!) execution cycle (e.g. in the same function) will NOT trigger two component re-render cycles.&lt;/p&gt;
+
+&lt;p&gt;Instead, the component will only re-render once and both state updates will be applied simultaneously.&lt;/p&gt;
+
+&lt;p&gt;Not directly related, but also sometimes misunderstood, is when the new state value is available.&lt;/p&gt;
+
+&lt;p&gt;Consider this code:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;console.log(name); // prints name state, e.g. 'Manu'
+setName('Max');
+console.log(name); // ??? what gets printed? 'Max'?
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You could think that accessing the name state after setName(‘Max’); should yield the new value (e.g. ‘Max’) but this is NOT the case. Keep in mind, that the new state value is &lt;strong&gt;only available in the next component render cycle&lt;/strong&gt; (which gets scheduled by calling setName()).&lt;/p&gt;
+
+&lt;p&gt;Both concepts (batching and when new state is available) behave in the same way for both functional components with hooks as well as class-based components with this.setState()!&lt;/p&gt;
+
+&lt;h3 id=&quot;usereducer&quot;&gt;&lt;strong&gt;useReducer&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;类似于reducer的一种方式，因为定义了大量的useState，所以可以将多个reducer整合。&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;首先在component外层定义useReducer，因为每次外层的定义是不会随着component一起render的。useReducer和基础的redux的reducer定义类似。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const ingredientReducer = (currentIngredients, action)=&amp;gt;{
+  switch(action.type){
+    case &quot;SET&quot;:
+      return action.ingredient
+    case &quot;ADD&quot;:
+      return [...currentIngredients, action.ingredient]
+    case &quot;DELETE&quot;:
+      return currentIngredients.filter(ing =&amp;gt;ing.id !== action.id)
+    default:
+      throw new Error(&quot;should not go hear!&quot;)
+  }
+}
+
+const ExampleComponent = ()=&amp;gt;{...}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;每个action后面跟的就是在调用dispatch时需要传入的参数&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;在component内部导入刚刚定义的reducer
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const ExampleComponent = ()=&amp;gt;{
+const [ingredients, dispatch] = useReducer(ingredientReducer,[])
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;传入的两个参数第一个是前面定义的array第二个是start state，注意从useReducer中提取的第二个参数，是用来代替setState方法的，名字可以自行定义。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;代替setState，以下是几个state案例&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;ADD&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;// setIngredients(prevIngredients =&amp;gt; [...prevIngredients,
+  // {
+  //   id: responseData.name,
+  //   ...ingredient
+  // }
+  // ])
+  dispatch({
+    type: &quot;ADD&quot;, ingredient: {
+      id: responseData.name,
+      ...ingredient
+    }
+})
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;DELETE&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;// setIngredients(prevIngredients =&amp;gt; prevIngredients.filter(
+//   (ingredient) =&amp;gt; ingredient.id !== ingredientId))
+dispatch({type:&quot;DELETE&quot;,id:ingredientId})
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;SET&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const filterIngredientsHandler = useCallback((filterIngredients) =&amp;gt; {
+    // setIngredients(filterIngredients)
+    dispatch({ type: &quot;SET&quot;, ingredients: filterIngredients });
+  }, [])
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;综上，useReducer可以使用的情况是在每个state有不同的使用状态时，或者一个方法组要改多个state时，放在一起定义。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;usecontext&quot;&gt;&lt;strong&gt;useContext&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;用法是将需要层层传递的某个state利用这种形式获得，类似于redux但是是react自带的方法，主要用于function base component中详见react笔记那篇文章。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import React, { useState } from 'react';
+export const AuthContext = React.createContext({
+isAuth: false,
+login: () =&amp;gt; {}
+})
+
+const AuthContextProvider = (props) =&amp;gt; {
+    const [isAuth, setIsAuth] = useState(false);
+    const loginHandler = () =&amp;gt; {
+        setIsAuth(true)
+    }
+    return (
+        &amp;lt;AuthContext.Provider value=&amp;gt;
+            {props.children}
+        &amp;lt;/AuthContext.Provider&amp;gt;
+    )
+}
+export default AuthContextProvider;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在index.js中利用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;AuthContextProvider&amp;gt;&lt;/code&gt;包裹住&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;App /&amp;gt;&lt;/code&gt;表示所有需要用到AuthContext地方被表示为Provider,在需要用到的是否login的地方写入以下代码（此处是在App主界面），注意定义中先export的并不是default的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AuthContextProvider&lt;/code&gt;而是包含默认值的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AuthContext&lt;/code&gt;所以在导入的时候是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{AuthContext}&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import { AuthContext } from './context/auth-context';   
+
+const App = props =&amp;gt; {
+const authContext = useContext(AuthContext);
+let content = &amp;lt;Auth /&amp;gt;
+if (authContext.isAuth) {
+    content = &amp;lt;Ingredients/&amp;gt;
+}
+return (
+    // &amp;lt;AuthContext.Consumer&amp;gt;
+    // &amp;lt;Auth /&amp;gt;
+    // &amp;lt;/AuthContext.Consumer&amp;gt;
+    {content}
+    )
+};
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在需要auth的界面中显示&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import {AuthContext} from '../context/auth-context';
+
+const Auth = props =&amp;gt; {
+const authContext = useContext(AuthContext);
+const loginHandler = () =&amp;gt; {
+    authContext.login();//改变login中的state从而在App主界面转换为&amp;lt;Ingredients/&amp;gt;
+};
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;usememo&quot;&gt;&lt;strong&gt;useMemo&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;在react笔记中介绍过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.memo&lt;/code&gt;的用法，这里是利用useMemo进行扩展。原来是作用在component定义中，useMemo是直接作用在component调用的时候。传入的是一个方法，作用是保存一些需要花费时间渲染的component，只有在其中有值改变的时候才回去渲染。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const ingredientList = useMemo(() =&amp;gt; {
+  return (
+    &amp;lt;IngredientList ingredients={ingredients} onRemoveItem={removeIngredientHandler} /&amp;gt;
+  )
+}, [ingredients])//依赖
+...
+在render中
+{ingredientList}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;如果是用到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.memo&lt;/code&gt;则是&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const IngredientList =React.memo(props =&amp;gt; {
+  return (...)})
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;自制hook&quot;&gt;自制Hook&lt;/h2&gt;
+&lt;p&gt;最重要一点需要以use作为开头&lt;/p&gt;
+
+&lt;p&gt;自制的Hook首先是一个匿名方法，对渲染的优先顺序可以使用useCallback来限制&lt;/p&gt;
+
+&lt;h2 id=&quot;将hook作用到实际的开发中&quot;&gt;将hook作用到实际的开发中&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;首先利用React.lazy()代替原先的自定义懒加载，毕竟原先的代码中包含了class base的component，具体代码见react-axios的那篇文章。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;和React.lazy包裹搭配使用的是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Suspend&amp;gt;&lt;/code&gt;，是对route中在没有实现加载时在页面上显示的内容，具体是:
+```&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;lt;Suspense fallback={&amp;lt;p&amp;gt;Loading…&amp;lt;/p&amp;gt;}&amp;gt;
+        {routes}
+&amp;lt;/Suspense&amp;gt;
+```
+包裹住自定义的route，并且将router修改为render跳转而不是component跳转&amp;gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;如果是要执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentWillMount&lt;/code&gt;表示在component加载之前执行，所以把代码前移，放在return之前。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentWillUnmount&lt;/code&gt;作为放在最后作为页面加载完毕清除缓存的控件可以利用useEffect的return实现。&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Wed, 30 Sep 2020 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2020/09/30/ReactHooks/</link>
@@ -661,7 +1078,8 @@ t.start();
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;可以用wait达到同样效果，sleep适用于无锁、同步场景&lt;/p&gt;
 
-&lt;p&gt;#####&lt;/p&gt;
+&lt;h5 id=&quot;join-方法&quot;&gt;join 方法&lt;/h5&gt;
+&lt;p&gt;等待线程运行结束，&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 21 Sep 2020 00:00:00 +0800</pubDate>
@@ -1740,7 +2158,7 @@ componentWillUnmount() {
   &lt;li&gt;exact: 表示path中的名称不是模糊的，如果没有exact那么所有path中包含”/” 的页面就都会有render之后的页面渲染效果。&lt;/li&gt;
   &lt;li&gt;path: 表示页面到哪里去&lt;/li&gt;
   &lt;li&gt;component: 表示页面render到一个component&lt;/li&gt;
-  &lt;li&gt;render: 返回一个方法，可以是jsx语句&lt;/li&gt;
+  &lt;li&gt;render: 返回一个方法，可以是jsx语句，如果要传入参数，需要再加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Route path=&quot;/auth&quot; component={(props)=&amp;gt;&amp;lt;Auth {...props}/&amp;gt;} /&amp;gt;&lt;/code&gt;保留props&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&quot;如何防止每次跳转页面不重新加载js&quot;&gt;如何防止每次跳转页面不重新加载js&lt;/h4&gt;
@@ -2610,7 +3028,7 @@ There are 4 main states a Transition can be in:&lt;/p&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;use Refs 暂时没明白什么作用&lt;/p&gt;
+    &lt;p&gt;use Refs 实时获得当前state&lt;/p&gt;
 
     &lt;p&gt;&lt;strong&gt;ref=”“&lt;/strong&gt; key word class-based 的 component
   在打开页面的时候在哪里定位 
@@ -2623,15 +3041,15 @@ There are 4 main states a Transition can be in:&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;use Context API&lt;/p&gt;
 
-    &lt;p&gt;用于在一个component中需要certain data inmultiple components and do not want to pass that data across multiple layers
-  比如 确认用户是否login 但是会有一些功能在没有login的时候也能用&lt;/p&gt;
+    &lt;p&gt;用于在一个component中需要certain data inmultiple components and do not want to pass that data across multiple layers，也就是一个state需要传到离他很远的component中来进行确认的时候，就用到Context作为简便获得特定component中的state的语法。
+  &lt;strong&gt;比如：确认用户是否login，如果能够login就渲染到另一个界面&lt;/strong&gt;&lt;/p&gt;
 
     &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;      const context = React.createContext({
-          default value:''//格式是string array
-      })
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;  const Context = React.createContext({
+      默认值:''//格式是string array
+  })
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
     &lt;p&gt;pass within without using props ，在需要的地方引入&lt;/p&gt;
@@ -2639,24 +3057,115 @@ There are 4 main states a Transition can be in:&lt;/p&gt;
     &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;      &amp;lt;Context.Provider value=&amp;gt;
-      包裹住需要传入的props
-      &amp;lt;/Context.Provider&amp;gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;  &amp;lt;Context.Provider value=&amp;gt;
+  包裹住需要传入的props，这样只要调用这个地方就可以实现实时监听，并且一旦引用就会修改默认值
+  &amp;lt;/Context.Provider&amp;gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
-    &lt;p&gt;使用&lt;/p&gt;
+    &lt;p&gt;在return中使用&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;  &amp;lt;Context.Consumer&amp;gt;//返回的是一个function 以context为 参数
+  {(context)=&amp;gt; context 中的value也就是默认值中的value }
+  &amp;lt;/Context.Consumeer&amp;gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;如果不能再return中使用可以现在class中使用就需要定义一个静态变量，也就是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;static&lt;/code&gt;，其作用是can be access from outside without need to init an object based on this class可以在外部引入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;static contextType = Context&lt;/code&gt;，调用默认值时就可以执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this.默认值&lt;/code&gt;。&lt;/p&gt;
+
+    &lt;p&gt;在functional component中使用 context
+  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const authContext = useContext(Context)&lt;/code&gt;这样就可以获得context中的内容了。&lt;/p&gt;
+
+    &lt;p&gt;使用useContext 作为function-based 或者定义静态contextType变量再调用实现，详见114。&lt;/p&gt;
+
+    &lt;p&gt;在445课时用到的案例，下面是代码&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;  import React, { useState } from 'react';
+  export const AuthContext = React.createContext({
+  isAuth: false,
+  login: () =&amp;gt; {}
+  })
+
+  const AuthContextProvider = (props) =&amp;gt; {
+      const [isAuth, setIsAuth] = useState(false);
+      const loginHandler = () =&amp;gt; {
+          setIsAuth(true)
+      }
+      return (
+          &amp;lt;AuthContext.Provider value=&amp;gt;
+              {props.children}
+          &amp;lt;/AuthContext.Provider&amp;gt;
+      )
+  }
+  export default AuthContextProvider;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;在index.js中利用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;AuthContextProvider&amp;gt;&lt;/code&gt;包裹住&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;App /&amp;gt;&lt;/code&gt;表示所有需要用到AuthContext地方被表示为Provider,在需要用到的是否login的地方写入以下代码（此处是在App主界面），注意定义中先export的并不是default的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AuthContextProvider&lt;/code&gt;而是包含默认值的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AuthContext&lt;/code&gt;所以在导入的时候是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{AuthContext}&lt;/code&gt;&lt;/p&gt;
 
     &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
 2
 3
 4
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;  ```
-  &amp;lt;Context.Consumer&amp;gt;//返回的是一个function 以context为 参数
-  {(context)=&amp;gt; context 中的value }
-  &amp;lt;/Context.Consumer&amp;gt;   ```
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;  import { AuthContext } from './context/auth-context';   
+    
+  const App = props =&amp;gt; {
+  const authContext = useContext(AuthContext);
+  let content = &amp;lt;Auth /&amp;gt;
+  if (authContext.isAuth) {
+      content = &amp;lt;Ingredients/&amp;gt;
+  }
+  return (
+      // &amp;lt;AuthContext.Consumer&amp;gt;
+      // &amp;lt;Auth /&amp;gt;
+      // &amp;lt;/AuthContext.Consumer&amp;gt;
+      {content}
+      )
+  };
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
-    &lt;p&gt;当然有更加简洁的表达方式，使用useContext 作为function-based 或者定义静态contextType变量再调用实现，详见114。其实类似于redux。&lt;/p&gt;
+    &lt;p&gt;在需要auth的界面中显示&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;  import {AuthContext} from '../context/auth-context';
+
+  const Auth = props =&amp;gt; {
+  const authContext = useContext(AuthContext);
+  const loginHandler = () =&amp;gt; {
+      authContext.login();//改变login中的state从而在App主界面转换为&amp;lt;Ingredients/&amp;gt;
+  };
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
