@@ -230,6 +230,7 @@ export default withRouter(post);
 #### conditional redirect
 
 使用`<Redirect from="/new-post" to="/posts/">`实现参数传递，表示页面跳转，比如输入结束之后调用axios的post同时跳转到之前的页面可以使用条件式的跳转机制，或者是直接`this.props.history.replace('/posts')`实现跳转。
+同时`this.props.history.goBack()`表示返回原来位置。
 
 #### 使用guards
 在没有authentication情况下使用guard，没有什么组件，使用state和dirty的inline判断来guard

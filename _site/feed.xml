@@ -5,9 +5,78 @@
     <description>季月侣的Blog || About Joy </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 18 Oct 2020 10:13:22 +0800</pubDate>
-    <lastBuildDate>Sun, 18 Oct 2020 10:13:22 +0800</lastBuildDate>
+    <pubDate>Wed, 28 Oct 2020 13:12:59 +0800</pubDate>
+    <lastBuildDate>Wed, 28 Oct 2020 13:12:59 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title> Spring全家桶笔记 </title>
+        <description>&lt;h1 id=&quot;chapter1&quot;&gt;Chapter1&lt;/h1&gt;
+&lt;h2 id=&quot;配置单源数据&quot;&gt;配置单源数据&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Spring 框架的基本配置是可以通过 https://start.spring.io/ 这个网页帮助自动配置的。&lt;/li&gt;
+  &lt;li&gt;数据的启动方式是通过在这个界面勾选依赖，实现自动配置。&lt;/li&gt;
+  &lt;li&gt;配置的演示：
+    &lt;ul&gt;
+      &lt;li&gt;引入对应数据库驱动 —H2&lt;/li&gt;
+      &lt;li&gt;引入JDBC依赖 — spring-boot-starter-jdbc&lt;/li&gt;
+      &lt;li&gt;获得DataSource Bean 打印信息&lt;/li&gt;
+      &lt;li&gt;通过/acturator/beans 查看Bean&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Spring boot 根据数据源会自动配置数据库，对于所需要的Bean在不使用Springboot的情况下需要自己手写以下内容:
+    &lt;ul&gt;
+      &lt;li&gt;数据源相关Datasource 根据选择的连接池实现&lt;/li&gt;
+      &lt;li&gt;事务相关&lt;/li&gt;
+      &lt;li&gt;PlatformTransactionManager(DataSource TransactionManager)&lt;/li&gt;
+      &lt;li&gt;Transaction Template&lt;/li&gt;
+      &lt;li&gt;操作相关 JdbcTemplate&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;数据源相关配置属性
+&lt;img src=&quot;/img/java-spring/spring-boot-chapter1-datasourcs.jpg&quot; alt=&quot;&quot; /&gt;
+    &lt;h2 id=&quot;配置多源数据&quot;&gt;配置多源数据&lt;/h2&gt;
+  &lt;/li&gt;
+  &lt;li&gt;配置数据源分开&lt;/li&gt;
+  &lt;li&gt;关注每次使用的数据源
+    &lt;ul&gt;
+      &lt;li&gt;有多个DataSource时系统如何判断&lt;/li&gt;
+      &lt;li&gt;对应的（事务，ORM）如何选择DataSource&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;和Spring Boot 协同工作&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;配置@Primary类型的Bean&lt;/li&gt;
+  &lt;li&gt;排除Spring Boot 自动配置&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;好用的数据连接池
+HikariCP 来源于日本，高性能JDBC数据库连接池，tomcat在连接取放比较占有优势，使用了JavaAssist生成，是一种字节码级别的优势，同时有大量的小改进使用了FastStatementList 代替了 ArrayList, 无锁集合 ConcurrentBag以及代理类的优化，积少成多的优化。
+怎样在代码中使用Spring Boot2.x中是默认使用HikariCP只要配置&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 23 Oct 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/10/23/Spring/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/10/23/Spring/</guid>
+        
+        <category>Java</category>
+        
+        <category>Springboot</category>
+        
+        <category>All kind of database</category>
+        
+        <category>JPA</category>
+        
+        <category>NoSql</category>
+        
+        <category>RabitMQ</category>
+        
+        <category>self-learning</category>
+        
+        
+      </item>
     
       <item>
         <title> React Hooks </title>
@@ -1078,8 +1147,195 @@ t.start();
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;可以用wait达到同样效果，sleep适用于无锁、同步场景&lt;/p&gt;
 
-&lt;h5 id=&quot;join-方法&quot;&gt;join 方法&lt;/h5&gt;
-&lt;p&gt;等待线程运行结束，&lt;/p&gt;
+&lt;h5 id=&quot;join-方法&quot;&gt;&lt;strong&gt;join 方法&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;等待线程运行结束，哪个线程调用join就代表使用结束&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;static int r = 0;
+...
+
+Thread t1 = new Thread(() -&amp;gt;{
+  sleep(1);
+  r=10;
+}, &quot;t1&quot;);
+t1.start();
+// t1.join();
+log(r);
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;获得的r值不是新创建线程的值，因为主线程和t1线程并行执行，t1线程需要1秒才能算出r=10，而主线程一开就获得了r结果。不能使用sleep使主线程也睡眠，而是使用join在r1.start之后使主线程等待t1结束执行。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t1.join()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;同步：调用方需要等待结果返回&lt;/strong&gt;
+&lt;strong&gt;异步：调用方不需要等结果返回&lt;/strong&gt;
+如果主线程等不同线程的返回结果可以多个调用join。
+多个线程join，并且同时开始执行，运行时间是最长的线程等待时间。&lt;/p&gt;
+
+&lt;h6 id=&quot;join-传入参数有时效等待&quot;&gt;join 传入参数，有时效等待&lt;/h6&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;join(1500);&lt;/code&gt;等待1.5秒，如果没有等够时间，就不继续等待，同样，如果线程执行时间小于等待时效，在线程结束之后也就不再等待。&lt;/p&gt;
+
+&lt;h5 id=&quot;interrupt&quot;&gt;&lt;strong&gt;interrupt&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;打断sleep, wait, join 的线程
+打断阻塞线程，打断sleep线程，会清空打断状态&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Thread t1 = new Thread(() -&amp;gt;{
+  try{
+    Thread.sleep(5000);
+  }catch(InterruptedException e){//打断的异常，会有打断标记，是boolean 有过为true，但是sleep、wait、join会将打断标记设置为false
+    e.printStackTrace();
+  }
+},&quot;t1);
+t1.start();
+t1.interrupt();
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;小知识：打断的异常，会有打断标记，是boolean 有过为true，但是sleep、wait、join会将打断标记设置为false&lt;/em&gt;&lt;/strong&gt;
+&lt;strong&gt;&lt;em&gt;获取打断标记的方法&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;线程名.isInterrupted();&lt;/code&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;打断正常运行的代码会怎样&quot;&gt;打断正常运行的代码会怎样?&lt;/h5&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Thread t1 = new Thread(() -&amp;gt;{
+  while(true){
+    boolean inter = Thread.currentThread().isInterrupted();
+    if(inter){//表示被打断了，退出循环
+      break;
+    }
+  }
+},&quot;t1&quot;);
+t1.start();
+
+Thread.sleep(1000);
+t1.interrupt();
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;代码中是主线程睡眠，但是打断的是创建的t1线程，t1线程是否继续执行是依靠是这个线程里面的判断。这个例子中利用打断状态获得是否继续执行的条件。&lt;/p&gt;
+
+&lt;h5 id=&quot;interrupt设计模式&quot;&gt;interrupt设计模式&lt;/h5&gt;
+&lt;ol&gt;
+  &lt;li&gt;两阶段终止模式
+eg.强制stop()线程，如果线程锁住共享资源则在stop线程之后就没有机会释放锁。其他线程不能获取锁。
+应用场景，定时监控cpu利用率，需要不断监控。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;while true  -&amp;gt; 有没有被打断&lt;/p&gt;
+
+&lt;p&gt;-&amp;gt;是 就结束循环&lt;/p&gt;
+
+&lt;p&gt;-&amp;gt;否 睡眠 如果无异常就继续监控，如果被打断就设置打断标记。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;class TwoPhaseTermination {
+  private Thread monitor;
+  //启动监控线程
+  public void start(){
+    monitor = new Thread(()-&amp;gt;{
+      while(true){
+        Thread current = Thread.currentThread();
+        if (current.isInterrupted()){
+          break;
+        }
+        try{
+           Thread.sleep(1000);
+        }catch{
+          ...
+          //重新设置打断标记
+          current.interrupt();
+        }
+      }
+    });
+    monitor.start();
+  }
+  //停止监控线程
+  public void stop(){
+    monitor.interrupt();// 因为会清空打断标记
+  }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;注意点&lt;/em&gt;&lt;/strong&gt;
+isInterrupted()不清除打断标记
+静态方法interrupted()清除打断标记&lt;/p&gt;
+
+&lt;h5 id=&quot;打断park&quot;&gt;&lt;strong&gt;打断park&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LockSupport.park()&lt;/code&gt;停止线程，之后的代码不会执行，interrupt可以打断这个正在park的线程。这个会保留打断标记，在park之后再次执行park，线程不会停下来。（打断标记为真，park会失效，可以和interrupted()方法搭配使用。）&lt;/p&gt;
+
+&lt;h5 id=&quot;不推荐使用的方法&quot;&gt;不推荐使用的方法&lt;/h5&gt;
+&lt;p&gt;以下是容易破坏同步代码块的方法，已经过时。
+ stop() 停止线程运行
+ suspedn() 挂起线程
+ resume() 恢复线程运行&lt;/p&gt;
+
+&lt;h4 id=&quot;主线程和守护线程&quot;&gt;主线程和守护线程&lt;/h4&gt;
+&lt;p&gt;默认情况下java进程是等待所有线程结束运行才会结束，有一种特殊的线程叫&lt;strong&gt;守护线程&lt;/strong&gt;只要它的非守护线程结束，即使守护线程的代码没有执行完也会强制结束。
+守护线程应用：1)垃圾回收机制，2)Tomcat中的Acceptor和Poller都是守护线程&lt;/p&gt;
+
+&lt;h4 id=&quot;线程状态&quot;&gt;线程状态&lt;/h4&gt;
+&lt;p&gt;5种 初始 -&amp;gt; 可运行 -&amp;gt; 运行 -&amp;gt; 终止 
+运行和可运行可以来回转换，阻塞状态就是使线程放弃CPU使用权，调度器不会考虑阻塞状态线程。 
+阻塞API结束 阻塞变为可运行。&lt;/p&gt;
+
+&lt;p&gt;6种 ThreadState 从Java层面表示
+new初始
+runnable包括运行、可运行和阻塞
+terminated终止状态，线程结束，不会转化为其他状态。
+blocked：阻塞 sync 
+waiting：阻塞 join 
+timed waiting：阻塞 sleep有时限的等待
+&lt;strong&gt;阻塞就是调度器不会再分时间片&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;获得状态信息&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;getState()&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;阻塞线程在Java中的形式&lt;/p&gt;
+&lt;h5 id=&quot;wait&quot;&gt;&lt;strong&gt;wait&lt;/strong&gt;&lt;/h5&gt;
 
 </description>
         <pubDate>Mon, 21 Sep 2020 00:00:00 +0800</pubDate>
@@ -2275,7 +2531,8 @@ export default withRouter(post);
 
 &lt;h4 id=&quot;conditional-redirect&quot;&gt;conditional redirect&lt;/h4&gt;
 
-&lt;p&gt;使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Redirect from=&quot;/new-post&quot; to=&quot;/posts/&quot;&amp;gt;&lt;/code&gt;实现参数传递，表示页面跳转，比如输入结束之后调用axios的post同时跳转到之前的页面可以使用条件式的跳转机制，或者是直接&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this.props.history.replace('/posts')&lt;/code&gt;实现跳转。&lt;/p&gt;
+&lt;p&gt;使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Redirect from=&quot;/new-post&quot; to=&quot;/posts/&quot;&amp;gt;&lt;/code&gt;实现参数传递，表示页面跳转，比如输入结束之后调用axios的post同时跳转到之前的页面可以使用条件式的跳转机制，或者是直接&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this.props.history.replace('/posts')&lt;/code&gt;实现跳转。
+同时&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this.props.history.goBack()&lt;/code&gt;表示返回原来位置。&lt;/p&gt;
 
 &lt;h4 id=&quot;使用guards&quot;&gt;使用guards&lt;/h4&gt;
 &lt;p&gt;在没有authentication情况下使用guard，没有什么组件，使用state和dirty的inline判断来guard&lt;/p&gt;
@@ -3463,217 +3720,6 @@ You can ignore me editing the webpack.config.prod.js file - with the latest vers
         <category>self-learning</category>
         
         <category>class-based</category>
-        
-        
-      </item>
-    
-      <item>
-        <title> React Native 设备加载 </title>
-        <description>&lt;h2 id=&quot;react-native-实现手机端的相机加载&quot;&gt;React Native 实现手机端的相机加载&lt;/h2&gt;
-
-&lt;p&gt;需要了解到 expo 作为一个基础平台提供了很多工具，比如加载数据库，获取手机的权限，打开相机并拍照等功能，所以利用 expo 提供的 API 实现一个能打开相机，保存拍摄的图片，获得当前位置，在地图上展现出当前位置的 App。&lt;/p&gt;
-
-&lt;h2 id=&quot;基础界面&quot;&gt;基础界面&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;分为 4 个界面
-    &lt;ul&gt;
-      &lt;li&gt;MapScreen &lt;em&gt;地图界面&lt;/em&gt;&lt;/li&gt;
-      &lt;li&gt;NewPlaceScreen &lt;em&gt;创建新的图片和位置界面&lt;/em&gt;&lt;/li&gt;
-      &lt;li&gt;PlaceDetailScreen &lt;em&gt;位置详细信息界面&lt;/em&gt;&lt;/li&gt;
-      &lt;li&gt;PlacesListScreen &lt;em&gt;所有位置的渲染界面&lt;/em&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;react-native-实现设备拍摄照片&quot;&gt;React Native 实现设备拍摄照片&lt;/h2&gt;
-
-&lt;p&gt;用户在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ImagePicker.launchCameraAsync({...})&lt;/code&gt;中获得的图像的URI即存储路径，同样其导入是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;expo install expo-image-picker&lt;/code&gt;可以在官方文档的ImagePicker中找到用法,同样不光需要拍摄，在拍摄前需要获取device的权限，需要用到Permissions API&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import * as ImagePicker from 'expo-image-picker'; 
-import * as Permissions from 'expo-permissions';
-
-const verfiypermissions = async () =&amp;gt; {
-        // 这个方法在用户确认后会自动保存在设备上， 用户不需要再次使用
-        const result = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL)// return 一个Promise
-        if (result.status !== 'granted') {
-            // 如果没有授权 
-            Alert.alert('Insufficient Permissions!',
-                'You need to grant camera permissions to use this app.',
-                [{ text: 'okey' }]
-            );
-            return false;
-        }
-        return true;
-    }
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;react-native-实现保存照片到本地device&quot;&gt;React Native 实现保存照片到本地device&lt;/h2&gt;
-
-&lt;h2 id=&quot;react-native-实现-sqlite-数据库连接&quot;&gt;React Native 实现 SQLite 数据库连接&lt;/h2&gt;
-
-&lt;p&gt;首先对数据库的连接是在创建 shopApp 中做的，这里是将 fetch 的网页连接变成实际的数据库，当然调用的是用原生 Sql 语言编写，expo 的 SQLite API 提供了事务性。&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;首先定义一个 helpers 包和 App.js 同级，这个是为了更好的调用数据库，其中写入 db.js 文件
-在终端中导入包 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;expo install expo-sqlite&lt;/code&gt;可以在官方文档的SQLite中找到用法&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;下面代码定义了创建一个 places 数据库，首先是新建一个 Promise,其中的 SQLite.openDatabase(…) 在官方文档中 Open a database, creating it if it doesn’t exist, and return a Database object,利用 Promise 包裹住这个事务是保证有 error 时可以在 await 中 catch 住。&lt;/p&gt;
-
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import * as SQLite from 'expo-sqlite';
-
-const db = SQLite.openDatabase('place.db');
-
-export const init = () =&amp;gt; {
-    //create basic table
-    const promise = new Promise((resolve, reject) =&amp;gt; {
-        db.transaction((tx) =&amp;gt; {
-            // transaction保证事务性
-            tx.executeSql(&quot;CREATE TABLE IF NOT EXISTS places (id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, imageUri TEXT NOT NULL, address TEXT NOT NULL, lat REAL NOT NULL, lng REAL NOT NULL)&quot;,
-                [],
-                () =&amp;gt; {
-                    // SUCCESS
-                    resolve();
-                },
-                (_, err) =&amp;gt; {//第一个参数是 repeition of query ,第二个才是需要的error信息
-                    // error
-                    reject(err);
-                }
-            );
-        });
-    });
-    return promise;
-};
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;在 store/places-actions.js 中来获得数据库传入的数据
-这里的 FileSystem.documentDirectory 又是 expo 提供的 API 需要先导入 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;expo install expo-file-system&lt;/code&gt;可以在官方文档的FileSystem中找到用法作用是：provides access to a file system stored locally on the device. Within the Expo client, each app has a separate file system and has no access to the file system of other Expo apps.这里是为了将拍下来的照片存入device。&lt;/p&gt;
-
-    &lt;p&gt;其中addPlace是需要在NewPlaceScreen中载入的图片，其中传入的参数，一个是用户输入的title,一个是存入缓存中的imageUri,一路follow其实传递路线是&lt;/p&gt;
-
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;export const addPlace = (title, image) =&amp;gt; {
-    return async dispatch =&amp;gt; {
-        // 需要dispatch的方法
-        const fileName = image.split('/').pop();
-        const newPath = FileSystem.documentDirectory + fileName;
-        console.log(newPath)
-
-        try {
-            await FileSystem.moveAsync({// 存储位置 从哪里来 到哪里去
-                from: image,
-                to: newPath
-            });
-            const dbResult = await insertPlace(
-                title,
-                newPath,
-                'Dummey Address',
-                15.6,
-                12.3
-            );
-            console.log(dbResult);
-            dispatch({ type: ADD_PLACE, placeData:
-            { id: dbResult.insertId,
-            title: title,
-            image: newPath } });
-
-        } catch (err) {
-            console.log(err);
-            throw (err);
-        }
-    }
-}
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;react-native-实现手机端获得地址&quot;&gt;React Native 实现手机端获得地址&lt;/h2&gt;
-
-&lt;h2 id=&quot;react-native-百度地图实现静态地图渲染&quot;&gt;React Native 百度地图实现静态地图渲染&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://lbsyun.baidu.com/index.php?title=static&quot; target=&quot;_blank&quot;&gt;百度地图开发者获得静态地图界面&lt;/a&gt;
-原始的教程中是 Google Map 获得 API 但是需要绑定 credit card 以及连接 VPN，这里利用百度地图也可以实现类似功能，就是界面有点难找：）&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 06 Sep 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/09/06/React-Native%E5%AE%9E%E7%8E%B0%E7%9B%B8%E6%9C%BA%E6%89%8B%E6%9C%BA%E5%8A%A0%E8%BD%BD/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/09/06/React-Native%E5%AE%9E%E7%8E%B0%E7%9B%B8%E6%9C%BA%E6%89%8B%E6%9C%BA%E5%8A%A0%E8%BD%BD/</guid>
-        
-        <category>react native</category>
-        
-        <category>self-learning</category>
-        
-        <category>permission</category>
         
         
       </item>
