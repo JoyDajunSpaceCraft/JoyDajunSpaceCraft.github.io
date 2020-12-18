@@ -119,6 +119,7 @@ componentWillUnmount() {
 ### 使用route来实现不同URL页面之间相互的传递参数。
  
 route是react-router-dom中的实现方法，通过在App.js中引入`import { BrowserRouter, Route } from 'react-router-dom';`实现。
+<a href="https://reactrouter.com/web/api/" target="_blank">官网</a>
 
 在主程序的return中用`<BrowserRouter></BrowserRouter>`包裹所有的App.js中需要包裹的代码，在导航的component中需要导入`import { Route } from 'react-router-dom'`注意如果要真确使用一定要在App.js中同样导入Route。
 #### Route使用方式 
@@ -153,12 +154,34 @@ route是react-router-dom中的实现方法，通过在App.js中引入`import { B
 + hash表示可以跳转到页面的摸个部分 
 + search表示可以对这个页面的某个地方实现查找，都是后话了。
 
+#### url中传入参数
+如果想要传入url的参数可以在设置路由的页面对url进行定义
+
+```
+const queryParams = []
+for (let i in this.state.ingredients) {
+    //encodeURIComponent函数可把字符串作为 URI 组件进行编码
+    // 将ingredient中的参数表示为能够通过传URL形式放置的
+    // 传入的是property name 和 property value
+    queryParams.push(encodeURIComponent(i) + "=" + encodeURIComponent(this.state.ingredients[i]));
+}
+queryParams.push('price=' + this.state.totalPrice);//将totalPrice实现从burgerBuilder 传递到 contactData
+const queryString = queryParams.join('&')
+this.props.history.push({
+    pathname: '/checkout',
+    search: "?" + queryString,
+});
+```
+
+之后在路由渲染到的component中定义获得以上路由时需要在url中得到的参数。
+
 **这里的知识点就是 如果将参数传入为search形式，在后面怎样读取出来**
 + 首先理解for of 概念 也就是一种for each 循环形式
 `for (let i of arr){...}`
 + 在后面调用的地方使用的是
-`const query=new URLSearchParams(this.props.location.search)` 表示通过 `URLSearchParams`将默认存储在location中的search提取。
+`const query=new URLSearchParams(this.props.location.search)` 表示通过 `URLSearchParams`将默认存储在location中的search提取。**location默认在props中**
 + URLSearchParams暴露一个entries方法可以获得当时传入search中的内容,`quick-sumbit`是key`true`是value，最后会返回两个值`"quick-sumbit","true"`
++ entries()方法返回一个iterator，允许遍历该对象中包含的所有键/值对。每一组键值对都是 USVString对象
 
 原始获得search中内容代码如下：
 ```
@@ -170,6 +193,8 @@ componentDidMount(){
         }
     }
 ```
+
+
 
 
 
@@ -221,9 +246,10 @@ export default withRouter(post);
 ```
 这样的情况下，可能会认为new-post也是一个id也会产生传参问题，解决方式是在外层包裹上`<Switch></Switch`，表示只渲染第一个Route。所以对于Route来说 **位置很重要**
 
+
 #### 使用nested Route 表示两个componentrender的时候摆在一个页面上
 
-    这里的例子是在主页面上点击某按钮就能显示另一个component中的东西，在主页面要点击的地方加入Route写好对应的path同时注意主页面中不再使用那个Route而且为了防止出现exact不能动态加载的情况不使用exact。
+这里的例子是在主页面上点击某按钮就能显示另一个component中的东西，在主页面要点击的地方加入Route写好对应的path同时注意主页面中不再使用那个Route而且为了防止出现exact不能动态加载的情况不使用exact。
 
 ***react小知识，对于两个不同数据类型int string如果只是想比较value可以使用!=而不是!==***
 
