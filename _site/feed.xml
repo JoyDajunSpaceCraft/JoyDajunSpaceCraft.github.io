@@ -5,9 +5,209 @@
     <description>季月侣的Blog || About Joy </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 18 Dec 2020 15:01:56 +0800</pubDate>
-    <lastBuildDate>Fri, 18 Dec 2020 15:01:56 +0800</lastBuildDate>
+    <pubDate>Thu, 24 Dec 2020 11:11:10 +0800</pubDate>
+    <lastBuildDate>Thu, 24 Dec 2020 11:11:10 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title> Spring 05 SpringCloud 和 Cloud Native 概述 服务注册和发现 </title>
+        <description>&lt;h1 id=&quot;chapter-11-springcloud-和-cloud-native-概述&quot;&gt;Chapter 11 SpringCloud 和 Cloud Native 概述&lt;/h1&gt;
+
+&lt;h2 id=&quot;简单理解微服务&quot;&gt;简单理解微服务&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;“微服务就是⼀一些协同⼯工作的⼩小⽽而⾃自治的服务。”&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;微服务的优点&quot;&gt;微服务的优点&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;异构性
+    &lt;ul&gt;
+      &lt;li&gt;语⾔、存储……&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;弹性
+    &lt;ul&gt;
+      &lt;li&gt;一个组件不可用，不会导致级联故障&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;扩展
+    &lt;ul&gt;
+      &lt;li&gt;单体服务不易扩展，多个较⼩的服务可以按需扩展&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;易于部署&lt;/li&gt;
+  &lt;li&gt;与组织结构对⻬&lt;/li&gt;
+  &lt;li&gt;可组合性&lt;/li&gt;
+  &lt;li&gt;可替代性&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;如和理解-cloud-native&quot;&gt;如和理解 Cloud Native&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;“云原⽣生技术有利利于各组织在公有云、私有云和混合云等新型动态环 境中，构建和运⾏行行可弹性扩展的应⽤用。”
+    &lt;h2 id=&quot;12-factor-app&quot;&gt;12-Factor App&lt;/h2&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;目的 :为构建 SaaS 应⽤用提供⾏之有效的⽅法论 适⽤于任意语⾔和后端服务的开发的应用程序
+https://12factor.net/zh_cn/&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;基准代码(Codebase)
+    &lt;ul&gt;
+      &lt;li&gt;⼀份基准代码，多份部署&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;依赖(Dependencies)
+    &lt;ul&gt;
+      &lt;li&gt;显式声明依赖关系&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;配置(Config)
+    &lt;ul&gt;
+      &lt;li&gt;在环境中存储配置&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;后端服务(Backing services)
+    &lt;ul&gt;
+      &lt;li&gt;把后端服务当作附加资源&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;构建，发布，运⾏(Build, release, run)
+    &lt;ul&gt;
+      &lt;li&gt;严格分离构建和运⾏&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;进程(Processes)
+    &lt;ul&gt;
+      &lt;li&gt;以一个或多个⽆状态进程运行应用&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;端口绑定(Port Binding)
+    &lt;ul&gt;
+      &lt;li&gt;通过端⼝绑定提供服务&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;并发(Concurrency)
+    &lt;ul&gt;
+      &lt;li&gt;通过进程模型进行扩展&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;易处理(Disposability)
+    &lt;ul&gt;
+      &lt;li&gt;快速启动和优雅终止可最大化健壮性&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;开发环境与线上环境等价(Dev / Prod parity)
+    &lt;ul&gt;
+      &lt;li&gt;尽可能的保持开发，预发布，线上环境相同&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;日志(Logs)
+    &lt;ul&gt;
+      &lt;li&gt;把日志当作事件流&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;管理进程(Admin processes)
+    &lt;ul&gt;
+      &lt;li&gt;后台管理任务当作一次性进程运⾏&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;一份基准代码，多份部署
+使用版本控制系统加以管理
+基准代码与应用保持⼀一对应的关系
+尽管每个应⽤用只对应⼀份基准代码，但可以同时存在多份部署&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;显式声明依赖关系
+12-Factor 的应用程序不会隐式依赖系统级的类库 它⼀定通过依赖清单，确切地声明所有依赖项
+在运⾏过程中，通过依赖隔离⼯具来确保程序不会调用系统中存
+在但清单中未声明的依赖项&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;严格分离构建和运⾏
+12-Facfor 应⽤严格区分构建、发布、运行三个步骤
+部署⼯具通常都提供了发布管理⼯具
+每⼀个发布版本必须对应一个唯⼀的发布 ID&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;以⼀个或多个无状态进程运行应用
+12-Factor 应⽤的进程必须⽆状态且⽆共享 
+任何需要持久化的数据都要存储在后端服务内&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;快速启动和优雅终⽌止可最⼤化健壮性
+进程应当追求最小启动时间
+进程⼀旦接收终止信号就会优雅的终止
+进程应当在面对突然死亡时保持健壮&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;尽可能的保持开发，预发布，线上环境相同
+想要做到持续部署就必须缩⼩本地与线上差异
+后端服务是保持开发与线上等价的重要部分
+应该反对在不同环境间使⽤不同的后端服务&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;spring-cloud-的主要功能&quot;&gt;Spring Cloud 的主要功能&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;服务发现 zookeeper等&lt;/li&gt;
+  &lt;li&gt;服务熔断&lt;/li&gt;
+  &lt;li&gt;配置服务 git&lt;/li&gt;
+  &lt;li&gt;服务安全 Auth&lt;/li&gt;
+  &lt;li&gt;服务⽹网关&lt;/li&gt;
+  &lt;li&gt;分布式消息 rabbit MQ&lt;/li&gt;
+  &lt;li&gt;分布式跟踪&lt;/li&gt;
+  &lt;li&gt;各种云平台支持 google cloud engine ,azure 云&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;spring-cloud-的版本号规则&quot;&gt;Spring Cloud 的版本号规则&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Spring Cloud 是个⼤工程，其中包含多个独立项⽬&lt;/li&gt;
+  &lt;li&gt;BOM - Release Train
+    &lt;ul&gt;
+      &lt;li&gt;London Tube Stations&lt;/li&gt;
+      &lt;li&gt;字⺟序排列
+        &lt;ul&gt;
+          &lt;li&gt;Greenwich, Finchley, Edgware …&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;SR - Service Release&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;chapter-12-服务注册和发现&quot;&gt;Chapter 12 服务注册和发现&lt;/h1&gt;
+
+&lt;h2 id=&quot;使-eureka-作为服务注册中&quot;&gt;使⽤ Eureka 作为服务注册中⼼&lt;/h2&gt;
+
+</description>
+        <pubDate>Fri, 18 Dec 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/12/18/Spring05/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/12/18/Spring05/</guid>
+        
+        <category>Java</category>
+        
+        <category>Spring Boot</category>
+        
+        <category>Spring Cloud</category>
+        
+        <category>Cloud Native</category>
+        
+        <category>Fegin</category>
+        
+        <category>Zookeeper</category>
+        
+        <category>Consul</category>
+        
+        <category>Springbucks</category>
+        
+        <category>self-learning</category>
+        
+        
+      </item>
     
       <item>
         <title> jvm </title>
@@ -35,19 +235,905 @@
 &lt;p&gt;hot spot&lt;/p&gt;
 
 &lt;h2 id=&quot;jvm-学习路线&quot;&gt;JVM 学习路线&lt;/h2&gt;
-&lt;p&gt;java class -&amp;gt; java classLoader &amp;lt;–&amp;gt; 内存结构(方法区 -&amp;gt; 堆 -&amp;gt; 虚拟机栈 -&amp;gt; 程序计数器 -&amp;gt; 本地方法栈) &amp;lt;–&amp;gt; 执行引擎(解释器 -&amp;gt; 即时编译器 -&amp;gt; GC 垃圾回收)&lt;/p&gt;
+&lt;p&gt;java class -&amp;gt; java classLoader &amp;lt;–&amp;gt;  (方法区 -&amp;gt; 堆 -&amp;gt; 虚拟机栈 -&amp;gt; 程序计数器 -&amp;gt; 本地方法栈) &amp;lt;–&amp;gt; 执行引擎(解释器 -&amp;gt; 即时编译器 -&amp;gt; GC 垃圾回收)&lt;/p&gt;
 
 &lt;p&gt;学习顺序是1. 内存结构 2. 垃圾回收 3. java class 4. java classLoader 5. 即时编译器&lt;/p&gt;
 
-&lt;h2 id=&quot;内存结构&quot;&gt;内存结构&lt;/h2&gt;
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;程序计数器 ： Program Counter Register&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h1 id=&quot;chapter2-内存结构&quot;&gt;Chapter2 内存结构&lt;/h1&gt;
+&lt;h3 id=&quot;程序计数器--program-counter-register&quot;&gt;程序计数器 ： Program Counter Register&lt;/h3&gt;
 
+&lt;h3 id=&quot;执行顺序&quot;&gt;执行顺序：&lt;/h3&gt;
 &lt;p&gt;方法区 -&amp;gt; 堆 -&amp;gt; 虚拟机栈 -&amp;gt;  -&amp;gt; 本地方法栈&lt;/p&gt;
+
+&lt;h3 id=&quot;程序计数器&quot;&gt;程序计数器&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;作用
+记住下一条jvm指令执行地址，利用寄存器来实现。&lt;/li&gt;
+  &lt;li&gt;特点 ：线程私有&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;虚拟机栈&quot;&gt;虚拟机栈&lt;/h3&gt;
+&lt;p&gt;类似于子弹夹，每个线程运行时的内存空间，栈由栈帧组成，一个栈帧对应一个方法的调用（参数，局部变量，返回地址）方法执行完就会释放栈帧，如果方法嵌套调用就会逐步释放但是都在一个栈内。&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;定义 java virtual machine stacks
+    &lt;ul&gt;
+      &lt;li&gt;么个线程运行时所需要的内容称为虚拟机栈&lt;/li&gt;
+      &lt;li&gt;每个栈由多个栈帧组成（frame），对应每次方法调用时所占的内存&lt;/li&gt;
+      &lt;li&gt;每个线程只能有一个活动的栈帧，对应当前正在执行的方法&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;问题辨析
+    &lt;ul&gt;
+      &lt;li&gt;垃圾回收是否涉及栈内存？
+不会，垃圾回收只回收堆内存中的对象。&lt;/li&gt;
+      &lt;li&gt;栈内存分配越大越好吗？
+栈内存可以根据运行指令指定大小，默认 都是1024KB  -Xss，栈内存越大，线程能运行的数目越少。&lt;/li&gt;
+      &lt;li&gt;方法内的局部变量是否是线程安全的？
+多个线程是共享还是私有的，栈内的是私有的所以没问题，但是如果是static来描述就会产生线程安全问题。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;栈线程安全问题
+分为三个场景，如果不是局部变量，或者逃离了作用范围（作为返回值，或者作为参数传入），就会产生线程安全问题。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;栈的内存溢出（stackOverflowError）
+    &lt;ul&gt;
+      &lt;li&gt;栈帧过多：一直入栈没有出栈，方法的递归调用，没有设置正确的&lt;/li&gt;
+      &lt;li&gt;栈帧过多：不容易出现
+案例：json数据转换会产生无线递归，两个类中循环引用 @JsonIgnore就不会出现。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;线程运行诊断&quot;&gt;线程运行诊断&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;案例1 cpu占用过多，怎样定位
+    &lt;ul&gt;
+      &lt;li&gt;top 看哪个进程对cpu占用&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ps -o pid,gid,%cpu | grep 进程号&lt;/code&gt; ps命令进一步定位是哪个线程引起的cpu占用, -o表示按照 pid 进程id gid 和 cpu利用率来显示所有内容， grep表示筛选进程。&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jstack 进程号&lt;/code&gt;显示所有java中的线程，线程编号是二进制。可以根据线程id找到问题线程 和 源码行数&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;案例2 程序运行很长时间没有结果。多个线程是死锁。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;found one java-level deadlock&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;本地方法栈&quot;&gt;本地方法栈&lt;/h3&gt;
+&lt;p&gt;native method 用c或c++来使用本地方法接口。方法很多，最典型的就是Object中的native来修饰的就是通过c实现的。&lt;/p&gt;
+
+&lt;h3 id=&quot;堆heap&quot;&gt;堆Heap&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;通过new关键字创建对象都会使用堆内存&lt;/li&gt;
+  &lt;li&gt;特点：线程共享，堆中的对象都需要考虑线程安全问题；垃圾回收机制。
+&lt;strong&gt;虚拟机栈等都是局部私有的，而堆是共有的&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;堆内存溢出OutOfMemoryError
+虚拟机参数-Xmx一般是4g没有被回收掉的但一直在增加就会产生这种问题。&lt;/li&gt;
+  &lt;li&gt;堆内存诊断
+    &lt;ul&gt;
+      &lt;li&gt;jps:查看当前系统中有哪些java进程&lt;/li&gt;
+      &lt;li&gt;jmap:查看内存占用情况，常使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jmap -heap 进程号&lt;/code&gt;对需要内容查询。&lt;/li&gt;
+      &lt;li&gt;jconsole：图形界面，多功能的检测工具，可以连续监测。jdk自带&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;案例 垃圾回收后，内存占用依然很高
+ 使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jvisualvm&lt;/code&gt; 注意 我的java的jvisual的地址&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/bin/jvisualvm&lt;/code&gt;
+ 其中的监视-&amp;gt;堆dump点击-&amp;gt;右侧的查找，找到其中占用最大的20个堆对象，可以看到哪些元素占用的空间大。
+    &lt;h3 id=&quot;方法区&quot;&gt;方法区&lt;/h3&gt;
+    &lt;p&gt;Method Area JVM 规范中对方法区的定义：所有JAVA虚拟机线程共享的一块区域，存储了类的结构相关信息，成员方法，构造方法，运行时常量池等。方法区是堆的一个组成部分。 方法区的永久代 运行池（1.6）之后的1.8版本中不再使用永久代这样的概念了，反而是使用本地内存作为方法区。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;方法区内存溢出
+    &lt;ul&gt;
+      &lt;li&gt;方法区内存溢出的现象，类加载器，加载类的字节码，类名和报名。1.8以后类加载器都是用的系统内存，所以在设置错误案例的时候需要给元空间设置内存参数-XX:MaxMetaspaceSize=8m，因为产生很多class&lt;/li&gt;
+      &lt;li&gt;实际场景中spring框架等原始的包名cjlib动态 生成类&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;常量池constant pool：给指令查找符号。
+包含的二进制字节码：类基本信息，常量池，类方法定义，包含了虚拟机指令
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;javap -v&lt;/code&gt;反编译获取静态变量就是去常量池中找到对应的类型方法。&lt;/li&gt;
+  &lt;li&gt;运行时常量池：常量池是*.class文件中的，当该类被加载，它的常量池信息就会放在运行时常量池中，里面的符号地址变为真正的地址。
+    &lt;h3 id=&quot;stringtable&quot;&gt;StringTable：&lt;/h3&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String s1=&quot;a&quot;;&lt;/code&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String s2=&quot;b&quot;;&lt;/code&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String s3=&quot;ab&quot;;&lt;/code&gt;
+常量池存在于字节码中，运行时常量池写入常量池中的内容，这只a b ab 都只是常量池中的符号，还没有变为java对象。
+StringTable[“a”,”b”,”ab”]hash table 对象，不能扩容。&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;lbc  #2 会把符号变为”a”字符串对象，用hash表示长度等&lt;/li&gt;
+      &lt;li&gt;lbc  #3 会把符号变为”b”字符串对象，用hash表示长度等&lt;/li&gt;
+      &lt;li&gt;lbc  #4 会把符号变为”ab”字符串对象，用hash表示长度等&lt;/li&gt;
+      &lt;li&gt;问题1:是在以上的代码中加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String s4 = s1+s2;&lt;/code&gt;反编译这个代码 运行顺序1）new StringBuilder 2)初始化方法 3）new  StringBuilder.append(“a”).append(“b”).toString()将StringBuilder中创建内容写入新的对象中。
+请问s3==s4? &lt;strong&gt;不一样，s3是写在StringTable中的，而s4是新创建的堆中的对象&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;问题2：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String s5 = &quot;a&quot; + &quot;b&quot;&lt;/code&gt;
+查看字节码会看到先去常量池中找到已经拼接好的StringTable中的内容不会创建新的对象，所以是s3==s5。javac编译器的优化，结果在编译期间已经可以确定了。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Stringtable特性
+    &lt;ul&gt;
+      &lt;li&gt;常量池中的字符串仅是符号，第一次用到时才会变为对象&lt;/li&gt;
+      &lt;li&gt;利用StringTable的机制来避免重复创建字符串&lt;/li&gt;
+      &lt;li&gt;字符串变量拼接的原理是StringBuilder1.8&lt;/li&gt;
+      &lt;li&gt;字符串常量拼接的原来是编译器优化&lt;/li&gt;
+      &lt;li&gt;可以是用intern方法，主动将StringTable中还没有的字符串放入
+        &lt;ul&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String s = new String(&quot;a&quot;) + new String(&quot;b&quot;);&lt;/code&gt; 这里的s所代表的的ab并没有放入StringTable中，此时的StringTable里面的内容就是[“a”,”b”]因为他代表的是堆中存放的内容。
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;s.intern(); &lt;/code&gt;就会把没有放到StringTable中的“ab”写入。&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;StringTable 面试题
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;String s1 = &quot;a&quot;;
+String s2 = &quot;b&quot;;
+String s3 = &quot;a&quot;+&quot;b&quot;;//ab
+String s4 = s1 + s2;// new String(&quot;ab&quot;)
+String s5 = &quot;ab&quot;;
+String s6 = s4.intern();
+
+s3==s4; false
+s3==s5; true
+s3==s6; true
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;StringTable 位置
+1.6到1.8的优化StringTable的位置由永久代转移到堆中了。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;StringTable垃圾回收
+统计信息，StringTable类似于HashTable，如果需要存入StringTable一直在存，内存紧张，无用的字符串常量就会被回收。&lt;/li&gt;
+  &lt;li&gt;StringTable的性能调优
+本质是HashTable
+    &lt;ul&gt;
+      &lt;li&gt;案例：从外部读取一个文件，StringTable的桶信息其中桶大小和桶个数决定了耗费时间。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-XX:StringTableSize=桶个数&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;考虑将字符串对象是否入池，当应用里有大量字符串以及重复应用的时候可以使用intern()方法加入StringTable实现调优。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;直接内存directbuffer&quot;&gt;直接内存DirectBuffer&lt;/h3&gt;
+&lt;p&gt;JVM 区没有直接内存区，是系统内存。
+定义：常见于NIO区域，用于数据缓冲区，分配成本高，读写性能高。不需要从系统内存转换到java内存这一步。不受jvm内存回收管理&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;内存溢出&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;List&amp;lt;ByteBuffer&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+int i=0;
+try{
+  while(true){
+    ByteBuffer bf = ByterBuffer.allocateDirect(1024*1024*100);
+    list.add(bf);
+    i++;
+  }
+}finally{
+  System.out.println(i);
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;直接内存溢出，底层的分配释放原理，在任务管理器中查看。&lt;/p&gt;
+
+&lt;p&gt;unsafe类是必须通过反射方法拿到unsafe对象，分配内存&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unsafe.allocateMemory(内存大小);&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unsafe.setMemoey()&lt;/code&gt;搭配使用。直接内存释放是unsafe才能释放。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;byteBuffer源码分析，内存释放
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Cleaner&lt;/code&gt;对象中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unsafe.freeMemory&lt;/code&gt;
+Cleaner对象，关联对象被回收时，会触发&lt;strong&gt;虚引用&lt;/strong&gt;对象的clean方法，在后台reference。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;JVM 调优上的参数 -XX: DisableExplicitGC 禁用显式的垃圾回收，会影响直接内存的调优机制。比如在直接内存回收中使用这个调优参数就无法实现内存分配。
+如何解决？可以直接用unsafe对象来手动释放。&lt;/p&gt;
+
+&lt;h1 id=&quot;chapter3-垃圾回收&quot;&gt;Chapter3 垃圾回收&lt;/h1&gt;
+&lt;h3 id=&quot;如何判断对象可以回收&quot;&gt;如何判断对象可以回收&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;引用计数法：当引用计数变为0就会被回收，弊端是循环引用问题。&lt;/li&gt;
+  &lt;li&gt;可达性分析算法：确定一系列根对象，类似于葡萄根，扫描堆中的对象，看是否能验证GC Root对象 Memory Analyzer 专门的堆回收。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;List&amp;lt;Object&amp;gt; list1 = ArrayList&amp;lt;&amp;gt;();
+list1.add(&quot;a&quot;);
+list1.add(&quot;b&quot;);
+
+list1 = null;
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;jmap搭配使用打印内存快照 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jmap -dump:formate=b,live,file=1.bin 进程名&lt;/code&gt;，-dump:formate=b表示将这个快照转换为2进制存储，live表示存为快照之后进行垃圾回收,file=1.bin表示保存文件名。使用Memory Analyzer这个软件实现分析。垃圾不能回收的有Native Stack, System class, Thread, Busy monitor.&lt;/p&gt;
+&lt;h4 id=&quot;四种引用面试&quot;&gt;四种引用（面试）&lt;/h4&gt;
+&lt;p&gt;GC ROOT&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;强引用：只要沿着GC ROOT的引用链就不会被回收，只有在没有GC ROOT引用的时候就会断开&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;软引用(softReference)：间接引用，在垃圾回收之后如果内存不足且就会回收，当引用对象被回收，软引用就会进入引用队列。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;垃圾回收的打印详细信息的参数-XX:+PrintGCDetails -verbose:gc&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;弱引用(weakReference)：没有强引用，发生垃圾回收不管内存够不够都会把弱引用回收。当引用对象被回收，弱引用就会进入引用队列。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;虚引用(phantomReference)Cleaner直接内存地址（必须配合引用队列）：ByteBuffer+直接内存，会释放掉直接内存。在虚对象被回收就会调用unsafe.memory，并且将虚引用加入到引用队列中。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;终结器引用(finalReference)（必须配合引用队列）：finalize()终结方法，当没有强引用时，虚拟机将终结器引用加入到引用队列，这个对象还没有被回收，优先级更低的线程将调用finalize()实现终结。&lt;strong&gt;效果不高，不推荐&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;软引用实例&quot;&gt;软引用实例&lt;/h4&gt;
+&lt;p&gt;例子，如果直接引用较大的数组作为内存，可能会造成内存溢出。所以使用软引用list -&amp;gt; softreference-&amp;gt;byte[]&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;List&amp;lt;SoftReference&amp;lt;byte[]&amp;gt;&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+for (int i:10){
+  SoftReference&amp;lt;byte[]&amp;gt; ref = new SoftReference&amp;lt;&amp;gt;(new byte[])
+  list.add(ref);
+  ...
+} 
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这里的结果显示在list中，在软引用最后不被引用之后还能保留最后一个软引用，问题就是怎样把之前已经置为null的软引用在list队列中删除，解决方案如下：
+&lt;strong&gt;利用引用队列 在垃圾回收之后还会保留最后一个引用，可以将其删除&lt;/strong&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ReferenceQueue&amp;lt;byte[]&amp;gt; queue = new ReferenceQueue&amp;lt;&amp;gt;();&lt;/code&gt;
+关联了软引用对象和引用队列
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SoftReference&amp;lt;byte[]&amp;gt; ref = new SoftReference&amp;lt;&amp;gt;(new byte[队列容纳参数]，queue);&lt;/code&gt;
+当 软引用做关联到byte数组被回收时，软引用自己就会被加入到引用队列中去。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Refernece&amp;lt;? extends byte[]&amp;gt; poll = queue.poll()`
+while (poll != null){
+//当队列中的软引用为空，就remove掉存储在软引用队列中的对象
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;弱引用实例-解决强引用内存溢出&quot;&gt;弱引用实例 （解决强引用内存溢出）&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;List &amp;lt;WeakReference&amp;lt;byte[]&amp;gt;&amp;gt; list= new ArrayList&amp;lt;&amp;gt;();
+WeakReference&amp;lt;byte[]&amp;gt; ref = new WeakReference&amp;lt;&amp;gt;(new byte[弱引用大小]);
+list.add(ref);
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;弱引用在垃圾回收时就会将对象回收。&lt;/p&gt;
+&lt;h3 id=&quot;垃圾回收算法&quot;&gt;垃圾回收算法&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;标记清除：GC root 表示哪些没有引用的对象，清除就是将需要清除的内存的起始标记放到空闲的队列中，下次要用的时候直接覆盖，而不是物理意义上的”删除”
+&lt;strong&gt;优点：速度快，缺点：会产生内存碎片&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;标记整理：GC root 表示哪些没有被引用，第二步就是整理，避免标记清除的时候的内存碎片问题，使内存紧凑。
+&lt;strong&gt;优点：没有内存碎片，缺点：移动内存，速度慢&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;复制：将内存区域划分成大小相等的两个区，一个区叫FROM有内存 另一个TO区为空，将有引用的FROM区中的内存复制到TO区中，TO没有产生碎片，清空FROM区，最后交换FROM TO 位置
+&lt;strong&gt;优点：不会产生碎片，缺点：占用较大的内存&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;分代垃圾回收机制&quot;&gt;分代垃圾回收机制&lt;/h3&gt;
+&lt;p&gt;实际的虚拟机会使用以上的垃圾回收算法 
+新生代：伊甸园 幸存区 FROM 幸存区 TO
+老年代：
+居民楼中的垃圾：隔多久收垃圾 ，不会整个内存扫描，新生代相当于垃圾箱，是产生比较频繁的垃圾，老年代是执行频率较低的垃圾，等到整个内存不足时才会清理老年代。&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;第一次垃圾回收minor gc：伊甸园是第一个被使用的空间，如果占满，新生代的垃圾回收minor GC。将内存进行一次复制垃圾回收，伊甸园清理。&lt;/li&gt;
+  &lt;li&gt;第二次垃圾回收 minor gc，伊甸园中内存清理，幸存区每次垃圾回收都会计数，如果在FROM区有超过15次垃圾回收，就会转到老年代区。&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Full GC当老年代空间不足，就会清理老年代和新生代。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;要点
+    &lt;ol&gt;
+      &lt;li&gt;对象首先分配在伊甸园区&lt;/li&gt;
+      &lt;li&gt;新生代空间不足时，触发minor GC，伊甸园和FROM存活的对象使用cpoy复制到TO区，存活的对象和年龄加1，并且交换FROM TO&lt;/li&gt;
+      &lt;li&gt;minor GC 会引发 STOP THE WORLD 其他用户的线程会暂停，因为对象地址会改变，等垃圾回收结束，用户线程才会恢复。&lt;/li&gt;
+      &lt;li&gt;当对象寿命超过阈值，会晋升至老年代，最大寿命是15(4bit)&lt;/li&gt;
+      &lt;li&gt;当老年代空间不足，会现场时触发minor GC 如果之后仍空间不足，那么触发Full GC， stop the world的时间会比较长。&lt;/li&gt;
+      &lt;li&gt;如果此时还是空间不足就会触发outOfSpaceError&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;相关的VM 参数&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;含义&lt;/td&gt;
+      &lt;td&gt;参数&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;堆初始大小&lt;/td&gt;
+      &lt;td&gt;-Xms&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;堆最大大小&lt;/td&gt;
+      &lt;td&gt;-Xmx或-XX:MaxHeapSize=size&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;新生代大小&lt;/td&gt;
+      &lt;td&gt;-Xmn或 -XX:NewSize=size+ -XX:MaxNewSize=size&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;幸存区比例（动态）&lt;/td&gt;
+      &lt;td&gt;-XX:InitialSurvivorRatio=ratio和-XX:+UseAdaptiveSizePolicy&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;幸存区比例&lt;/td&gt;
+      &lt;td&gt;-XX:SurvivorRatio=ratio 默认为8&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;晋升阈值&lt;/td&gt;
+      &lt;td&gt;-XX:MaxTenuringThreshold=treshold&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;晋升详情&lt;/td&gt;
+      &lt;td&gt;-XX:PrintTenuringDistributution&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;GC详情&lt;/td&gt;
+      &lt;td&gt;-XX:+PrintGCDetails -verbose:gc&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Full GC 前 Minor GC&lt;/td&gt;
+      &lt;td&gt;-XX:ScavengeBeforeFullGC&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;在FullGC之前是不是要开Minor gc&lt;/p&gt;
+
+&lt;h4 id=&quot;垃圾回收案例&quot;&gt;垃圾回收案例&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;//分配内存
+private static final int _512KB = 512* 1024;
+private static final int _7M = 7 * 1024 * 1024;
+...
+
+// 堆空间20兆-Xms20M 堆空间最大20兆-Xmx20M 新生代10兆-Xmn10M 幸存区比例不会动态调整-XX:+UseSerial1GC 打印GC详情 -XX:+PrintGCDetails -verbose:gc
+public static void main(String[] args){
+  ArrayList&amp;lt;byte[]&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+  // 第一次是放了7兆会产生一次垃圾回收
+  list.add(new byte[_7M]);
+  // 触发第二次垃圾回收，因为用了两个512k堆的总容量快占满，新生代快占满
+  list.add(new byte[_512KB]); 
+  list.add(new byte[_512KB]); 
+}
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;案例2-大对象&quot;&gt;案例2 大对象&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;private static final int _512KB = 512* 1024;
+private static final int _8M = 8 * 1024 * 1024;
+
+// 堆空间20兆-Xms20M 堆空间最大20兆-Xmx20M 新生代10兆-Xmn10M 幸存区比例不会动态调整-XX:+UseSerial1GC 打印GC详情 -XX:+PrintGCDetails -verbose:gc
+public static void main(String[] args){
+  ArrayList&amp;lt;byte[]&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+  list.add(new byte[_8M]);
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;当加入的对象对于新生代内存不足但是老年代有空间的情况下，直接存储到老年代，相当于晋升，不会有新生代GC。&lt;/li&gt;
+  &lt;li&gt;当加入内容都会导致堆空间不足的内存溢出时之前还是会执行两种垃圾回收。&lt;/li&gt;
+  &lt;li&gt;当内存溢出发生在子线程中，会不会导致主线程的结束？&lt;strong&gt;主线程不会结束&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;垃圾回收器&quot;&gt;垃圾回收器&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;串行：单线程，堆内存较小，适合个人电脑。居民楼 楼层不高，一个保洁工人打扫卫生。&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;吞吐量优先：多线程，堆内存较大，多核CPU。让单位时间内Stop the world 时间短。垃圾回收次数占比低。高楼层，多个保洁，多CPU就是多个扫帚&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;响应时间优先：多线程，堆内存较大，多核CPU。垃圾回收次数占比高。尽可能stop the world时间短&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;串行垃圾回收器&quot;&gt;串行垃圾回收器&lt;/h4&gt;
+&lt;p&gt;-XX:+UseSerialGC = Serial + SerialOld&lt;/p&gt;
+
+&lt;p&gt;Serial：复制算法，在新生代
+SerialOld：标记整理算法，老年代&lt;/p&gt;
+
+&lt;p&gt;CPU0 运行 =&amp;gt;安全点 =&amp;gt;阻塞 =&amp;gt; 运行&lt;/p&gt;
+
+&lt;p&gt;CPU1 运行 =&amp;gt;安全点 =&amp;gt;阻塞 =&amp;gt; 运行&lt;/p&gt;
+
+&lt;p&gt;CPU2 运行 =&amp;gt;安全点 =&amp;gt;垃圾回收线程 =&amp;gt; 运行&lt;/p&gt;
+
+&lt;p&gt;CPU3 运行 =&amp;gt;安全点 =&amp;gt;阻塞 =&amp;gt; 运行&lt;/p&gt;
+
+&lt;p&gt;为什么在安全点暂停，因为地址在改变所以到安全点再改。&lt;/p&gt;
+
+&lt;h4 id=&quot;吞吐量优先&quot;&gt;吞吐量优先&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;-XX:+UseParallelGC -XX:+UseParallelOldGC 默认开启，只要这两个有一个开启另一个也开启&lt;/li&gt;
+  &lt;li&gt;-XX:+UseAdaptiveSizePolicy&lt;/li&gt;
+  &lt;li&gt;-XX:GCTimeRatio=ratio&lt;/li&gt;
+  &lt;li&gt;-XX:MaxGCPauseMillis=ms&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;-XX:ParallelGCThreads=n&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;垃圾回收线程个数和线程数一样，cpu使用曲线是一下子到100%&lt;/li&gt;
+  &lt;li&gt;UseAdaptiveSizePolicy采用的自适应新生代的大小动态调整伊甸园和幸存区大小&lt;/li&gt;
+  &lt;li&gt;GCTimeRatio是尝试调整吞吐量目标垃圾回收时间和总时间占比1/(1+ratio)&lt;/li&gt;
+  &lt;li&gt;MaxGCPauseMillis毫秒数，每次垃圾回收耗时&lt;/li&gt;
+  &lt;li&gt;ParallelGCThreads可以设置线程数&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;GCTimeRatio和MaxGCPauseMillis是对立的指标一般radio是19（1/20 = 0.05）&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;CPU0 运行 =&amp;gt;安全点 =&amp;gt;垃圾回收线程 =&amp;gt; 运行&lt;/p&gt;
+
+&lt;p&gt;CPU1 运行 =&amp;gt;安全点 =&amp;gt;垃圾回收线程 =&amp;gt; 运行&lt;/p&gt;
+
+&lt;p&gt;CPU2 运行 =&amp;gt;安全点 =&amp;gt;垃圾回收线程 =&amp;gt; 运行&lt;/p&gt;
+
+&lt;p&gt;CPU3 运行 =&amp;gt;安全点 =&amp;gt;垃圾回收线程 =&amp;gt; 运行&lt;/p&gt;
+
+&lt;h4 id=&quot;响应时间优先&quot;&gt;响应时间优先&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;-XX:+UseConcMarkSweepGC ~ -XX:+UseParNewGC ~ SerialOld&lt;/li&gt;
+  &lt;li&gt;-XX:ParallelGCThreads=n ~ -XX:ConcGCThreads=threads 初始执行的并行线程数，并发线程数，建议设置为并行的四分之一（比如四个线程，保留一个做垃圾回收）&lt;/li&gt;
+  &lt;li&gt;-XX:CMSInitingOccupancyFraction=percent 控制执行垃圾回收的内存占比，当内存占用到多少的时候就执行垃圾回收，是保证对浮动垃圾的清理。默认值65%&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;-XX:CMSScavenegBeforeRemark 重新标记的时候新生代会引用老年代，对性能影响大，相当于在回收之前做了无用的查找，这个参数就是对新生代垃圾回收&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;UseConcMarkSweepGC 基于垃圾清除的回收器，并发，工作于老年代，UseParNewGC在新生代  SerialOld基于标记整理的老年代回收器。&lt;/li&gt;
+  &lt;li&gt;CMS对CPU占用不高，用户工作线程会收影响，对整个应用程序吞吐量会有影响。
+&lt;strong&gt;concurrent并发：垃圾回收执行，用户线程也执行&lt;/strong&gt;
+&lt;strong&gt;parallel并行：垃圾回收期间，用户线程stoptheworld了&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;老年代不足： 初始标记 -&amp;gt; 跟用户执行并发，重新标记时也要stop the world 用户线程又开始运行。
+CPU0 运行 =&amp;gt; 安全点 =&amp;gt; 阻塞 =&amp;gt; 安全点 =&amp;gt;运行 =&amp;gt;安全点 =&amp;gt; 重新标记 =&amp;gt; 安全点 =&amp;gt; 运行&lt;/p&gt;
+
+&lt;p&gt;CPU1 运行 =&amp;gt; 安全点 =&amp;gt; &lt;strong&gt;初始标记&lt;/strong&gt; =&amp;gt; 安全点 =&amp;gt; &lt;strong&gt;并发标记 =&amp;gt;安全点 =&amp;gt; 重新标记 =&amp;gt; 安全点 =&amp;gt; 并发清理 =&amp;gt; 运行&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;CPU2 运行 =&amp;gt; 安全点 =&amp;gt; 阻塞 =&amp;gt; 安全点 =&amp;gt;运行 =&amp;gt;安全点 =&amp;gt; 重新标记 =&amp;gt; 安全点 =&amp;gt; 运行&lt;/p&gt;
+
+&lt;p&gt;CPU3 运行 =&amp;gt; 安全点 =&amp;gt; 阻塞 =&amp;gt; 安全点 =&amp;gt;运行 =&amp;gt;安全点 =&amp;gt; 重新标记 =&amp;gt; 安全点 =&amp;gt; 运行&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;碎片过多不能回收，导致并发失败，垃圾回收时间会增加。CMS回收问题&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;g1-垃圾回收器&quot;&gt;G1 垃圾回收器&lt;/h3&gt;
+
+&lt;p&gt;Garbage First,JDK9开始使用这个回收器，CMS被替代了&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;重视吞吐量和低延迟，默认暂停的目标是200ms&lt;/li&gt;
+  &lt;li&gt;超大内存，将堆划分为多个大小相等的Region&lt;/li&gt;
+  &lt;li&gt;标记整理算法，两个区域之间是复制算法&lt;/li&gt;
+  &lt;li&gt;相关JVM参数
+-XX:+UseG1GC
+-XX:G1HeapRegionSize=size
+-XX:MaxGCPauseMillis=time
+    &lt;h4 id=&quot;g1回收阶段&quot;&gt;G1回收阶段&lt;/h4&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Young Collection &amp;lt;-&amp;gt; Mix Collection &amp;lt;-&amp;gt; Young Collection Concurrent Mark&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;young collection ： 伊甸园区 被占满&lt;/li&gt;
+  &lt;li&gt;young collection + CM
+    &lt;ul&gt;
+      &lt;li&gt;在young GC 会进行GC Root&lt;/li&gt;
+      &lt;li&gt;老年代，占用堆空间比例达到阈值，进行并发标记，不会STW 由-XX:InitiatingHeapOccupancyPercent=percent参数决定 默认为45%&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;mixed Collection 
+全面垃圾回收，老年代优先回收垃圾多的区。
+    &lt;ul&gt;
+      &lt;li&gt;最终标记Remark会STW&lt;/li&gt;
+      &lt;li&gt;拷贝存活Evacuation 会STW&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Full GC
+    &lt;ul&gt;
+      &lt;li&gt;SerialGC
+        &lt;ul&gt;
+          &lt;li&gt;新生代内存不足minor gc&lt;/li&gt;
+          &lt;li&gt;老年代内存不足 full gc&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;ParallelGC
+        &lt;ul&gt;
+          &lt;li&gt;新生代内存不足minor gc&lt;/li&gt;
+          &lt;li&gt;老年代内存不足 full gc&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;CMS
+        &lt;ul&gt;
+          &lt;li&gt;新生代内存不足minor gc&lt;/li&gt;
+          &lt;li&gt;老年代内存不足&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;G1
+        &lt;ul&gt;
+          &lt;li&gt;新生代内存不足minor gc&lt;/li&gt;
+          &lt;li&gt;老年代内存不足 有阈值&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;垃圾回收调优&quot;&gt;垃圾回收调优&lt;/h3&gt;
+
+&lt;h1 id=&quot;chapter-4-类加载和字节码技术&quot;&gt;Chapter 4 类加载和字节码技术&lt;/h1&gt;
+
+&lt;h2 id=&quot;类文件结构&quot;&gt;类文件结构&lt;/h2&gt;
+&lt;p&gt;编译期间每一个字节的含义 
+类文件节后如下
+&lt;img src=&quot;/img/jvm-classFile.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;魔数&quot;&gt;魔数&lt;/h3&gt;
+&lt;p&gt;0-3字节 表示它是否是【class】类型文件ca fe ba be&lt;/p&gt;
+&lt;h3 id=&quot;版本&quot;&gt;版本&lt;/h3&gt;
+&lt;p&gt;4-7地接，表示类版本 00 34(翻译成10进制52表示java 8)&lt;/p&gt;
+
+&lt;h3 id=&quot;常量池&quot;&gt;常量池&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/img/jvm-constantPool.jpg&quot; alt=&quot;&quot; /&gt;
+8-9 字节 表示常量池长度 00 23 (10进制翻译为35 表示常量池有#1~#34项 注意#0项不计入)
+#1第一项0a需要查表表示第一个Method信息 0a &lt;strong&gt;00 06&lt;/strong&gt; &lt;strong&gt;00 15（21）&lt;/strong&gt; 表示引用常量池#6和#21项来获得【所属类】和【方法名】&lt;/p&gt;
+
+&lt;p&gt;先是将16进制转10进制再去查找常量池的项，对照某项的数值去常量池表找对应含义。&lt;/p&gt;
+
+&lt;h3 id=&quot;访问表示与继承信息&quot;&gt;访问表示与继承信息&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/img/jvm-extends.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;field信息&quot;&gt;Field信息&lt;/h3&gt;
+&lt;p&gt;用字节码表示
+&lt;img src=&quot;/img/jvm-field.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;方法信息&quot;&gt;方法信息&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/img/jvm-method.jpg&quot; alt=&quot;&quot; /&gt;
+方法属性&lt;/p&gt;
+
+&lt;h3 id=&quot;附加属性&quot;&gt;附加属性&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/img/jvm-attachAttr.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;字节码指令&quot;&gt;字节码指令&lt;/h2&gt;
+&lt;h3 id=&quot;入门&quot;&gt;入门&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;构造方法中的字节含义 2a b7 00 01 b1
+    &lt;h3 id=&quot;finally&quot;&gt;finally&lt;/h3&gt;
+    &lt;p&gt;如果在finally中写入return会吞掉异常&lt;/p&gt;
+    &lt;h3 id=&quot;synchronized从字节码角度理解&quot;&gt;synchronized从字节码角度理解&lt;/h3&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;加锁成对出现 monitorenter 加锁monitorexit 解锁
+如果出现异常就会将异常的引用被抛出，总会进入到暂存lock对象并进行解锁操作。&lt;/p&gt;
+
+&lt;h2 id=&quot;编译器处理&quot;&gt;编译器处理&lt;/h2&gt;
+
+&lt;h3 id=&quot;语法糖-默认构造&quot;&gt;语法糖 默认构造&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;java源码编译为class字节码文件 解释为伪代码
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;public class C{}&lt;/code&gt;编译为class之后的代码&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;public class C1{
+  // 无参构造是编译器帮助我们加上的
+  public C1(){
+    super();// 调用父类OBject的无参构造方法，即调用java/lang.Object
+  }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;语法糖-自动拆装箱&quot;&gt;语法糖 自动拆装箱&lt;/h3&gt;
+&lt;p&gt;JDK5开始&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;public static void main (String[] args){
+  Integer x = Integer.valueOf(1);//Integer x = 1 装箱
+  int y = x.intValue(); // int y = x拆箱
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;编译器帮助写入字节码&lt;/p&gt;
+
+&lt;h3 id=&quot;语法糖-泛型集合&quot;&gt;语法糖 泛型集合&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;泛型擦除
+JDK5之后的特性：泛型信息在编译成字节码之后就会擦除掉&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;List&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;&amp;gt;();
+list.add(10);// 实际调用的是List.add(Object e)
+Integer x = list.get(0);// 实际调用的是Object obj = List.get(int index);
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;泛型反射
+如果以上的integer转换为int就是
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;int x = ((Integer)list.get(0)).intValue();&lt;/code&gt;。
+有些字节码信息改变了，局部变量类型表，包含了泛型信息，泛型没有被擦除，不能使用反射拿到泛型信息&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;语法糖-可变参数&quot;&gt;语法糖 可变参数&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;public static void foo(String... arge){
+  String[] array = args;
+}  
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;可变参数 String… args 其实是一个String[] args 在java编译器上会显示为，根据实参数量创建，如果是无参，则会创建一个长度为0的形参。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;public static void foo (String[] args){
+  String[] args = args;
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;语法糖-foreach&quot;&gt;语法糖 foreach&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;int[] array = {1,2,3};// 数组赋值的简化写法
+for (int e: array){...}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;编译成&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;int[] array = new int[]{1,2,3};
+for (int i=0;i&amp;lt;array.length;i+++){
+  int e = array[i];
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;如果要实现foreach一定要有迭代器！！！&lt;/p&gt;
+
+&lt;h3 id=&quot;语法糖-switch-string&quot;&gt;语法糖 switch string&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;switch case   
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;… 还有各种语法糖就不一一写了&lt;/p&gt;
+
+&lt;h3 id=&quot;语法糖-匿名内部类&quot;&gt;语法糖 匿名内部类&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Runnable runnable = new Runnable(){
+  @Override
+  public void run(){}
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;转换后的代码&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;final class 外部类名$1 implemplents Runnable{
+  public void run(){}
+}
+...
+public class 内部类名{
+  public static void main(String[] args){
+    Runnable runnable = new 外部类名$1
+  }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;引用局部变量的匿名内部类的语法糖&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;publc static void test(final int x){
+  Runnable runnable = new Runnable(){
+    @Override
+    public void run(){
+      ...
+    }
+  }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;转换之后的代码为&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;// 额外生成的类
+final class 外部类名$1 implements Runnable{
+  int val$x;
+  构造方法 赋值属性
+  public void run(){...}
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;为什么匿名内部类局部变量一定是final的，因为在创建外部类名$1对象时将x的值赋值隔离外部类名$1对象的valx属性，所以x不能再发生变化，否则valx属性会跟着一起变。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;类加载阶段&quot;&gt;类加载阶段&lt;/h2&gt;
+
+&lt;h3 id=&quot;加载&quot;&gt;加载&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/img/jvm-classloader.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;链接&quot;&gt;链接&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;验证 检查是否符合JVM规范，安全性检查&lt;/li&gt;
+  &lt;li&gt;准备 为static变量分配空间 设置默认值 静态变量存储在堆中跟着类对象
+    &lt;ul&gt;
+      &lt;li&gt;分配空间在准备阶段和赋值在初始化阶段是两个步骤&lt;/li&gt;
+      &lt;li&gt;赋值时在类的构造方法中&lt;/li&gt;
+      &lt;li&gt;final类型静态变量赋值动作和String赋值不是在初始 化阶段而是在准备阶段的。&lt;/li&gt;
+      &lt;li&gt;如果final但是属于引用类型也就是new了就是在初始化阶段完成&lt;/li&gt;
+      &lt;li&gt;new 新变量是在初始化阶段完成的&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;解析:将常量池中的符号引用解析为直接引用。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;public class Load2{
+  public static void main (String[] args) throws Exception{
+    ClassLoader cl = Load2.class.getClassLoader();
+    // loadClass方法不会导致类的解析和初始化
+    Class&amp;lt;?&amp;gt; c = cl.loadClass(&quot;C的全限定类名&quot;);
+    ...
+    // new C();
+  }
+}
+
+class C{
+  D d = new D();
+}
+class D{
+
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;初始化&quot;&gt;初始化&lt;cinit&gt;&lt;/cinit&gt;&lt;/h3&gt;
+&lt;p&gt;初始化就是调用&lt;cinit&gt;&lt;/cinit&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/jvm-classloaderInit.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;chapter5-类加载器&quot;&gt;Chapter5 类加载器&lt;/h1&gt;
+&lt;p&gt;以JDK8为例&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/jvm-classloaderMain.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;只有在以上类都没有加载过的时候才会执行自定义的类加载器。&lt;/p&gt;
+
+&lt;h2 id=&quot;启动类加载器-不能直接访问&quot;&gt;启动类加载器 不能直接访问&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Class F{
+  static {...}
+}
+Class Load{
+  public void main (){
+    Class&amp;lt;?&amp;gt; aclass = Class.forname(&quot;F的全限定类名&quot;);
+    aclass.getClassLoader();//打印类加载器
+  }
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;扩展类加载器&lt;/li&gt;
+&lt;/ul&gt;
 
 </description>
         <pubDate>Thu, 17 Dec 2020 00:00:00 +0800</pubDate>
@@ -2080,10 +3166,12 @@ ENTRYPOINT [&quot;java&quot;, &quot;-jar&quot;,&quot;/waiter-service.jar&quot;]
   &lt;li&gt;
     &lt;p&gt;进入到pom文件所在目录 开始利用maven打包&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mvn clean package -Dmaven.test.skip=true&lt;/code&gt;&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;经过漫长时间的打包终于能看到镜像了&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;经过漫长时间的打包终于能看到镜像了
+执行镜像&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker run --name waiter-service -d -p 8080:8080 springbucks/waiter-service:0.0.1-SNAPSHOT&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;查看日志
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker logs waiter-service&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
+
 </description>
         <pubDate>Wed, 09 Dec 2020 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2020/12/09/Spring04/</link>
@@ -8187,26 +9275,6 @@ module.exports={
         <category>self-learning</category>
         
         <category>完整工作流</category>
-        
-        
-      </item>
-    
-      <item>
-        <title> Machine Learning math </title>
-        <description>&lt;h2 id=&quot;降维-dimensionalily-reduce&quot;&gt;降维 Dimensionalily Reduce&lt;/h2&gt;
-&lt;p&gt;首先引入过拟合概念 overfitting ，解决方法有三种，这里具体讲的是PCA降维。&lt;/p&gt;
-
-&lt;h3 id=&quot;pca-降维概念&quot;&gt;PCA 降维概念&lt;/h3&gt;
-</description>
-        <pubDate>Wed, 30 Sep 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/09/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0ML/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/09/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0ML/</guid>
-        
-        <category>math</category>
-        
-        <category>self-learning</category>
-        
-        <category>machine learning</category>
         
         
       </item>
