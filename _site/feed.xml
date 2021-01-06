@@ -5,12 +5,343 @@
     <description>季月侣的Blog || About Joy </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 24 Dec 2020 11:11:10 +0800</pubDate>
-    <lastBuildDate>Thu, 24 Dec 2020 11:11:10 +0800</lastBuildDate>
+    <pubDate>Wed, 06 Jan 2021 10:33:46 +0800</pubDate>
+    <lastBuildDate>Wed, 06 Jan 2021 10:33:46 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
-        <title> Spring 05 SpringCloud 和 Cloud Native 概述 服务注册和发现 </title>
+        <title> ReinforcementLearning  </title>
+        <description>&lt;h1 id=&quot;一些数学概念&quot;&gt;一些数学概念&lt;/h1&gt;
+
+&lt;h2 id=&quot;行列式公式&quot;&gt;行列式公式&lt;/h2&gt;
+
+&lt;p&gt;c&lt;sub&gt;i,j&lt;/sub&gt; = (-1)&lt;sup&gt;i+j&lt;/sup&gt;det(A)&lt;sub&gt;i,j&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;det(A) = a11·c11 + a12·c12···+a1n·c1n&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/rl/math_pic.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;行列式的值&quot;&gt;行列式的值&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;其实行列式的值是高维空间中的体积&lt;/li&gt;
+  &lt;li&gt;如果两个row的值相同说明这个矩阵的行列式是0&lt;/li&gt;
+  &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;概念解析&quot;&gt;概念解析&lt;/h1&gt;
+&lt;p&gt;首先根据2020年李宏毅机器学习中的概念将reinforcement learning 作为一种 非 supervice learning的形式作出对比&lt;/p&gt;
+&lt;h2 id=&quot;以alphago为例&quot;&gt;以AlphaGo为例&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;supervice learning 表示从一个老师那里学习&lt;/li&gt;
+  &lt;li&gt;reinforcement learning 是根据过去的经验来学习&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;以电玩为例&quot;&gt;以电玩为例&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;比如一款星球大战游戏，玩家需要操纵机器往左还是往右，射击还是移动，每次做出动作都会有一个reward作为结果&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;应用领域&quot;&gt;应用领域&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Chatbot作用于 如果人也不知道怎么做，但是用reinforcement learning 可以更快的会的结果。&lt;/li&gt;
+  &lt;li&gt;最常用的Application是
+    &lt;h2 id=&quot;难点&quot;&gt;难点&lt;/h2&gt;
+  &lt;/li&gt;
+  &lt;li&gt;reward有滞后性，短期牺牲会有好结果&lt;/li&gt;
+  &lt;li&gt;agent要会探索世界&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;a3c-新概念&quot;&gt;A3C 新概念？&lt;/h2&gt;
+&lt;h3 id=&quot;policy-based-vs-value-based&quot;&gt;policy based v.s. value based&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;policy based -&amp;gt; learning an actor： 找一个function
+&lt;img src=&quot;/img/rl/policy_actor.jpg&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;value based -&amp;gt; learning a critic：找一个评价指标&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;所以最强的是将policy 和 value结合的一种方法 Asynchronous Advatage Actor-Crtic(A3C) Alpha Go 是以上两种方法的结合&lt;/p&gt;
+
+&lt;h3 id=&quot;policy-based---learning-an-actor&quot;&gt;policy based -&amp;gt; learning an actor&lt;/h3&gt;
+
+&lt;h4 id=&quot;步骤&quot;&gt;步骤&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&quot;/img/rl/policySteps.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;nn-as-actor-第一步&quot;&gt;NN as Actor 第一步&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;input: the observation of machine represented as a vector or a matrix&lt;/li&gt;
+  &lt;li&gt;output: each action corresponds to a neuron in putput layer
+ 比如 上面的电玩例子，input是每次的图片 pixels 经过NN 获得结果 左移，右移 或者开火
+看到哪个output的几率会采取哪种action
+&lt;img src=&quot;/img/rl/step1.jpg&quot; alt=&quot;&quot; /&gt;
+好处就是：比较general，毕竟机器可以预测没有看到过的信息。&lt;/li&gt;
+  &lt;li&gt;对于supervised learning 的 review
+    &lt;h4 id=&quot;goodness-of-actor-第二步&quot;&gt;Goodness of Actor 第二步&lt;/h4&gt;
+  &lt;/li&gt;
+  &lt;li&gt;give an actor&lt;/li&gt;
+  &lt;li&gt;use actor to play the video game 
+最大化每次游戏结束的total reward而不是每次action的reward，即使是给了相同的action还是会有不同的reward因为游戏本身有随机性。其实是max reward的期望。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/rl/step2/expectation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;pick-best-function-第三步&quot;&gt;pick best function 第三步&lt;/h4&gt;
+&lt;p&gt;最大化R用Gradient Ascent
+假设在sample data中 计算 gradient 其实就是很直觉的几率看到某个1observation 会的reward 会变好。
+为什么要取log 对 p的微分 再除 p的几率 偏好 action b出现的几率多 出掉某个比较大的值相当于 normalization&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;问题 env 和 Reward是黑盒子需要用 policy gradient train
+    &lt;h3 id=&quot;value-based---learning-a-critic&quot;&gt;value based -&amp;gt; learning a critic&lt;/h3&gt;
+  &lt;/li&gt;
+  &lt;li&gt;a critic is a function depending on the actor pπie it is evaluated
+    &lt;ul&gt;
+      &lt;li&gt;the function is represented by a neural netword&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;state value function V&lt;sup&gt;π&lt;/sup&gt;(s)
+    &lt;ul&gt;
+      &lt;li&gt;when using actor π, the cumulated reward expects to be obtained after seeing observation(state)
+critic 工作就是衡量一个actor好不好， critic会随着actor的不同而改变&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;怎么评估 Critic
+    &lt;ol&gt;
+      &lt;li&gt;蒙特卡洛 在游戏结束才知道 reward是多少&lt;/li&gt;
+      &lt;li&gt;temporal-difference 方法 $V^π(S_t)=V^T(S_t+1)+r_t$&lt;/li&gt;
+    &lt;/ol&gt;
+    &lt;ul&gt;
+      &lt;li&gt;虽然不知道两个实验中获得的V是多少，但是要让差值越接近r_t越好，好处是在游戏没有结束的时候可以开始train&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;another critic 另一种 critic方式，在每次对V输入的时候不光是输入 observation 的S 还要输入 actor，算出取得的reward，假设 action是可以&lt;strong&gt;穷举&lt;/strong&gt;的。可以用Qfunction找出一个比较好的 actor&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Q function 的妙用 1）初始的π 2）蒙特卡洛或者 temporal-difference 方法学出 Q value 3）学出的Qfunction 给了一个新的π 比原来的 π更好&lt;/p&gt;
+
+&lt;p&gt;重点在2）到3）步骤 需要在 Voldπ大于等于Vnewπ，也就是π的更新值要一直大于 原先的值&lt;/p&gt;
+
+&lt;p&gt;详情见一片rainbow文章&lt;/p&gt;
+
+&lt;h3 id=&quot;actor-和-critic-a3c-asynchronous-advatage-actor-critic&quot;&gt;actor 和 critic A3C （Asynchronous Advatage Actor-Critic）&lt;/h3&gt;
+&lt;p&gt;&lt;a hrrf=&quot;https://github.com/JoyDajunSpaceCraft/pytorch-a2c-ppo-acktr-gail/blob/master/a2c_ppo_acktr/model.py&quot; target=&quot;_blank&quot;&gt;A3C实现&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;a3c-的精神&quot;&gt;A3C 的精神&lt;/h4&gt;
+&lt;p&gt;一般都是根据 Actor 来学习reward 但是A3C是根据 Critic学&lt;/p&gt;
+
+&lt;h4 id=&quot;asynchronous&quot;&gt;Asynchronous&lt;/h4&gt;
+&lt;p&gt;Asynchronous是什么意思：有一个global的 Actor 和 gobal 的 Critic 到学习的时候&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;copy global paramters&lt;/li&gt;
+  &lt;li&gt;sampling some data&lt;/li&gt;
+  &lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;policy-gradient-方法-针对-env-和-reward&quot;&gt;policy gradient 方法 针对 env 和 reward&lt;/h3&gt;
+&lt;p&gt;因为env 和 reward是不可微分的黑盒子，所以需要实现对这两个内容的train 就用 policy gradient&lt;/p&gt;
+
+&lt;h3 id=&quot;inverse-reinforcement-learning&quot;&gt;inverse reinforcement learning&lt;/h3&gt;
+&lt;p&gt;imitation learning 的一种 ，没有reward function ，因为多数的情况下是没有reward的，所以用这个来获得reward function&lt;/p&gt;
+
+&lt;h1 id=&quot;小概念-ppo-proximal-policy-optimization&quot;&gt;小概念 PPO Proximal Policy Optimization&lt;/h1&gt;
+&lt;p&gt;从policy gradient 到 on-policy 和 off-policy 再到 add constraint&lt;/p&gt;
+&lt;h2 id=&quot;policy-gradient&quot;&gt;policy gradient&lt;/h2&gt;
+&lt;p&gt;action env reward-function&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;policy π is a network with parameter Θ
+    &lt;ul&gt;
+      &lt;li&gt;input 电玩： 游戏画面&lt;/li&gt;
+      &lt;li&gt;output 机器产生什么样的行为 电玩 ： 左右 开火
+游戏初始画面 s1 做出action a1 获得 reward r1 
+新的游戏画面s2 …
+直到游戏决定结束了，一场游戏叫做episode R表示total reward 
+trajectory τ = {s1,a1,s2,a2…}
+获得 的几率是：pΘ(τ) = p(s1)pΘ(a1|s1)p(s2|s1,a1)pΘ(a2|s2)…
+              = p(s1)∏pΘ(at,st)p(St+1|St,at)
+p(St+1|St,at)是env也就是游戏环境，pΘ(at,st)是actor的行为。
+所以前后的图片几率还是有关系的。
+获得的R是有规律的，穷举每一个可能的τ，R&lt;sub&gt;Θ&lt;/sub&gt;= ∑&lt;sub&gt;τ&lt;/sub&gt;R(τ)pΘ(τ) 
+就是得到期望值R(τ)，最大化 这个期望， 用到gradient deciant&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;实作的时候的细节 loss function 是 crossentropy 要记得乘上 total reward&lt;/li&gt;
+  &lt;li&gt;tips 1. add baseline 很多游戏只有正的reward ，因为reward一直是乘在几率之前，表示了上升的多少，但是我们是sample所以的action如果有一个reward没有被sample到，它的reward就是0，下次增加的几率就是0，所以将 reward要减去某个概率保证reward有正有负。减去的值就是平均值。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;imag&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;tips 2. assign suitable credit 每次游戏可能会是某件事情的累加，因为sample次数不多，合理的contribution需要计算。所以前面的R变为从某个时间t开始直到游戏结束，还要再乘上 一个小于1的参数&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;imag&lt;/p&gt;
+&lt;h2 id=&quot;from-on-policy-to-off-policy&quot;&gt;from on-policy to off-policy&lt;/h2&gt;
+</description>
+        <pubDate>Mon, 27 Dec 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/12/27/ReinforcementLearning/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/12/27/ReinforcementLearning/</guid>
+        
+        <category>Python</category>
+        
+        <category>Reinforcement Learning</category>
+        
+        <category>self-learning</category>
+        
+        
+      </item>
+    
+      <item>
+        <title> ParlAI Chatbot </title>
+        <description>&lt;h1 id=&quot;parlai-a-dialog-research-software-platform-alexander-阅读&quot;&gt;ParlAI: A Dialog Research Software Platform Alexander 阅读&lt;/h1&gt;
+&lt;h2 id=&quot;abstract&quot;&gt;abstract&lt;/h2&gt;
+&lt;p&gt;一个用Python实现的对话研究的开源软件平台，可在http://parl.ai。其目标是提供一个统一的框架，用于共享、培训和测试对话模型；集成Amazon Mechani-cal Turk进行数据收集、人类评估和在线/强化学习；以及一个机器学习模型库，用于与其他模型进行比较，并改进现有架构。超过20个任务在第一次重新租赁支持，包括流行的数据集，SQuAD, bAbI tasks，MCTest，维基，QACNN，QADailyMail，CBT，bAbI Di-alog，Ubuntu，OpenSubtitles和VQA。集成了几种模型，包括记忆网络、seq2seq和注意LSTMs等神经模型。&lt;/p&gt;
+
+&lt;h2 id=&quot;介绍&quot;&gt;介绍&lt;/h2&gt;
+
+&lt;p&gt;语言的目的是为了达到交流的目的，这通常涉及到两个或多个交流者之间的对话（Crystal，2004）。因此，试图解决对话是NLP社区研究人员的基本目标。从机器学习的角度来看，构建一个能够对话的学习代理也是很有趣的，原因很多，主要是解决方案涉及到实现领域的大多数子目标，而且在许多情况下，这些子任务直接影响任务。一方面，对话可以看作是一种罪恶-&lt;/p&gt;
+
+&lt;p&gt;gle任务（学习如何交谈）和另一方面，作为数千个相关的任务，需要不同的技能，所有的输入和输出格式相同。预定餐厅、聊天的任务，关于体育或新闻，或回答事实或感性的问题都属于Dialog。因此，执行任务转移的方法对最终目标很有用。记忆、逻辑和常识推理、计划、交互学习、学习组合性和其他人工智能子目标在对话中也有明确的作用。然而，为了追求这些研究目标，软-&lt;/p&gt;
+
+&lt;p&gt;软件工具应该统一不同的对话子任务和可以从中学习的代理。处理单个数据集可能会导致孤立&lt;/p&gt;
+
+&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+&lt;p&gt;开发dia-log模型的统一框架。ParlAI的目标是将提供给机器学习代理的对话数据集输入格式统一为单一格式，并尽可能使评估框架和指标标准化。搜索者可以将他们的新任务和他们的代理培训代码提交到存储库，以便与其他人共享，以帮助再现性，并更好地支持后续研究。&lt;/p&gt;
+
+&lt;p&gt;涉及许多不同技能的一般对话。ParlAI包含真实和模拟语言数据集的无缝组合，并通过使多任务模型与单任务模型一样易于构建，鼓励多任务模型的开发和评估。这将减少模型设计对特定数据集的过度拟合，并鼓励执行任务转移的模型，这是通用对话代理的一个重要先决条件。&lt;/p&gt;
+
+&lt;p&gt;真正与人对话。ParlAI通过Amazon Mechanical Turk可以收集、培训和评估与hu-mans的实时对话，这使得Turkers与对话代理之间的连接更加容易，见图2。这也使得比较不同研究小组Turker实验成为可能，这在历史上是很困难的。一个通用的对话模型。我们的目标是激励构建新的任务和代理，使领域朝着工作的方向发展。因此，进入知识库的每个新任务都应该朝着这个共同目标努力，而不是仅仅被看作是一项独立的研究。&lt;/p&gt;
+
+&lt;h2 id=&quot;基本属性&quot;&gt;基本属性&lt;/h2&gt;
+&lt;p&gt;ParlAI由许多任务和代理组成，可以用来解决这些问题。ParlAI中的所有任务都有一个单一格式（API），这使得将任何代理应用于任何任务或同时执行多个任务变得简单。这些任务包括固定的监督/模拟学习数据集（即会话日志）和交互式（在线或强化学习）任务，以及真实语言和模拟任务，这些任务都可以无缝地进行培训。ParlAI还支持其他媒体，例如图像以及视觉问题解答文本（Antol等人，2015年）或基于视觉的对话（Das等人，2017年）。ParlAI会在任务和数据集首次使用时自动下载它们。可以在环境（任务）中嵌入一个或多个机械突厥器来收集数据、训练或评估学习代理。示例包含在&lt;/p&gt;
+
+&lt;p&gt;与PyTorch 和 Lua Torch一起训练。ParlAI使用ZeroMQ与Python以外的语言（如Lua Torch）进行对话。代码中支持模型的批训练和hog-wild训练。图3给出了用于训练主代理的示例。&lt;/p&gt;
+
+&lt;h2 id=&quot;几个概念的解析&quot;&gt;几个概念的解析&lt;/h2&gt;
+
+&lt;p&gt;World,agent teacher
+World-环境。这可以从非常简单（例如只有两个agent进行转换）到更复杂（例如交互环境中的多个代理）。&lt;/p&gt;
+
+&lt;p&gt;•agent——能够在世界范围内行动（尤其是说话）的agent。agent可以是学习者（即机器学习系统），也可以是硬编码的机器人，例如设计用来与学习者或人类（如Turker）互动的机器人。&lt;/p&gt;
+
+&lt;p&gt;•teacher一种与学习者对话以进行教学的代理，例如执行图1中的任务之一。&lt;/p&gt;
+
+&lt;p&gt;在定义了一个世界和其中的代理人之后&lt;/p&gt;
+
+&lt;p&gt;主循环可以运行用于训练、测试或显示，调用函数世界谈判（）跑世界的一步。图3给出了显示数据的示例代码，运行该代码的输出如图4所示&lt;/p&gt;
+
+&lt;h2 id=&quot;actions-and-observations&quot;&gt;Actions and Observations&lt;/h2&gt;
+&lt;p&gt;所有的agent（包括teacher）都以一种单一的通用格式（观察/动作对象（python dict）进行交互，见图5。它用于在代理之间传递文本、标签和奖励。同一对象类型用于说话（演戏）和倾听（观察），但字段中的值不同。因此，对象从代理.act传入并传递给（）探员。观察（），见图3。信息的字段如下：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;text: a speech act.&lt;/li&gt;
+  &lt;li&gt;id: the speaker’s identity.&lt;/li&gt;
+  &lt;li&gt;reward: a real-valued reward assigned to the receiver of the message.&lt;/li&gt;
+  &lt;li&gt;episode done: indicating the end of a dialog.&lt;/li&gt;
+  &lt;li&gt;label: a set of answers the speaker is expect- ing to receive in reply, e.g. for QA datasets the right answers to a question.&lt;/li&gt;
+  &lt;li&gt;label candidates: a set of possible ways to respond supplied by a teacher, e.g. for multi- ple choice datasets or ranking tasks.&lt;/li&gt;
+  &lt;li&gt;text candidates: ranked candidate predic- tions from a learner. Used to evaluate ranking metrics, rather than just evaluate the single response in the text field.&lt;/li&gt;
+  &lt;li&gt;metrics: A teacher can communicate to a learning agent metrics on its performance.
+Finally other media can also be supported with additional fields:&lt;/li&gt;
+  &lt;li&gt;image: an image, e.g. for Visual Question Answering or Visual Dialog datasets&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;code-structure&quot;&gt;Code Structure&lt;/h2&gt;
+&lt;p&gt;The ParlAI codebase has five main directories: • core: the primary code for the platform.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;agents: contains agents which can interact with the worlds/tasks (e.g. learning models).&lt;/li&gt;
+  &lt;li&gt;examples: contains examples of different mains (display data, training and evaluation).&lt;/li&gt;
+  &lt;li&gt;tasks: contains code for the different tasks available from within ParlAI.&lt;/li&gt;
+  &lt;li&gt;mturk: contains code for setting up Mechan- ical Turk and sample MTurk tasks.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;core&quot;&gt;core&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;agent.py:定义所有代理的代理基类，它实现observe（）和act（）方法，Teacher类也报告度量，以及MultiTaskTeacher进行多任务培训。&lt;/li&gt;
+  &lt;li&gt;teacher.py:用于使用固定聊天日志进行对话的基本教师类。&lt;/li&gt;
+  &lt;li&gt;world.py:定义基本World class, DialogPartnerWorld作用于两个对话者、用于两个以上对话者的MultiA-gentDialogWorld以及可以包装所选环境的两个容器：BatchWorld用于批处理培训，HogwildWorld用于跨多个线程进行培训。&lt;/li&gt;
+  &lt;li&gt;dict.py:建筑语言文字规范。&lt;/li&gt;
+  &lt;li&gt;计算精确匹配、F1和排名指标以供评估&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;tasks&quot;&gt;tasks&lt;/h3&gt;
+&lt;p&gt;任务分为五类：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;问答（QA）：一种简单的对话形式，每个演讲者只需转一圈。任何智能对话代理都应该能够回答问题，并且可以构建许多种类的问题（以及数据集），从而提供一组非常重要的测试。问题回答特别有用，因为如果数据集用QA对标记，并且问题大多是明确的，那么求值比其他形式的对话更简单。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;句子完成（完形填空测试）Sentence Completion (Cloze Tests)：代理必须在对话的下一句话中填写缺失的单词。同样，这是一个特殊的对话框任务，但它的优点是数据集制作成本低，评估简单，这就是为什么社区已经构建了几个这样的数据集。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;面向目标的对话Goal-Oriented Dialog：更现实的任务类别是在对话结束时有一个目标要实现。例如，一个顾客和一个旅行社讨论一个航班，一个演讲者推荐另一个要看的电影，等等。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;闲聊Chit-Chat：对话任务，其中可能没有明确的目标，但更多的是讨论-例如两个发言者讨论体育、电影或共同兴趣。&lt;/li&gt;
+  &lt;li&gt;视觉对话Visual Dialog：对话通常是建立在世界上的物理对象上的，所以我们也把对话任务包括图像和文本。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在ParlAI中选择任务很容易在命令行上执行，如图4中的数据集显示实用程序所示。如果数据集以前没有使用过，ParlAI将自动下载它。因为所有数据集在ParlAI中都是以相同的方式处理的（使用一个对话框API，参见。5） ，一个模拟代理可以在任何一个代理之间切换培训和测试。重要的是，您可以通过提供一个逗号分隔的列表一次指定多个任务（多任务），例如命令行 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-t babi，squad&lt;/code&gt;，来同时使用这两个数据集，甚至所有的QA数据集（&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-t #qa&lt;/code&gt;），或者实际上一次在ParlAI中的每个任务（&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-t #all&lt;/code&gt;）。其目的是使构建和评估非常丰富的对话模型变得容易。
+每个任务都包含在文件夹中&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;build.py：用于设置任务数据的文件，包括首次请求时下载数据。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;agent.py：包含存在于任务世界中的教师类、代理。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;world.py：为需要定义新/复杂环境的任务添加（可选）。要添加新任务，必须实现build.py&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;下载任何需要的数据，以及agent.py为了训练。
+如果数据由固定的日志/对话框脚本组成，比如在许多受监控的数据集中（如SQuAD、Ubuntu等），则需要编写非常简单的代码。对于需要定义交互环境的更复杂的设置，可以实现新的world和/teacher&lt;/p&gt;
+
+&lt;h3 id=&quot;mechanical-turk&quot;&gt;Mechanical Turk&lt;/h3&gt;
+&lt;p&gt;ParlAI的一个重要部分是与Mechanical Turk无缝集成，用于数据收集、培训或评估。在ParlAI中，Human Turkers也被视为代理，因此Human-Human、Human bot或multiple Human和bot都可以在标准框架内进行对话，根据需要切换角色，而不会对代理进行代码更改。这是因为Turkers也通过相同的接口接收和发送：使用观察/动作指令的字段。我们在第一个版本中提供了两个示例：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;（i）qa_collector：一个代理，它与Turkers对话，以收集给定上下文段落的问题-答案对，以构建qa数据集，见图2。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;（ii）model_evaluator模型评估器：收集Turkers对机器人在给定任务中的性能的评级的代理。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;运行newMTurk任务需要实现运行主文件（比如运行.py)并为您希望人类对话的世界和代理定义几个特定于任务的参数。对于数据收集任务，代理应提出问题，并向Turker询问问题的答案，如图2所示。其他参数包括任务描述、突厥者在任务中的角色、描述任务的关键字、点击次数和突厥者的奖励。你可以在沙箱模式下运行，然后启动真正的任务，在那里Turker是付费的。对于在线培训或评估，Turker可以与您的机器学习代理交谈，例如LSTM、内存网络或其他实现的技术。新任务可以签入到存储库中，这样研究人员就可以共享数据收集和数据评估过程，并重现实验。&lt;/p&gt;
+
+&lt;h2 id=&quot;实验说明&quot;&gt;实验说明&lt;/h2&gt;
+
+&lt;p&gt;为了证明ParlAI在行动中的作用，我们在表1中给出了DrQA的结果，这是一个专注的LSTM架构，在班和bAbI任务上进行了单任务和多任务训练，据我们所知，这是以前没有用任何方法展示过的组合。这个实验同时显示了&lt;/p&gt;
+
+&lt;p&gt;ParlAI的力量——建立这个实验是多么容易——以及目前方法的局限性。几乎所有在班上工作得很好的方法都被设计成从给定的上下文中预测一个短语（它们在训练中被指定为开始和结束索引）。因此，这些模型不能应用于所有对话数据集，例如，一些bAbI任务包括是/否问题，其中“是”和“否”不会出现在上下文中。这说明研究人员不应该把模型集中在单个数据集上。ParlAI不提供开始和结束标签索引，因为它的API只是对话框，见图5。这是一个经过深思熟虑的选择，可以阻止这种数据集过度拟合/专门化。然而，这也会导致性能略有下降，因为提供的信息较少5（66.4 EM vs.69.5 EM，见（Chen et al.，2017），这仍然在许多现有的良好表现方法的范围内，见https://stanford-qa.com). 总体而言，DrQA可以解决一些&lt;/p&gt;
+
+&lt;p&gt;bAbI在班上任务和表现良好，与bAbI上的最佳表现方法不匹配（Seo et al.，2016；Henaff et al.，2016），多任务也无济于事。因此，ParlAI向社区提出了一个挑战，即寻找普遍适用的学习算法，并从许多对话数据集的培训中获益。&lt;/p&gt;
+
+&lt;p&gt;5因为我们现在不知道真正答案的位置，&lt;/p&gt;
+
+&lt;p&gt;我们随机选取匹配给定训练集答案的任何上下文短语的开始和结束索引，在某些情况下这是唯一的。&lt;/p&gt;
+
+&lt;h1 id=&quot;response-quality-in-human-chatbot-collaborative-systems&quot;&gt;Response Quality in Human-Chatbot Collaborative Systems&lt;/h1&gt;
+&lt;p&gt;Jiepu jiang&lt;/p&gt;
+
+&lt;h1 id=&quot;相关综述&quot;&gt;相关综述&lt;/h1&gt;
+&lt;p&gt;https://arxiv.org/pdf/2006.12442.pdf
+Facebook AI主管人 Stephen Roller 做这个github https://stephenroller.com/ 虽然不是ParAI的一作，但是还是写了一些综述提到 ParAI和相关研究的&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 25 Dec 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/12/25/ParlAI%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/12/25/ParlAI%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</guid>
+        
+        <category>Python</category>
+        
+        <category>Chatbot</category>
+        
+        <category>paper-reading</category>
+        
+        
+      </item>
+    
+      <item>
+        <title> Spring 全家桶笔记05 SpringCloud 和 Cloud Native 概述 服务注册和发现 </title>
         <description>&lt;h1 id=&quot;chapter-11-springcloud-和-cloud-native-概述&quot;&gt;Chapter 11 SpringCloud 和 Cloud Native 概述&lt;/h1&gt;
 
 &lt;h2 id=&quot;简单理解微服务&quot;&gt;简单理解微服务&lt;/h2&gt;
@@ -183,14 +514,570 @@ https://12factor.net/zh_cn/&lt;/p&gt;
 
 &lt;h2 id=&quot;使-eureka-作为服务注册中&quot;&gt;使⽤ Eureka 作为服务注册中⼼&lt;/h2&gt;
 
+&lt;ul&gt;
+  &lt;li&gt;什么是 Eureka
+    &lt;ul&gt;
+      &lt;li&gt;Eureka 是在 AWS 上定位服务的 REST 服务&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Netflix OSS
+    &lt;ul&gt;
+      &lt;li&gt;https://netflix.github.io&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Spring 对 Netflix 套件的支持
+    &lt;ul&gt;
+      &lt;li&gt;Spring Cloud Netflix&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;在本地启动一个简单的-eureka-服务&quot;&gt;在本地启动一个简单的 Eureka 服务&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Starter
+    &lt;ul&gt;
+      &lt;li&gt;spring-cloud-dependencies&lt;/li&gt;
+      &lt;li&gt;spring-cloud-starter-netflix-eureka-starter&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;声明
+    &lt;ul&gt;
+      &lt;li&gt;@EnableEurekaServer&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;注意事项
+    &lt;ul&gt;
+      &lt;li&gt;默认端口8761&lt;/li&gt;
+      &lt;li&gt;Eureka ⾃己不要注册到 Eureka 了，在产线上记得要部署Eureka集群，不要在单机使用@EnableEurekaServer&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;将服务注册到-eureka-server&quot;&gt;将服务注册到 Eureka Server&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Starter
+    &lt;ul&gt;
+      &lt;li&gt;spring-cloud-starter-netflix-eureka-client&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;声明
+    &lt;ul&gt;
+      &lt;li&gt;@EnableDiscoveryClient&lt;/li&gt;
+      &lt;li&gt;@EnableEurekaClient
+两个注解作用等价&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;一些配置项
+    &lt;ul&gt;
+      &lt;li&gt;eureka.client.service-url.default-zone&lt;/li&gt;
+      &lt;li&gt;eureka.client.instance.prefer-ip-address&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;关于-bootstrap-属性&quot;&gt;关于 Bootstrap 属性&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Bootstrap 属性
+    &lt;ul&gt;
+      &lt;li&gt;启动引导阶段加载的属性&lt;/li&gt;
+      &lt;li&gt;
+        &lt;table&gt;
+          &lt;tbody&gt;
+            &lt;tr&gt;
+              &lt;td&gt;bootstrap.properties&lt;/td&gt;
+              &lt;td&gt;.yml&lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/li&gt;
+      &lt;li&gt;spring.cloud.bootstrap.name=bootstrap&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;常用配置
+    &lt;ul&gt;
+      &lt;li&gt;spring.application.name=应⽤用名&lt;/li&gt;
+      &lt;li&gt;配置中⼼心相关&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;案例&quot;&gt;案例&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;服务端 server pom文件&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&amp;lt;properties&amp;gt;
+&amp;lt;spring-cloud.version&amp;gt;Greenwich.SR1&amp;lt;/spring-cloud.version&amp;gt;
+&amp;lt;/properties&amp;gt;
+&amp;lt;dependency&amp;gt;
+  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;
+  &amp;lt;artifactId&amp;gt;spring-cloud-starter-netflix-eureka-server&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&amp;lt;dependencyManagement&amp;gt;
+  &amp;lt;dependencies&amp;gt;
+    &amp;lt;dependency&amp;gt;
+      &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;
+      &amp;lt;artifactId&amp;gt;spring-cloud-dependencies&amp;lt;/artifactId&amp;gt;
+      &amp;lt;version&amp;gt;${spring-cloud.version}&amp;lt;/version&amp;gt;
+      &amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;
+      &amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;
+    &amp;lt;/dependency&amp;gt;
+  &amp;lt;/dependencies&amp;gt;
+&amp;lt;/dependencyManagement&amp;gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;服务端 server application.properties中&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;server.port=8761
+
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;服务端 server 主函数文件&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;package geektime.spring.cloud.eureka;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+
+@SpringBootApplication
+@EnableEurekaServer
+public class EurekaServerApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(EurekaServerApplication.class, args);
+	}
+
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;client 中 pom文件&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&amp;lt;dependency&amp;gt;
+  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;
+  &amp;lt;artifactId&amp;gt;spring-cloud-starter-netflix-eureka-server&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&amp;lt;dependencyManagement&amp;gt;
+&amp;lt;dependencies&amp;gt;
+  &amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;spring-cloud-dependencies&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;${spring-cloud.version}&amp;lt;/version&amp;gt;
+    &amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;
+    &amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;
+  &amp;lt;/dependency&amp;gt;
+&amp;lt;/dependencies&amp;gt;
+&amp;lt;/dependencyManagement&amp;gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;client 主函数中加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@EnableDiscoveryClient&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;client application.properties上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server.port=0&lt;/code&gt;随机指定一个端口
+&lt;strong&gt;例子启动在jdk8上面，jdk11有依赖缺失的问题&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;不建议在不是AWS的情况下去启动Eureka&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;使-spring-cloud-loadbalancer-访问服务&quot;&gt;使⽤ Spring Cloud LoadBalancer 访问服务&lt;/h2&gt;
+
+&lt;p&gt;就是在使用Eureka的情况下对服务进行的发现&lt;/p&gt;
+&lt;h3 id=&quot;如何获得服务地址&quot;&gt;如何获得服务地址&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;EurekaClient
+    &lt;ul&gt;
+      &lt;li&gt;getNextServerFromEureka()&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;DiscoveryClient &lt;strong&gt;推荐使用&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;getInstances()&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;启动了Eurekaserver端的代码之后显示
+&lt;img src=&quot;/img/java-spring/chapter12-Eureka.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;load-balancer-client&quot;&gt;Load Balancer Client&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;RestTemplate 与 WebClient
+    &lt;ul&gt;
+      &lt;li&gt;@LoadBalaced&lt;/li&gt;
+      &lt;li&gt;实际是通过 ClientHttpRequestInterceptor 实现的
+        &lt;ul&gt;
+          &lt;li&gt;LoadBalancerInterceptor&lt;/li&gt;
+          &lt;li&gt;LoadBalancerClient
+            &lt;ul&gt;
+              &lt;li&gt;RibbonLoadBalancerClient&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;了解ribbon-ribbon-customer-service&quot;&gt;了解Ribbon ribbon-customer-service&lt;/h3&gt;
+&lt;p&gt;需要同时打开Eureka server 和 client&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;pom文件&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&amp;lt;dependency&amp;gt;
+  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;
+  &amp;lt;artifactId&amp;gt;spring-cloud-starter-netflix-eureka-client&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&amp;lt;dependency&amp;gt;
+  &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;
+  &amp;lt;artifactId&amp;gt;spring-boot-starter-actuator&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;bootstrap.properties文件中&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;spring.application.name=customer-service
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;在主函数上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@EnableDiscoveryClient&lt;/code&gt;，并且在restTempate 上加上了LoadBalance注解&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;@LoadBalanced
+@Bean
+public RestTemplate restTemplate(RestTemplateBuilder builder) {
+  return builder
+      .setConnectTimeout(Duration.ofMillis(100))
+      .setReadTimeout(Duration.ofMillis(500))
+      .requestFactory(this::requestFactory)
+      .build();
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;在CustomerRunner上定义了DiscoverClient的函数&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;private void showServiceInstances() {
+  log.info(&quot;DiscoveryClient: {}&quot;, discoveryClient.getClass().getName());
+  discoveryClient.getInstances(&quot;waiter-service&quot;).forEach(s -&amp;gt; {
+      log.info(&quot;Host: {}, Port: {}&quot;, s.getHost(), s.getPort());
+  });
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;以fegin做为服务注册中心发现服务&quot;&gt;以Fegin做为服务注册中心发现服务&lt;/h2&gt;
+
+&lt;h3 id=&quot;认识-feign&quot;&gt;认识 Feign&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Feign
+    &lt;ul&gt;
+      &lt;li&gt;声明式 REST Web 服务客户端&lt;/li&gt;
+      &lt;li&gt;https://github.com/OpenFeign/feign&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Spring Cloud OpenFeign
+    &lt;ul&gt;
+      &lt;li&gt;spring-cloud-starter-openfeign&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;feign-的简单使&quot;&gt;Feign 的简单使⽤&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;开启 Feign ⽀支持
+    &lt;ul&gt;
+      &lt;li&gt;@EnableFeignClients&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;定义 Feign 接⼝
+    &lt;ul&gt;
+      &lt;li&gt;@FeignClient&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;简单配置
+    &lt;ul&gt;
+      &lt;li&gt;FeignClientsConfiguration&lt;/li&gt;
+      &lt;li&gt;Encoder / Decoder / Logger / Contract / Client …&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;feign-的一些其他配置&quot;&gt;Feign 的⼀一些其他配置&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;feign.okhttp.enabled=true&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;feign.httpclient.enabled=true&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;feign.compression.response.enabled=true&lt;/li&gt;
+  &lt;li&gt;feign.compression.request.enabled=true  对请求和响应压缩&lt;/li&gt;
+  &lt;li&gt;feign.compression.request.mime-types=
+         text/xml,application/xml,application/json&lt;/li&gt;
+  &lt;li&gt;feign.compression.request.min-request-size=2048&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;案例-1&quot;&gt;案例&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;pom文件&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&amp;lt;dependency&amp;gt;
+  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;
+  &amp;lt;artifactId&amp;gt;spring-cloud-starter-netflix-eureka-client&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&amp;lt;dependency&amp;gt;
+  &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;
+  &amp;lt;artifactId&amp;gt;spring-cloud-starter-openfeign&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&amp;lt;dependency&amp;gt;
+  &amp;lt;groupId&amp;gt;io.github.openfeign&amp;lt;/groupId&amp;gt;
+  &amp;lt;artifactId&amp;gt;feign-httpclient&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;bootstrap.properties中定义名字是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spring.application.name=customer-service&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;appliction.properties中显示的是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server.port=0&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;integeration 接口&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;coffeeOrderService&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import geektime.spring.springbucks.customer.model.CoffeeOrder;
+import geektime.spring.springbucks.customer.model.NewOrderRequest;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+@FeignClient(name = &quot;waiter-service&quot;, contextId = &quot;coffeeOrder&quot;)
+public interface CoffeeOrderService {
+    @GetMapping(&quot;/order/{id}&quot;)
+    CoffeeOrder getOrder(@PathVariable(&quot;id&quot;) Long id);
+
+    @PostMapping(path = &quot;/order/&quot;, consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    CoffeeOrder create(@RequestBody NewOrderRequest newOrder);
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;coffeeService&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import geektime.spring.springbucks.customer.model.Coffee;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
+@FeignClient(name = &quot;waiter-service&quot;, contextId = &quot;coffee&quot;, path = &quot;/coffee&quot;)
+// 不要在接口上加@RequestMapping
+public interface CoffeeService {
+    @GetMapping(path = &quot;/&quot;, params = &quot;!name&quot;)
+    List&amp;lt;Coffee&amp;gt; getAll();
+
+    @GetMapping(&quot;/{id}&quot;)
+    Coffee getById(@PathVariable Long id);
+
+    @GetMapping(path = &quot;/&quot;, params = &quot;name&quot;)
+    Coffee getByName(@RequestParam String name);
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;不要写@RequestMapping注解而是直接写在路径上&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;里面的作用名解析两个都要去找waiter-serivce上面的服务，通过contextId来区分&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;有了Fegin 的支持之后 CustomerRunner上的内容清爽很多， 不需要再写restTemplate&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在main函数上&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;@EnableDiscoveryClient
+@EnableFeignClients
+...
+@Bean
+public CloseableHttpClient httpClient() {
+  return HttpClients.custom()
+      .setConnectionTimeToLive(30, TimeUnit.SECONDS)
+      .evictIdleConnections(30, TimeUnit.SECONDS)
+      .setMaxConnTotal(200)
+      .setMaxConnPerRoute(20)
+      .disableAutomaticRetries()//禁用自动重试
+      .setKeepAliveStrategy(new CustomConnectionKeepAliveStrategy())//使用自定义的KeepAlive策略
+      .build();
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 </description>
-        <pubDate>Fri, 18 Dec 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/12/18/Spring05/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/12/18/Spring05/</guid>
+        <pubDate>Sat, 18 Dec 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/12/18/Spring05/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/12/18/Spring05/</guid>
         
         <category>Java</category>
         
-        <category>Spring Boot</category>
+        <category>Springboot</category>
         
         <category>Spring Cloud</category>
         
@@ -1136,9 +2023,9 @@ Class Load{
 &lt;/ul&gt;
 
 </description>
-        <pubDate>Thu, 17 Dec 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/12/17/JAVA-jvm/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/12/17/JAVA-jvm/</guid>
+        <pubDate>Fri, 17 Dec 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/12/17/JAVA-jvm/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/12/17/JAVA-jvm/</guid>
         
         <category>Java</category>
         
@@ -3173,9 +4060,9 @@ ENTRYPOINT [&quot;java&quot;, &quot;-jar&quot;,&quot;/waiter-service.jar&quot;]
 &lt;/ul&gt;
 
 </description>
-        <pubDate>Wed, 09 Dec 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/12/09/Spring04/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/12/09/Spring04/</guid>
+        <pubDate>Thu, 09 Dec 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/12/09/Spring04/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/12/09/Spring04/</guid>
         
         <category>Java</category>
         
@@ -4212,9 +5099,9 @@ private Resource&amp;lt;Coffee&amp;gt; addCoffee(Link link) {
   &lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Wed, 09 Dec 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/12/09/Spring03/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/12/09/Spring03/</guid>
+        <pubDate>Thu, 09 Dec 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/12/09/Spring03/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/12/09/Spring03/</guid>
         
         <category>Java</category>
         
@@ -4235,9 +5122,9 @@ private Resource&amp;lt;Coffee&amp;gt; addCoffee(Link link) {
         <title> Pandas </title>
         <description>
 </description>
-        <pubDate>Sun, 29 Nov 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/11/29/Pandas/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/11/29/Pandas/</guid>
+        <pubDate>Mon, 29 Nov 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/11/29/Pandas/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/11/29/Pandas/</guid>
         
         <category>Python</category>
         
@@ -5705,9 +6592,9 @@ postHandle 和 afterCompletion区别是视图呈现的区别&lt;/li&gt;
 &lt;/ul&gt;
 
 </description>
-        <pubDate>Wed, 04 Nov 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/11/04/Spring02/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/11/04/Spring02/</guid>
+        <pubDate>Thu, 04 Nov 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/11/04/Spring02/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/11/04/Spring02/</guid>
         
         <category>Java</category>
         
@@ -6259,9 +7146,9 @@ services:
 &lt;p&gt;打开 consul &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker run --name consul -d -p 8500:8500 -p 8600:8600/udp consul&lt;/code&gt;&lt;/p&gt;
 
 </description>
-        <pubDate>Mon, 02 Nov 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/11/02/Docker%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/11/02/Docker%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</guid>
+        <pubDate>Tue, 02 Nov 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/11/02/Docker%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/11/02/Docker%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</guid>
         
         <category>Docker</category>
         
@@ -8459,9 +9346,9 @@ public RedisCustomConversions redisCustomConversions() {
 &lt;/ol&gt;
 
 </description>
-        <pubDate>Fri, 23 Oct 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/10/23/Spring01/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/10/23/Spring01/</guid>
+        <pubDate>Sat, 23 Oct 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/10/23/Spring01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/10/23/Spring01/</guid>
         
         <category>Java</category>
         
@@ -8476,805 +9363,6 @@ public RedisCustomConversions redisCustomConversions() {
         <category>RabitMQ</category>
         
         <category>self-learning</category>
-        
-        
-      </item>
-    
-      <item>
-        <title> React Hooks </title>
-        <description>&lt;h2 id=&quot;react-的class-based--和-functional-based-的component&quot;&gt;React 的class-based  和 functional-based 的component&lt;/h2&gt;
-&lt;p&gt;在实现时，functional-based可以实现class-based功能，一般情况下lifecycle可以用hook代替&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;命名规则 useXYZ()&lt;/li&gt;
-  &lt;li&gt;只在react 16.8以上版本能用
-    &lt;h2 id=&quot;开始使用&quot;&gt;开始使用&lt;/h2&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;使用样例通过输入ingredient的载入ingredient的描述和数量并且能点击下面的ingredientlist-删除-ingredient&quot;&gt;使用样例，通过输入ingredient的载入ingredient的描述和数量，并且能点击下面的IngredientList 删除 ingredient&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;导入useState&lt;/strong&gt;,这个相当于class-base中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;state = {}&lt;/code&gt;不同之处在于useState可以实现传入各种类型的数据，其中有两个参数，一个是当前state的 snapshot 另一个就是如何更新这个state&lt;/li&gt;
-  &lt;li&gt;使用ES6的extract方法实现的state赋值，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const [inputState,setInputState]=useState({ title: '', amount: '' });
-&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;也可以替换成以下的形式
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const [enteredTitle, setEnteredTitle] = useState(&quot;&quot;);
-const [enteredAmount, setEnteredAmount] = useState(&quot;&quot;);
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;怎样use hooks
-    &lt;ul&gt;
-      &lt;li&gt;必须是在function component或者自定义hook中使用&lt;/li&gt;
-      &lt;li&gt;必须在root level使用hook，不能再一个function component中嵌套使用 hook，也不能在if语句中使用hook&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;fetch Data from firebase
-通过创建新的real time firebase 使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fetch()&lt;/code&gt;是一种browser能识别的代码表示从http中获取数据。
-&lt;strong&gt;小知识点&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;json =&amp;gt; js code &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jsonCode.json()&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;js code =&amp;gt; json &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSON.stringify(jsCode)&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;  fetch(&quot;https://react-hook-example-xxxee.firebaseio.com/ingredient.json&quot;,//样例URL
-      {
-        method: &quot;POST&quot;,
-        body: JSON.stringify(ingredient),
-        headers: { 'Content-Type': 'application.json' }
-      }).then(response =&amp;gt; {
-        return response.json()
-      }).then(responseData =&amp;gt; {// responseData是response 中的属性名 包含 firebase中赋予的id
-        setIngredients(prevIngredients =&amp;gt; [...prevIngredients,
-        {
-          id: responseData.name,// responseData来源于firebase
-          ...ingredient
-        }
-        ])
-      })
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;这里使用两个then因为return response.json()返回的是一个promise所以对其内部做处理需要再加一个then。第一个then获得的数据如下图
-&lt;img src=&quot;/img/react-hook-fetch.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;useEffect hook&lt;/strong&gt;
-这个hook表示在页面每一次render完成之后再加载的动作，用于消除&lt;strong&gt;side effect&lt;/strong&gt;，没有加入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[]&lt;/code&gt;依赖，相当于&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentDidUpdate&lt;/code&gt;
-传入一个匿名函数以及函数中变量用到的依赖，只有这个依赖改变，才会rerun这个页面。所以加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[]&lt;/code&gt;表示&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentDidMount&lt;/code&gt;所以&lt;strong&gt;&lt;em&gt;一定要加[],哪怕没有依赖也要加&lt;/em&gt;&lt;/strong&gt;
-&lt;strong&gt;注意，如果是因为在props中的传入的function改变，需要加入depend中需要转化格式&lt;/strong&gt;：&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const {propsValue} = props;
-...
-useEffect = (()=&amp;gt;{...},[propsValue]);
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;案例分析如何给页面加上一个可搜索的方法&quot;&gt;案例分析，如何给页面加上一个可搜索的方法？&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;首先需要对useEffect 中设置fetch保证每次输入都能匹配数据库中的某个固定字段&lt;/li&gt;
-  &lt;li&gt;在数据库（后端）配置这个字段，也就是firebase中在rules中将这个地方加上传入数据库的字段，以下内容表示在ingredient传入时也就是fetch的url最后加上的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ingredient.json&lt;/code&gt;中post的title字段为搜索中需要修改的地方。
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;{
-&quot;rules&quot;: {
-  &quot;.read&quot;: &quot;now &amp;lt; 1605024000000&quot;,  // 2020-11-11
-  &quot;.write&quot;: &quot;now &amp;lt; 1605024000000&quot;,  // 2020-11-11
-    &quot;ingredients&quot;:{
-      &quot;.indexOn&quot;:[&quot;title&quot;]
-    }
-}
-}
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;在useEffect中写入需要到数据库中匹配的字段，每次输入的值是通过html中onChange执行的。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;在以下的代码中注意query字段，表示判断输入值是否为空，如果不为空就需要到数据库中取数据。&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;useEffect = (() =&amp;gt; {
-    const query = enteredFilter.length === 0 ? '' 
-    : `?orderBy=&quot;title&quot;&amp;amp;equalTo=&quot;${enteredFilter}&quot;`;//注意不要丢到=号
-
-    fetch(&quot;https://react-hook-example-xxxee.firebaseio.com/ingredient.json&quot; + query)
-      .then(response =&amp;gt; {
-        return response.json();
-      })
-      .then(responseData =&amp;gt; {
-        const loadResponseData = [];
-        for (const key in responseData) {
-          loadResponseData.push({
-            id: key,
-            title: responseData[key].title,
-            amount: responseData[key].amount
-          });
-        }
-        onLoadingIngredients(loadResponseData);
-      })
-
-  }, [enteredFilter,onLoadingIngredients]);//每次enteredFilter改变就会执行
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;onLoadingIngredients这个依赖&lt;/strong&gt;是调用component时赋给的一个props，已经通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const {propsValue} = props;&lt;/code&gt;取出，表示如果这个component被重新调用就再次调用useEffect,parant component re-render&lt;/p&gt;
-
-&lt;h3 id=&quot;usecallback-hook&quot;&gt;&lt;strong&gt;useCallback hook&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;作用于会导致两个component一直渲染的页面，因为子页面利用父页面传过来的方法作为useEffect的依赖，只要useEffect依赖改变，子页面也就会重新渲染，但是父页面中传入到子页面的方法在被子页面调用之后，在父页面进行了重新渲染，从而带动子页面的渲染形成闭环，useCallback就是保持父页面中的内容没有因为子页面重新渲染而改变，作为一个cache。&lt;/p&gt;
-
-&lt;p&gt;useCallback 用法和useEffect相同，也需要加上依赖参数，如果是useState作为依赖参数则可以忽略不加。&lt;/p&gt;
-
-&lt;h3 id=&quot;useref-hook&quot;&gt;&lt;strong&gt;useRef hook&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;useRef是为了获得最新的state中的数据，在useEffect中setTimeout时希望判断两次输入时间间隔不小于多少秒，而且需要一边输入一边对比，就需要用到useRef。setTimeout内部获得的useState表示在运行到setTimeout时获得的state，但对于一直更新的state需要通过useRef获得。
-使用方式如下&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;先引入useRef  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;import {useRef} from 'react'&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;定义一个useRef &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const inputRef = useRef()&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;在html处定义ref &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;input ref={inputRef}/&amp;gt;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;在setTimeout处使用ref
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;  setTimeout(() =&amp;gt; {
-if (enteredFilter === inputRef.current.value) {
-  ...
-}
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;主要用于解决用户输入时为了不要一直获取用户输入而频繁的render到后端的问题。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;useeffect的cleanup&quot;&gt;&lt;strong&gt;useEffect的cleanUp&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;在上面的例子中，如果用户输入时间过长但是一直匹配到正确结果的情况下，需要clean useEffect的使用，（setTimeout 是在useEffect中的）所以每次depend改变需要re-render时，才执行return，也就是clean
-具体使用方式如下: return 一定是一个func，当depend为空也就是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[]&lt;/code&gt;时，return发生时间变为component为unmount时。&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;useEffect(() =&amp;gt; {
-    const timer = setTimeout(() =&amp;gt; {
-      if (enteredFilter === inputRef.current.value) {
-        ...
-      }
-    },5000);
-    return ()=&amp;gt;{cleanTimeout(timer)};
-},[]);
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;return中执行的就是clean useEffect的方法。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;小知识点&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;在代码中的三段表达式：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt; A ? B: C&lt;/code&gt;如果C是null则可以写成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A &amp;amp;&amp;amp; B&lt;/code&gt;形式&lt;/li&gt;
-  &lt;li&gt;在代码中两个setState一起执行不会导致死循环情况，因为state会预先存在batch中，原先的会保留并且在同一个render中执行，两个state同时执行，并且有交叉关系再执行时是没有冲突的。对于两个setState同时执行的情况&lt;a href=&quot;https://github.com/facebook/react/issues/10231#issuecomment-316644950&quot; target=&quot;_blank&quot;&gt;github issue&lt;/a&gt;
-具体解释如下:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;more-on-state-batching--state-update&quot;&gt;more on state batching &amp;amp;&amp;amp; state update&lt;/h4&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;setName('Max');
-setAge(30);
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;in the same synchronous (!) execution cycle (e.g. in the same function) will NOT trigger two component re-render cycles.&lt;/p&gt;
-
-&lt;p&gt;Instead, the component will only re-render once and both state updates will be applied simultaneously.&lt;/p&gt;
-
-&lt;p&gt;Not directly related, but also sometimes misunderstood, is when the new state value is available.&lt;/p&gt;
-
-&lt;p&gt;Consider this code:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;console.log(name); // prints name state, e.g. 'Manu'
-setName('Max');
-console.log(name); // ??? what gets printed? 'Max'?
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;You could think that accessing the name state after setName(‘Max’); should yield the new value (e.g. ‘Max’) but this is NOT the case. Keep in mind, that the new state value is &lt;strong&gt;only available in the next component render cycle&lt;/strong&gt; (which gets scheduled by calling setName()).&lt;/p&gt;
-
-&lt;p&gt;Both concepts (batching and when new state is available) behave in the same way for both functional components with hooks as well as class-based components with this.setState()!&lt;/p&gt;
-
-&lt;h3 id=&quot;usereducer&quot;&gt;&lt;strong&gt;useReducer&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;类似于reducer的一种方式，因为定义了大量的useState，所以可以将多个reducer整合。&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;首先在component外层定义useReducer，因为每次外层的定义是不会随着component一起render的。useReducer和基础的redux的reducer定义类似。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const ingredientReducer = (currentIngredients, action)=&amp;gt;{
-  switch(action.type){
-    case &quot;SET&quot;:
-      return action.ingredient
-    case &quot;ADD&quot;:
-      return [...currentIngredients, action.ingredient]
-    case &quot;DELETE&quot;:
-      return currentIngredients.filter(ing =&amp;gt;ing.id !== action.id)
-    default:
-      throw new Error(&quot;should not go hear!&quot;)
-  }
-}
-
-const ExampleComponent = ()=&amp;gt;{...}
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;每个action后面跟的就是在调用dispatch时需要传入的参数&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;在component内部导入刚刚定义的reducer
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const ExampleComponent = ()=&amp;gt;{
-const [ingredients, dispatch] = useReducer(ingredientReducer,[])
-}
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;传入的两个参数第一个是前面定义的array第二个是start state，注意从useReducer中提取的第二个参数，是用来代替setState方法的，名字可以自行定义。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;代替setState，以下是几个state案例&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;ADD&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;// setIngredients(prevIngredients =&amp;gt; [...prevIngredients,
-  // {
-  //   id: responseData.name,
-  //   ...ingredient
-  // }
-  // ])
-  dispatch({
-    type: &quot;ADD&quot;, ingredient: {
-      id: responseData.name,
-      ...ingredient
-    }
-})
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;DELETE&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;// setIngredients(prevIngredients =&amp;gt; prevIngredients.filter(
-//   (ingredient) =&amp;gt; ingredient.id !== ingredientId))
-dispatch({type:&quot;DELETE&quot;,id:ingredientId})
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;SET&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const filterIngredientsHandler = useCallback((filterIngredients) =&amp;gt; {
-    // setIngredients(filterIngredients)
-    dispatch({ type: &quot;SET&quot;, ingredients: filterIngredients });
-  }, [])
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;综上，useReducer可以使用的情况是在每个state有不同的使用状态时，或者一个方法组要改多个state时，放在一起定义。&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;usecontext&quot;&gt;&lt;strong&gt;useContext&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;用法是将需要层层传递的某个state利用这种形式获得，类似于redux但是是react自带的方法，主要用于function base component中详见react笔记那篇文章。&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import React, { useState } from 'react';
-export const AuthContext = React.createContext({
-isAuth: false,
-login: () =&amp;gt; {}
-})
-
-const AuthContextProvider = (props) =&amp;gt; {
-    const [isAuth, setIsAuth] = useState(false);
-    const loginHandler = () =&amp;gt; {
-        setIsAuth(true)
-    }
-    return (
-        &amp;lt;AuthContext.Provider value=&amp;gt;
-            {props.children}
-        &amp;lt;/AuthContext.Provider&amp;gt;
-    )
-}
-export default AuthContextProvider;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;在index.js中利用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;AuthContextProvider&amp;gt;&lt;/code&gt;包裹住&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;App /&amp;gt;&lt;/code&gt;表示所有需要用到AuthContext地方被表示为Provider,在需要用到的是否login的地方写入以下代码（此处是在App主界面），注意定义中先export的并不是default的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AuthContextProvider&lt;/code&gt;而是包含默认值的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AuthContext&lt;/code&gt;所以在导入的时候是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{AuthContext}&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import { AuthContext } from './context/auth-context';   
-
-const App = props =&amp;gt; {
-const authContext = useContext(AuthContext);
-let content = &amp;lt;Auth /&amp;gt;
-if (authContext.isAuth) {
-    content = &amp;lt;Ingredients/&amp;gt;
-}
-return (
-    // &amp;lt;AuthContext.Consumer&amp;gt;
-    // &amp;lt;Auth /&amp;gt;
-    // &amp;lt;/AuthContext.Consumer&amp;gt;
-    {content}
-    )
-};
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;在需要auth的界面中显示&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import {AuthContext} from '../context/auth-context';
-
-const Auth = props =&amp;gt; {
-const authContext = useContext(AuthContext);
-const loginHandler = () =&amp;gt; {
-    authContext.login();//改变login中的state从而在App主界面转换为&amp;lt;Ingredients/&amp;gt;
-};
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;usememo&quot;&gt;&lt;strong&gt;useMemo&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;在react笔记中介绍过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.memo&lt;/code&gt;的用法，这里是利用useMemo进行扩展。原来是作用在component定义中，useMemo是直接作用在component调用的时候。传入的是一个方法，作用是保存一些需要花费时间渲染的component，只有在其中有值改变的时候才回去渲染。&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const ingredientList = useMemo(() =&amp;gt; {
-  return (
-    &amp;lt;IngredientList ingredients={ingredients} onRemoveItem={removeIngredientHandler} /&amp;gt;
-  )
-}, [ingredients])//依赖
-...
-在render中
-{ingredientList}
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;如果是用到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.memo&lt;/code&gt;则是&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const IngredientList =React.memo(props =&amp;gt; {
-  return (...)})
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;自制hook&quot;&gt;自制Hook&lt;/h2&gt;
-&lt;p&gt;最重要一点需要以use作为开头&lt;/p&gt;
-
-&lt;p&gt;自制的Hook首先是一个匿名方法，对渲染的优先顺序可以使用useCallback来限制&lt;/p&gt;
-
-&lt;h2 id=&quot;将hook作用到实际的开发中&quot;&gt;将hook作用到实际的开发中&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;首先利用React.lazy()代替原先的自定义懒加载，毕竟原先的代码中包含了class base的component，具体代码见react-axios的那篇文章。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;和React.lazy包裹搭配使用的是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Suspend&amp;gt;&lt;/code&gt;，是对route中在没有实现加载时在页面上显示的内容，具体是:
-```&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&amp;lt;Suspense fallback={&amp;lt;p&amp;gt;Loading…&amp;lt;/p&amp;gt;}&amp;gt;
-        {routes}
-&amp;lt;/Suspense&amp;gt;
-```
-包裹住自定义的route，并且将router修改为render跳转而不是component跳转&amp;gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;如果是要执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentWillMount&lt;/code&gt;表示在component加载之前执行，所以把代码前移，放在return之前。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentWillUnmount&lt;/code&gt;作为放在最后作为页面加载完毕清除缓存的控件可以利用useEffect的return实现。&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Wed, 30 Sep 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/09/30/ReactHooks/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/09/30/ReactHooks/</guid>
-        
-        <category>react hooks</category>
-        
-        <category>self-learning</category>
-        
-        
-      </item>
-    
-      <item>
-        <title> webpack </title>
-        <description>&lt;p&gt;&lt;strong&gt;申明 create-react-app已经足够日常使用，webpack配置较为麻烦，实力劝退，而且版本更新换代较快，不建议使用。一口气学完之后感觉像是满口塞了泡菜般的有话说不出&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;how-it-work&quot;&gt;How it work&lt;/h2&gt;
-&lt;p&gt;entry(app.js)Multiple entry points are posible —&amp;gt;&lt;/p&gt;
-
-&lt;p&gt;—&amp;gt; Loaders(babel-loader,css-loader) File type dependent transformations&lt;/p&gt;
-
-&lt;p&gt;—&amp;gt; Plugins(uglify)Global transformations&lt;/p&gt;
-
-&lt;p&gt;—&amp;gt; output(bundle.js) Correctly ordered concatenated output&lt;/p&gt;
-
-&lt;h2 id=&quot;basic-workflow-requirements-create-react-app帮我们做的事情&quot;&gt;Basic Workflow Requirements create-react-app帮我们做的事情&lt;/h2&gt;
-
-&lt;p&gt;compile js code&lt;/p&gt;
-
-&lt;p&gt;handle jsx&lt;/p&gt;
-
-&lt;p&gt;css auto prefix&lt;/p&gt;
-
-&lt;p&gt;support image support&lt;/p&gt;
-
-&lt;p&gt;optimize code&lt;/p&gt;
-
-&lt;h2 id=&quot;创建新的文件夹并在其下运行&quot;&gt;创建新的文件夹并在其下运行&lt;/h2&gt;
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm init&lt;/code&gt;一路回车&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev webpack webpack-dev-server&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;在总目录下建立src目录&lt;/li&gt;
-  &lt;li&gt;npm install –save 需要的东西&lt;/li&gt;
-  &lt;li&gt;在package.json文件中的script下配置
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;start&quot;:&quot;webpack-dev-server&quot;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;导入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;webpack-cli&lt;/code&gt;使用的是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev webpack-cli&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;在package.json文件同级创建文件&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;webpack.config.js&lt;/code&gt;告知webpack读取这个文件。&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://webpack.js.org/concepts/&quot; target=&quot;_blank&quot;&gt;webpack文档&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;写入webpackconfigjs文件&quot;&gt;写入webpack.config.js文件&lt;/h3&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const path= require('path');
-
-module.exports={
-    mode: 'devlopment',//设置之后不会自动压缩代码
-    entry:'./src/index.js',
-    output:{
-        // path 的名字表示当前页面的名字
-        path:path.resolve(__dirname,'react-webpack'),
-        filename: 'bundle.js',
-        publicPath: ''
-    },
-    devtool: 'cheap-module-source-map'
-};
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;加入-babel&quot;&gt;加入 babel&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev @babel/core @babel/preset-env @babel/preset-react @babel/preset-stage-2 babel-loader @babel/plugin-proposal-class-properties&lt;/code&gt;需要初始化以上&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;在devtool下面加上文件读取的rules
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt; module:{
-   rules:[
-     {
-       // test告知以js为结尾都会遵循以下的rule
-       test:/\.js$/,
-       // loader告知以什么形式加载
-       loader:'babel-loader',
-       // 不读取哪些内容
-       exclude:/node_modules/
-     }
-   ]
- }
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;在package.json文件同级加上文件&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.babelrc&lt;/code&gt;babel自动读取这个文件，写入json文件
-    &lt;ul&gt;
-      &lt;li&gt;presets是babel给的browser的屏幕宽度等参数&lt;/li&gt;
-      &lt;li&gt;plugins是写入什么形式babel会帮助
-        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;{
- &quot;presets&quot;: [
-   [
-       &quot;@babel/preset-env&quot;,
-       {
-           &quot;targets&quot;: {
-               &quot;browsers&quot;: [
-                   &quot;&amp;gt;1%&quot;,
-                   &quot;last 2 version&quot;
-               ]
-           }
-       }
-   ],
-   &quot;@babel/preset-react&quot;
- ],
- &quot;plugins&quot;: [
-   &quot;@babel/plugin-proposal-class-properties&quot;
- ]
-}
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;加载读取css文件的控件&quot;&gt;加载读取css文件的控件&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev style-loader css-loader file-loader&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;写入能够读取css的rules，在以上定义的modules内&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;{
-  test:/\.css$/,
-  exclude:/node_modules/,
-  use: [
-    {loader: 'style-loader'},
-    {loader: 'css-loader', options:{
-        importLoaders: 1,
-        modules: {
-            localIdentName: '[name]__[local]__[hash:base64:5]'
-        }
-    }}
-  ] 
-}
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev postcss-loader&lt;/code&gt; 这个控件可以将react中的css以oldHtml的语法加入到页面中。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev autoprefixer&lt;/code&gt;是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;postcss-loader&lt;/code&gt;控件中options需要载入的控件，这里加载时需要在页面中先定义&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autoprefixer&lt;/code&gt;
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;const autoprefixer = require('autoprefixer');&lt;/code&gt;类似于定义&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;path&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;use: [
-  { loader: 'style-loader' },
-  {
-    loader: 'css-loader',
-    options: {
-      importLoaders: 1,
-      modules: {
-        localIdentName: '[name]__[local]__[hash:base64:5]'
-      }
-    }
-  },
-  {
-    loader:'postcss-loader',options:{
-      ident:'postcss',
-      plugins: ()=&amp;gt;[autoprefixer()]
-    }
-  }
-]
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autoprefixer&lt;/code&gt;控件是告知页面是以什么样的形式打开，需要在package.json文件中&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;license&quot;&lt;/code&gt;同级中写入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;browserslist&quot;: &quot;&amp;gt;1%,last 2 version&quot;&lt;/code&gt;，这里的&lt;strong&gt;browserlist&lt;/strong&gt;对应了&lt;strong&gt;babelrc&lt;/strong&gt;中的&lt;strong&gt;browsers&lt;/strong&gt;属性&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;页面加载image&quot;&gt;页面加载image&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev url-loader&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;写入rules&lt;/p&gt;
-
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;{
-  test:/\.(png|jpe?g|gif)$/,
-  //loader ?之后的内容表示 照片存储的位置[name]是照片名,[ext]表示扩展名 extension
-  loader:'url-loader?limit=8000&amp;amp;name=images/[name].[ext]'
-}
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;导入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev html-webpack-plugin&lt;/code&gt;将style写入bundle.js，同时在config文件中定义
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;const HtmlWbpackPlugin = require('html-webpack-plugin');
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;方便后面调用。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;在config文件中，module之后定义一个plugins，告诉webpack要以index.html中的语法作为基本语法&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;plugins:[
-        new HtmlWbpackPlugin({
-            template: __dirname + './src/index.html',
-            filename: 'index.html',
-            inject:'body'
-        })
-    ]
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Wed, 30 Sep 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/09/30/Webpack/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/09/30/Webpack/</guid>
-        
-        <category>wepack</category>
-        
-        <category>self-learning</category>
-        
-        <category>完整工作流</category>
         
         
       </item>
