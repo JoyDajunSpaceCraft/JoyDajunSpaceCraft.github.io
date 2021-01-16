@@ -5,8 +5,8 @@
     <description>季月侣的Blog || About Joy </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 06 Jan 2021 10:33:46 +0800</pubDate>
-    <lastBuildDate>Wed, 06 Jan 2021 10:33:46 +0800</lastBuildDate>
+    <pubDate>Sat, 16 Jan 2021 14:42:54 +0800</pubDate>
+    <lastBuildDate>Sat, 16 Jan 2021 14:42:54 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -162,7 +162,9 @@ p(St+1|St,at)是env也就是游戏环境，pΘ(at,st)是actor的行为。
 就是得到期望值R(τ)，最大化 这个期望， 用到gradient deciant&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;实作的时候的细节 loss function 是 crossentropy 要记得乘上 total reward&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;实作的时候的细节 loss function 是 crossentropy 要记得乘上 total reward&lt;/p&gt;
+  &lt;/li&gt;
   &lt;li&gt;tips 1. add baseline 很多游戏只有正的reward ，因为reward一直是乘在几率之前，表示了上升的多少，但是我们是sample所以的action如果有一个reward没有被sample到，它的reward就是0，下次增加的几率就是0，所以将 reward要减去某个概率保证reward有正有负。减去的值就是平均值。&lt;/li&gt;
 &lt;/ul&gt;
 

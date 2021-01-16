@@ -4,7 +4,7 @@ title: ' ReinforcementLearning  '
 subtitle: ' Machine Learning '
 date: 2020--12-27
 author: 'Joy'
-header-img: 'img/react-hook.jpg'
+header-img: 'img/reinforcementLearning.jpg'
 tags:
   - Python
   - Reinforcement Learning
@@ -136,6 +136,7 @@ p(St+1|St,at)是env也就是游戏环境，pΘ(at,st)是actor的行为。
 就是得到期望值R(τ)，最大化 这个期望， 用到gradient deciant
 
 +  实作的时候的细节 loss function 是 crossentropy 要记得乘上 total reward 
+
 + tips 1. add baseline 很多游戏只有正的reward ，因为reward一直是乘在几率之前，表示了上升的多少，但是我们是sample所以的action如果有一个reward没有被sample到，它的reward就是0，下次增加的几率就是0，所以将 reward要减去某个概率保证reward有正有负。减去的值就是平均值。
 
 imag
